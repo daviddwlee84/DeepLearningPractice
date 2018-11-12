@@ -1,0 +1,10 @@
+custom_num/0.png
+custom_num/1.png
+custom_num/2.png
+custom_num/3.png
+custom_num/4.png
+custom_num/5.png
+custom_num/6.png
+custom_num/7.png
+custom_num/8.png
+custom_num/9.png
