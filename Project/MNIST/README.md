@@ -6,11 +6,50 @@
 
 TBD
 
+## Use Online Database
+
+### Files
+
+```txt
+.
+├── data (auto generate) - MNIST dataset will download here
+├── mnist_app.py - input image and output number
+├── mnist_backward.py - back propagation
+├── mnist_forward.py - forward propagation
+├── mnist_test.py - testing
+├── model (auto generate) - saved model training status
+├── test_picture - custom number images
+└── test_picture.sh - test custom images
+```
+
+1. Go to project directory
+
+    `cd Online_Database`
+
+2. Training phase
+
+    `python3 mnist_backward.py`
+
+3. Testing phase (can parallel running while training)
+
+    `python3 mnist_forward.py`
+
+4. Custom test
+
+    `bash test_picture.sh`
+
+    or
+
+    `python3 mnist_app.py path/to/image1 path/to/image2 ...`
+
+### Result
+
 ## Use Actual Images
 
 ### Files
 
 ```txt
+.
 ├── custom_num - custom number images
 ├── custom_test.sh - test custom images
 ├── custom_test.txt - custom image test list
