@@ -4,7 +4,7 @@
 
 ### Network Structure
 
-TBD
+![structure](structure.png)
 
 ## Use Online Database
 

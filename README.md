@@ -10,7 +10,9 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 ### Dependencies
 
-* `tensorflow`
+* [`tensorflow`](https://tensorflow.org)
+    * [github](https://github.com/tensorflow/tensorflow)
+    * [Brief Notes](Notes/Framework/Tensorflow.md)
 
 ## Project
 
@@ -22,7 +24,7 @@ Subject|Technique|Framework
 
 ### Technique
 
-* [`Fully Connected Neural Network`](Notes/Technique/Fully_Connected_Neural_Network.md)
+* [`Fully Connected Neural Network`](Notes/Technique/Fully_Connected_Neural_Network.md) - Overview of neural network training process
 
 #### Computer Vision (CV)
 
@@ -46,6 +48,7 @@ Subject|Technique|Framework
 #### Text and Sequence
 
 * Long Short Term Memory (LSTM)
+* Gated Recurrent Unit (GRU) Neural Network
 
 ### Element
 
@@ -70,6 +73,13 @@ Subject|Technique|Framework
         * [online reading](https://exacity.github.io/deeplearningbook-chinese/)
 * [Deep Learning with Python](https://www.manning.com/books/deep-learning-with-python)
 
+## Tools
+
+### Visualize Drawing Tools
+
+* [NN-SVG](http://alexlenail.me/NN-SVG/)
+    * [github](https://github.com/zfrenchee/NN-SVG)
+
 ## Resources
 
 ### Tutorial
@@ -82,3 +92,7 @@ Subject|Technique|Framework
 
 * [Stanford - CS231n](http://cs231n.stanford.edu/)
 * [PKU - 人工智慧實踐：Tensorflow筆記](https://www.icourse163.org/course/PKU-1002536002)
+
+#### Document
+
+* [Learning TensorFlow](https://learningtensorflow.com/)
