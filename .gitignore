@@ -1,5 +1,7 @@
 # MNIST image data
 Project/MNIST/Actual_Picture/mnist_data_jpg/
+Project/MNIST/Actual_Picture/data/
+Project/MNIST/Actual_Picture/model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
