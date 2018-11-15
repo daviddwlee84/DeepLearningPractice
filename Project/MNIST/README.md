@@ -22,6 +22,8 @@
 └── test_picture.sh - test custom images
 ```
 
+### Instructions
+
 1. Go to project directory
 
     `cd Online_Database`
@@ -91,7 +93,7 @@
 
 5. Test with testing data (optional)
 
-    `python3 mnist_test.py` (terminate with `Ctrl + C`)
+    `python3 mnist_test.py` (terminate with `Ctrl + c`)
 
 6. Test with custom images (by default, image should be black number and white background)
     * Use my images (you can save your image paths in `custom_test.txt`)
