@@ -16,15 +16,19 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 ## Project
 
-Subject|Technique|Framework
--------|---------|---------
-[MNIST Handwriting Digit](Project/MNIST)|Fully Connected NN|Tensorflow
+Subject|Technique|Framework|Remark
+-------|---------|---------|------
+[Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
+[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow
 
 ## Deep Learning Categories
 
 ### Technique
 
-* [`Fully Connected Neural Network`](Notes/Technique/Fully_Connected_Neural_Network.md) - Overview of neural network training process
+* Feedforward Neural Network
+    * Multilayer Perceptron (MLP)
+* [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - Overview of neural network training process
 
 #### Computer Vision (CV)
 
@@ -38,6 +42,7 @@ Subject|Technique|Framework
 
 * `Generative Adversarial Network (GAN)`
 * `Variational Autoencoder (VAE)`
+* `Self-Organizing Map (SOM)`
 
 ### Learning Framework
 
@@ -63,7 +68,18 @@ Subject|Technique|Framework
 * Leaky ReLU
 * Softmax
 
-#### Loss Function
+#### [Loss Function](Notes/Element/Loss_Function.md)
+
+* Cross-Entropy
+* Hinge
+* Huber
+* Kullback-Leibler
+* MAE (L1)
+* MSE (L2)
+
+#### [Forward Propagation](Notes/Element/Forward_Propagation.md)
+
+#### [Back Propagation](Notes/Element/Back_Propagation.md)
 
 ## Books Recommendation
 
@@ -77,8 +93,18 @@ Subject|Technique|Framework
 
 ### Visualize Drawing Tools
 
-* [NN-SVG](http://alexlenail.me/NN-SVG/)
+* [NN-SVG](http://alexlenail.me/NN-SVG/) - FCNN, LeNet, AlexNet style
     * [github](https://github.com/zfrenchee/NN-SVG)
+* [draw.io](https://www.draw.io/)
+* [Netscope](https://ethereon.github.io/netscope/quickstart.html)
+
+Latex
+
+* [HarisIqbal88/PlotNeuralNet](https://github.com/HarisIqbal88/PlotNeuralNet)
+
+Toy
+
+* [martisak/dotnets](https://github.com/martisak/dotnets)
 
 ## Resources
 
@@ -96,3 +122,17 @@ Subject|Technique|Framework
 #### Document
 
 * [Learning TensorFlow](https://learningtensorflow.com/)
+* [**DeepNotes**](https://deepnotes.io/)
+    * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
+
+NLP
+
+* [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
+
+CV
+
+[Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
+
+#### Slides
+
+* [Supervised Deep Learning](https://sites.google.com/site/deeplearningcvpr2014/ranzato_cvpr2014_DLtutorial.pdf)
