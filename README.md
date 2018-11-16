@@ -19,8 +19,8 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 Subject|Technique|Framework|Remark
 -------|---------|---------|------
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
-[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy
-[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow
+[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow|
 
 ## Deep Learning Categories
 

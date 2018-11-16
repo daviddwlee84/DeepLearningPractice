@@ -106,6 +106,98 @@ $$
 
 ## Example
 
+### With custom initial value
+
+* Weight & Bias
+    * $\mathbb{w}$ = 0.5 for all w
+    * $\mathbb{b}$ = 1 for all b
+* Input
+    * $\mathbb{x} = [8, 7]$
+    * $\mathbb{y} = [0, 0, 1]$
+
+**Result**:
+
+```txt
+Round: 0
+Current loss: [[1.9095425]]
+Current weight:
+ [[0.5 0.5 0.5]
+ [0.5 0.5 0.5]]
+Current bias:
+ [[1]
+ [1]
+ [1]]
+Round: 1
+Current loss: [[2.99760217e-15]]
+Current weight:
+ [[-2.16666667 -2.16666667  5.83333333]
+ [-1.83333333 -1.83333333  5.16666667]]
+Current bias:
+ [[0.66666667]
+ [0.66666667]
+ [1.66666667]]
+======= Finish Training ======
+After 1 round training
+Final eight:
+ [[-2.16666667 -2.16666667  5.83333333]
+ [-1.83333333 -1.83333333  5.16666667]]
+Final bias:
+ [[0.66666667]
+ [0.66666667]
+ [1.66666667]]
+Final loss: [[2.99760217e-15]]
+y_hat =
+ [[3.09335001e-50]
+ [3.09335001e-50]
+ [1.00000000e+00]]
+```
+
+### With random initial value
+
+* Weight & Bias
+    * $\mathbb{w}$ = random uniform distribution 0~1
+    * $\mathbb{b}$ = 0 for all b
+* Input
+    * $\mathbb{x} = [8, 7]$
+    * $\mathbb{y} = [0, 0, 1]$
+
+**Result**:
+
+```txt
+Round: 0
+Current loss: [[0.46077411]]
+Current weight:
+ [[-0.03010464 -0.48454925 -0.19359648]
+ [-0.48489008 -0.29742846 -0.09327472]]
+Current bias:
+ [[0.]
+ [0.]
+ [0.]]
+Round: 1
+Current loss: [[3.02091685e-13]]
+Current weight:
+ [[-1.54217344 -0.63265234  1.46657541]
+ [-1.80795027 -0.42701866  1.35937568]]
+Current bias:
+ [[-0.1890086 ]
+ [-0.01851289]
+ [ 0.20752149]]
+======= Finish Training ======
+After 1 round training
+Final eight:
+ [[-1.54217344 -0.63265234  1.46657541]
+ [-1.80795027 -0.42701866  1.35937568]]
+Final bias:
+ [[-0.1890086 ]
+ [-0.01851289]
+ [ 0.20752149]]
+Final loss: [[3.02091685e-13]]
+y_hat =
+ [[5.56493009e-21]
+ [1.50529585e-13]
+ [1.00000000e+00]]
+```
+
 ## Links
 
 ### Article

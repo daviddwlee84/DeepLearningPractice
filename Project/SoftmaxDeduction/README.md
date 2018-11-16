@@ -4,6 +4,12 @@
 
 * [**Softmax Classification Back Propagation with Cross Entropy**](Softmax_Deduction.md)
 
+## Implementation
+
+```sh
+python3 Softmax_Deduction.py
+```
+
 ## Notes
 
 * [Softmax - Activation Function](../../Notes/Element/Activation_Function.md#Softmax)

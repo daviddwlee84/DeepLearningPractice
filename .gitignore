@@ -1,3 +1,6 @@
+# VSCode Debug
+.vscode
+
 # MNIST image data
 Project/MNIST/Actual_Picture/mnist_data_jpg/
 Project/MNIST/Actual_Picture/data/
