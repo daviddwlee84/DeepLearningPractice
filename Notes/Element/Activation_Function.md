@@ -11,7 +11,13 @@ Table of Content
 
 ## Linear
 
-## Sigmoid
+## Sigmoid (Logistic Function)
+
+It squashes a vector in the range (0, 1). It is applied independently to each element of $\vec{z}$
+
+$$
+\operatorname{sigmoid}(z_i) = \frac{1}{1 + \exp(z_i)}
+$$
 
 ## Hyperbolic Tangent
 
@@ -43,7 +49,7 @@ A generalization of the sigmoid function.
     where $\vec{z}_i = \log \tilde{P}(y = i|\vec{x})$
 2. Exponentiate and normalize $\vec{z}$ to obtain the desired $\hat{y}$
     $$
-    \operatorname{softmax}(\vec{z})_i = \frac{\exp(\vec{z}_i)}{\sum_j \exp(\vec{z}_j)}
+    \operatorname{softmax}(\vec{z})_i = \frac{\exp(z_i)}{\sum_j \exp(z_j)}
     $$
 
 **Derivatives**:
@@ -51,6 +57,8 @@ A generalization of the sigmoid function.
 $$
 \frac {\partial \operatorname{softmax}({\vec {z}})_{i}}{\partial x_{j}}=\operatorname{softmax}({\vec {z}})_{i}(\delta _{ij}-\operatorname{softmax}({\vec {z}})_{j})
 $$
+
+>  use [Kronecker delta](https://en.wikipedia.org/wiki/Kronecker_delta) $\delta_{ij}$
 
 ## Resources
 
