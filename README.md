@@ -21,6 +21,7 @@ Subject|Technique|Framework|Remark
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow|
+[CIFAR-10](Project/CIFAR-10)|FCNN|Tensorflow|
 
 ## Deep Learning Categories
 
