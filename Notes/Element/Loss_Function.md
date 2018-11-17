@@ -21,6 +21,16 @@ $$
 \operatorname{CE}(\mathbb{y}, \mathbb{\hat{y}}) = \displaystyle -\sum_{i=1}^K y_i \log(\hat{y}_i)
 $$
 
+### Binary Classification Problem
+
+(Another definition of Cross-Entropy)
+
+* [The cross-entropy error function in neural network - Question 2](https://datascience.stackexchange.com/questions/9302/the-cross-entropy-error-function-in-neural-networks)
+
+$$
+\operatorname{CE}(\mathbb{y}, \mathbb{\hat{y}}) = \displaystyle -\sum_{i=1}^2 y_i \log(\hat{y}_i) = -y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i)
+$$
+
 ## Resources
 
 * [Loss Functions](https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html)
@@ -28,3 +38,4 @@ $$
     * [Category:Loss functions](https://en.wikipedia.org/wiki/Category:Loss_functions)
     * [Loss functions for classification](https://en.wikipedia.org/wiki/Loss_functions_for_classification)
         * [Cross entropy](https://en.wikipedia.org/wiki/Cross_entropy)
+* [Understanding Categorical Cross-Entropy Loss, Binary Cross-Entropy Loss, Softmax Loss, Logistic Loss, Focal Loss and all those confusing names](https://gombru.github.io/2018/05/23/cross_entropy_loss/)
