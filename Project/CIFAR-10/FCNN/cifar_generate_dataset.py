@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
+from random import shuffle
 
 # Generate standard tfrecord of training or testing set
 image_train_path = '../cifar-10/train/'
@@ -19,6 +20,10 @@ def write_tfRecordd(tfRecordName, image_path, label_path):
 
     with open(label_path, 'r') as label_file:
         picfile_label_pair = label_file.readlines()
+    
+    # Before shuffle, the accuracy is only 0.2
+    # After shuffle, it can be about 0.5
+    shuffle(picfile_label_pair)
     
     for num, content in enumerate(picfile_label_pair):
         # Construct picture path
