@@ -52,6 +52,15 @@ python3 cifar_backward.py
 python3 cifar_test.py
 ```
 
+### Custom Picture Test
+
+```sh
+# Generate filelist.txt
+find testpic -type f > filelist.txt
+# Inject into App
+cat filelist.txt | xargs python3 cifar_app.py
+```
+
 ## Link
 
 [Kaggle - CIFAR-10 - Object Recognition in Images](https://www.kaggle.com/c/cifar-10)
