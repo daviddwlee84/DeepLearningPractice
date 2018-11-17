@@ -115,3 +115,9 @@ TBD
 * Accuracy after xx round
 
 TODO: try to get rid of warnings
+
+## Links
+
+### Article
+
+* [Putting it all together and Classifying MNIST dataset](https://deepnotes.io/classify-mnist)
