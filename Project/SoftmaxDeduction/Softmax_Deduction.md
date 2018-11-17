@@ -205,9 +205,10 @@ y_hat =
 Softmax & Cross Entropy
 
 * [**Softmax classification with cross-entropy**](https://peterroelants.github.io/posts/cross-entropy-softmax/)
-* [**Classification and Loss Evaluation - Softmax and Cross Entropy Loss**](https://deepnotes.io/softmax-crossentropy) - use [Kronecker delta](https://en.wikipedia.org/wiki/Kronecker_delta) $\delta_{ij}$
+* [**Classification and Loss Evaluation - Softmax and Cross Entropy Loss**](https://deepnotes.io/softmax-crossentropy)
 * [Backpropagation with Softmax / Cross Entropy](https://stats.stackexchange.com/questions/235528/backpropagation-with-softmax-cross-entropy)
 * [Derivative of Softmax loss function](https://math.stackexchange.com/questions/945871/derivative-of-softmax-loss-function)
+* [The Softmax function and its derivative](https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/)
 * [CSDN - 【深度學習】：超詳細的Softmax求導](https://blog.csdn.net/bqw18744018044/article/details/83120425)
 
 Softmax in Python

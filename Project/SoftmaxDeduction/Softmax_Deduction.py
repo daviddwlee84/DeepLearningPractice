@@ -6,8 +6,19 @@ def Softmax(x):
 
 class CrossEntropy():
     def __call__(self, y_hat, y):
+        """Computes cross entropy between y (targets encoded as one-hot vectors) and predictions y_hat
+        
+        Arguments:
+            y_hat {ndarray} -- (N, k)
+            y {ndarray} -- (N, k)
+        
+        Returns:
+            int -- cross entropy
+        """
         # Avoid division by zero
         y_hat = np.clip(y_hat, 1e-15, 1 - 1e-15)
+
+        #return - y.T * np.log(y_hat)
         return - y.T * np.log(y_hat) - (1 - y.T) * np.log(1 - y_hat)
 
     def gradient(self, y_hat, y):
