@@ -12,8 +12,17 @@ for train_test in ('train', 'test'):
 
     print("Generating", train_test, "set tagfile...")
 
+    ## Method 1.
     # Take only one element from generator
     folder = sorted(next(os.walk(os.path.join(root_folder, train_test)))[1])
+
+    ## Method 2.
+    #folder = sorted(os.listdir(os.path.join(root_folder, train_test)))
+    #try:
+    #    # For macOS
+    #    folder.remove('.DS_Store')
+    #except:
+    #    print('Not found .DS_Store')
 
     train_pic_path_tag = []
 
