@@ -2,6 +2,12 @@
 
 ## Overview
 
+Version
+
+* [Use Online Database](#Use-Online-Database)
+* [Use Actual Images](#Use-Actual-Images)
+* [Use tf.keras (Tensorflow tutorial)](#Use-Keras)
+
 ### Network Structure
 
 ![structure](structure.png)
@@ -115,6 +121,49 @@ TBD
 * Accuracy after xx round
 
 TODO: try to get rid of warnings
+
+## Use Keras
+
+* [Tensorflow Tutorial Example](https://www.tensorflow.org/tutorials/)
+* [Original File](https://colab.research.google.com/github/tensorflow/docs/blob/master/site/en/tutorials/_index.ipynb)
+
+This practice implement storing training checkpoints and restoring model weights. ([TensorFlow Tutorial: Save and restore models](https://www.tensorflow.org/tutorials/keras/save_and_restore_models))
+
+(And I found error when using model.save())
+
+> NotImplementedError: Currently `save` requires model to be a graph network. Consider using `save_weights`, in order to save the weights of the model.
+
+### Instruction
+
+```sh
+# Train Model
+python3 train.py
+# Use App
+find ../Actual_Picture/custom_num -type f | xargs python3 app.py
+```
+
+### Result
+
+```txt
+10000/10000 [==============================] - 1s 96us/step
+Untrained model, accuracy: 15.55%
+10000/10000 [==============================] - 1s 78us/step
+Restored model, accuracy: 97.81%
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+flatten (Flatten)            multiple                  0
+_________________________________________________________________
+dense (Dense)                multiple                  401920
+_________________________________________________________________
+dropout (Dropout)            multiple                  0
+_________________________________________________________________
+dense_1 (Dense)              multiple                  5130
+=================================================================
+Total params: 407,050
+Trainable params: 407,050
+Non-trainable params: 0
+```
 
 ## Links
 

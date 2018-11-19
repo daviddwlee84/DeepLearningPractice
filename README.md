@@ -13,6 +13,10 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 * [`tensorflow`](https://tensorflow.org)
     * [github](https://github.com/tensorflow/tensorflow)
     * [Brief Notes](Notes/Framework/Tensorflow.md)
+    * `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
+* [`keras`](http://keras.io/)
+    * [github](https://github.com/keras-team/keras/)
+    * [Brief Notes](Notes/Framework/Keras.md)
 
 ## Project
 
@@ -20,7 +24,7 @@ Subject|Technique|Framework|Remark
 -------|---------|---------|------
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
-[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow|actual image vs. online dataset
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [CIFAR-10](Project/CIFAR-10)|FCNN|Tensorflow|
 
 ## Deep Learning Categories
@@ -136,21 +140,21 @@ Subject|Technique|Framework|Remark
 
 ### Programming Framework
 
-Framework |Organization|Support Language
-----------|------------|-----------------
-TensorFlow|Google|Python, C++, Go, JavaScript, ...
-Keras|fchollet|Python
-PyTorch|Facebook|Python
-CNTK|Microsoft|C++
-OpenNN||C++
-Caffe|BVLC|C++, Python
-MXNet|DMLC|Python, C++, R, ...
-Torch7|Facebook|Lua
-Theano|U. Montreal|Python
-Deeplearning4J|DeepLearning4J|Java, Scala
-Leaf|AutumnAI|Rust
-Lasagne|Lasagne|Python
-Neon|NervanaSystems|Python
+Framework |Organization|Support Language|Remark
+----------|------------|----------------|------
+TensorFlow|Google|Python, C++, Go, JavaScript, ...|
+Keras|fchollet|Python|on top of TensorFlow, CNTK, or Theano
+PyTorch|Facebook|Python|
+CNTK|Microsoft|C++|
+OpenNN||C++|
+Caffe|BVLC|C++, Python|
+MXNet|DMLC|Python, C++, R, ...|
+Torch7|Facebook|Lua|
+Theano|U. Montreal|Python|
+Deeplearning4J|DeepLearning4J|Java, Scala|
+Leaf|AutumnAI|Rust|
+Lasagne|Lasagne|Python|
+Neon|NervanaSystems|Python|
 
 ## Problem - Solution
 

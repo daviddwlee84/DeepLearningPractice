@@ -9,6 +9,8 @@ Project/MNIST/Actual_Picture/model/
 Project/MNIST/Online_Database/data/
 Project/MNIST/Online_Database/model/
 
+Project/MNIST/Keras_Version/checkpoint
+
 # CIFAR 10 image data
 Project/CIFAR-10/cifar-10/
 Project/CIFAR-10/FCNN/data/
