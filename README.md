@@ -20,7 +20,7 @@ Subject|Technique|Framework|Remark
 -------|---------|---------|------
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
-[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow|
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow|actual image vs. online dataset
 [CIFAR-10](Project/CIFAR-10)|FCNN|Tensorflow|
 
 ## Deep Learning Categories
@@ -30,6 +30,7 @@ Subject|Technique|Framework|Remark
 * Feedforward Neural Network
     * Multilayer Perceptron (MLP)
 * [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - Overview of neural network training process
+    * Dense Neural Network (DNN)
 
 #### Computer Vision (CV)
 
@@ -41,11 +42,13 @@ Subject|Technique|Framework|Remark
 
 #### Uncategorized
 
+* [`Reinforcement Learning (RL)`](Notes/Technique/Reinforcement_Learning.md)
+    * `Policy Gradient Methods (PG)`
 * `Generative Adversarial Network (GAN)`
 * `Variational Autoencoder (VAE)`
 * `Self-Organizing Map (SOM)`
 
-### Learning Framework
+### Learning Framework / Model
 
 #### Object Detection
 
@@ -54,15 +57,21 @@ Subject|Technique|Framework|Remark
 #### Text and Sequence
 
 * Long Short Term Memory (LSTM)
+* [Sequence-to-Sequence (seq-to-seq)](Notes/LearningFramework/seq-to-seq.md)
+    * RNN-Based seq-to-seq
+    * Convolution-based seq-to-seq
+    * Transformer-based seq-to-seq
+    * Attention Is All You Need
+    * BERT
 * Gated Recurrent Unit (GRU) Neural Network
+* Word Piece Model (WPM) aka. SentencePiece
 
-### Element
+### Ingredient of magic
 
 #### Layer
 
 #### [Activation Function](Notes/Element/Activation_Function.md)
 
-* Linear
 * Sigmoid
 * Hyperbolic Tangent
 * Rectified Linear Unit (ReLU)
@@ -81,6 +90,37 @@ Subject|Technique|Framework|Remark
 #### [Forward Propagation](Notes/Element/Forward_Propagation.md)
 
 #### [Back Propagation](Notes/Element/Back_Propagation.md)
+
+#### Optimizer
+
+* Adadelta
+* Adagrad
+* Adam
+* Conjugate Gradients
+* BFGS
+* Momentum
+* Nesterov Momentum
+* Newton’s Method
+* RMSProp
+* SGD
+
+#### Regularization
+
+* Data Augmentation
+* Dropout
+* Early Stopping
+* Ensembling
+* Injecting Noise
+* L1 Regularization
+* L2 Regularization
+
+### Common Sense / Terminology / Tricks
+
+* one-hot encoding
+* ground truth
+* Data Parallelism
+* Word Embedding
+* Word2Vec
 
 ### Network Framework
 
@@ -111,6 +151,42 @@ Deeplearning4J|DeepLearning4J|Java, Scala
 Leaf|AutumnAI|Rust
 Lasagne|Lasagne|Python
 Neon|NervanaSystems|Python
+
+## Problem - Solution
+
+* Vanishing gradient problem
+    * Solutions:
+        * Multi-level hierarchy
+        * LSTM
+        * Faster hardware
+        * Residual networks
+        * Other activation functions
+
+## Applications
+
+### CV
+
+### NLP
+
+* Speech Recognition
+    * End-to-End Models:
+        * (Traditional --> HMM)
+        * CTC
+        * RNN Transducer
+        * Attention-based Model
+    * Improved attention
+        * Single head attention
+        * Multi-headed attention
+    * Word Pieces
+    * Sequence-Training
+        * Beam-Search Decoding Based EMBR
+* Neural Machine Translation (NMT)
+    * Encoder LSTM + Decoder LSTM
+    * Google NMT (GNMT)
+* Speech Synthesis
+    * WaveNet: A Generative Model for Raw Audio
+    * [Tacotron](https://google.github.io/tacotron/): An end-to-end speech synthesis system
+* Personalized Recommendation
 
 ## Books Recommendation
 
