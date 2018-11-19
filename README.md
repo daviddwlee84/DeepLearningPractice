@@ -82,6 +82,36 @@ Subject|Technique|Framework|Remark
 
 #### [Back Propagation](Notes/Element/Back_Propagation.md)
 
+### Network Framework
+
+* LeNet
+* AlexNet
+* ZFNet
+* VGG-Net
+* GoogLeNet
+* ResNet
+* DenseNet
+* ResNeXt
+* DPN（Dual Path Network）
+
+### Programming Framework
+
+Framework |Organization|Support Language
+----------|------------|-----------------
+TensorFlow|Google|Python, C++, Go, JavaScript, ...
+Keras|fchollet|Python
+PyTorch|Facebook|Python
+CNTK|Microsoft|C++
+OpenNN||C++
+Caffe|BVLC|C++, Python
+MXNet|DMLC|Python, C++, R, ...
+Torch7|Facebook|Lua
+Theano|U. Montreal|Python
+Deeplearning4J|DeepLearning4J|Java, Scala
+Leaf|AutumnAI|Rust
+Lasagne|Lasagne|Python
+Neon|NervanaSystems|Python
+
 ## Books Recommendation
 
 * [MIT Deep Learning](https://www.deeplearningbook.org/)
@@ -129,10 +159,11 @@ Toy
 NLP
 
 * [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
+* [Tracking Progress in Natural Language Processing](https://github.com/sebastianruder/NLP-progress)
 
 CV
 
-[Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
+* [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
 
 #### Slides
 
