@@ -65,7 +65,7 @@ def main():
         prediction = model.predict(testPicArr) # This will return probability distribution vector (due to softmax)
         preValue = np.argmax(prediction) # Get the maximum index as prediction
         print('Image:', testPic, end='\t')
-        print('The prediction number is:', preValue)
+        print('The prediction number is: {} ({:2.0f}%)'.format(preValue, prediction[0][preValue]*100))
 
 if __name__ == '__main__':
     main()
