@@ -31,11 +31,11 @@ Subject|Technique|Framework|Remark
 
 ## Deep Learning Categories
 
-### Technique
+### Technique / Network Structure
 
 * Feedforward Neural Network
     * Multilayer Perceptron (MLP)
-* [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - Overview of neural network training process
+* [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - And an overview of neural network training process including [forward](Notes/Technique/Fully_Connected_Neural_Network.md#Forward-Propagation) and [back](Notes/Technique/Fully_Connected_Neural_Network.md#Back-Propagation) propagation
     * Dense Neural Network (DNN)
 
 #### Computer Vision (CV)
@@ -76,9 +76,9 @@ Subject|Technique|Framework|Remark
 
 * Neural Architecture Search
 
-### Ingredient of magic
+## Ingredient of magic
 
-#### [Layer](Notes/Element/Layers.md)
+### [Layer](Notes/Element/Layers.md)
 
 * BatchNorm
 * Convolution
@@ -94,7 +94,7 @@ General speaking
 * Hidden
 * Output
 
-#### [Activation Function](Notes/Element/Activation_Function.md)
+### [Activation Function](Notes/Element/Activation_Function.md)
 
 * Sigmoid
 * Hyperbolic Tangent
@@ -102,7 +102,7 @@ General speaking
 * Leaky ReLU
 * Softmax
 
-#### [Loss Function](Notes/Element/Loss_Function.md)
+### [Loss Function](Notes/Element/Loss_Function.md)
 
 * Cross-Entropy
 * Hinge
@@ -111,11 +111,7 @@ General speaking
 * MAE (L1)
 * MSE (L2)
 
-#### [Forward Propagation](Notes/Element/Forward_Propagation.md)
-
-#### [Back Propagation](Notes/Element/Back_Propagation.md)
-
-#### [Optimizer / Optimization Algorithm](Notes/Element/Optimizer.md)
+### [Optimizer / Optimization Algorithm](Notes/Element/Optimizer.md)
 
 - Exponential Moving Average (Exponentially Weighted Moving Average)
 
@@ -130,7 +126,7 @@ General speaking
 * RMSProp
 * Stochastic Gradient Descent (SGD)
 
-#### Regularization
+### Regularization
 
 * Data Augmentation
 * Dropout
@@ -140,7 +136,9 @@ General speaking
 * L1 Regularization
 * L2 Regularization
 
-### Common Sense / Terminology / Tricks
+## Common Concept
+
+### Terminology / Tricks
 
 * one-hot encoding
 * ground truth
@@ -180,9 +178,9 @@ Leaf|AutumnAI|Rust|
 Lasagne|Lasagne|Python|
 Neon|NervanaSystems|Python|
 
-## Problem - Solution
+### Problem - Solution
 
-* Vanishing gradient problem
+* [Vanishing / Exploding gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
     * Solutions:
         * Multi-level hierarchy
         * LSTM
@@ -264,6 +262,7 @@ Toy
 * [Learning TensorFlow](https://learningtensorflow.com/)
 * [**DeepNotes**](https://deepnotes.io/)
     * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
+* [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
 
 #### Slides
 
