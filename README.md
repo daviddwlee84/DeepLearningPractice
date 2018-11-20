@@ -14,6 +14,8 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
     * [github](https://github.com/tensorflow/tensorflow)
     * [Brief Notes](Notes/Framework/Tensorflow.md)
     * `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
+    * [`h5py`](https://www.h5py.org/) - HDF5 for Python: To store model in HDF5 binary data format
+    * [`pyyaml`](https://pyyaml.org/) - PyYAML: YAML framework
 * [`keras`](http://keras.io/)
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
@@ -70,9 +72,27 @@ Subject|Technique|Framework|Remark
 * Gated Recurrent Unit (GRU) Neural Network
 * Word Piece Model (WPM) aka. SentencePiece
 
+#### Others
+
+* Neural Architecture Search
+
 ### Ingredient of magic
 
-#### Layer
+#### [Layer](Notes/Element/Layers.md)
+
+* BatchNorm
+* Convolution
+* Pooling
+* Dropout
+* Linear
+* LSTM
+* RNN
+
+General speaking
+
+* Input
+* Hidden
+* Output
 
 #### [Activation Function](Notes/Element/Activation_Function.md)
 
@@ -95,7 +115,9 @@ Subject|Technique|Framework|Remark
 
 #### [Back Propagation](Notes/Element/Back_Propagation.md)
 
-#### Optimizer
+#### [Optimizer / Optimization Algorithm](Notes/Element/Optimizer.md)
+
+- Exponential Moving Average (Exponentially Weighted Moving Average)
 
 * Adadelta
 * Adagrad
@@ -106,7 +128,7 @@ Subject|Technique|Framework|Remark
 * Nesterov Momentum
 * Newton’s Method
 * RMSProp
-* SGD
+* Stochastic Gradient Descent (SGD)
 
 #### Regularization
 
@@ -125,6 +147,8 @@ Subject|Technique|Framework|Remark
 * Data Parallelism
 * Word Embedding
 * Word2Vec
+* Vanilla - means standard, usual, or unmodified version of something.
+    * Vanilla gradient descent (aka. Batch gradient descent) - means the basic gradient descent algorithm without any bells or whistles.
 
 ### Network Framework
 
@@ -221,6 +245,11 @@ Toy
 
 ### Tutorial
 
+#### Course
+
+* [Tensorflow and deep learning without a PhD series by @martin_gorner](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd)
+* [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
+
 #### Interactive Learning
 
 * [Kaggle Learn Deep Learning](https://www.kaggle.com/learn/deep-learning)
@@ -236,15 +265,16 @@ Toy
 * [**DeepNotes**](https://deepnotes.io/)
     * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
 
+#### Slides
+
+* [Supervised Deep Learning](https://sites.google.com/site/deeplearningcvpr2014/ranzato_cvpr2014_DLtutorial.pdf)
+
+### Summaries
+
 NLP
 
-* [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
 * [Tracking Progress in Natural Language Processing](https://github.com/sebastianruder/NLP-progress)
 
 CV
 
 * [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
-
-#### Slides
-
-* [Supervised Deep Learning](https://sites.google.com/site/deeplearningcvpr2014/ranzato_cvpr2014_DLtutorial.pdf)
