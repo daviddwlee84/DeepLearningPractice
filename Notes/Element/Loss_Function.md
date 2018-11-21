@@ -1,6 +1,8 @@
 # Loss Function
 
-Table of Content
+## Overview
+
+### Table of Content
 
 * Cross-Entropy
 * Hinge
@@ -8,6 +10,10 @@ Table of Content
 * Kullback-Leibler
 * MAE (L1)
 * MSE (L2)
+
+### Brief Description
+
+Measuring "Distance" between the answer we expected and the true answer.
 
 ## Cross Entropy
 

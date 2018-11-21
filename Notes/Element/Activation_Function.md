@@ -28,7 +28,7 @@ $$
 ## Softmax
 
 A "softened" version of the arg max.
-A generalization of the sigmoid function.
+A generalization of the sigmoid function. An exponential follow by normalization.
 
 * **Soft**: continuous and differentiable
 * **Max**: arg max (its result is represented as a [one-hot](https://en.wikipedia.org/wiki/One-hot) vector, is not continous or differentiable)
