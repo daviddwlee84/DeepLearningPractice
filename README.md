@@ -49,6 +49,7 @@ Subject|Technique|Framework|Remark
 #### Uncategorized
 
 * [`Reinforcement Learning (RL)`](Notes/Technique/Reinforcement_Learning.md)
+    * `Q Learning`
     * `Policy Gradient Methods (PG)`
 * `Generative Adversarial Network (GAN)`
 * `Variational Autoencoder (VAE)`
@@ -247,6 +248,7 @@ Toy
 
 * [Tensorflow and deep learning without a PhD series by @martin_gorner](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd)
 * [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
+* [**Tensorflow and deep learning without a PhD**](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd) - Martin Görner
 
 #### Interactive Learning
 
