@@ -13,18 +13,18 @@ Alias or some similar terms
 
 Table TBD
 
-## Neural Network Process
+### Neural Network Process
 
-* Forward Propagation - Prediction phase
-* Back Propagation - Training phase
+* [Forward Propagation](#Forward-Propagation) - Prediction phase
+* [Back Propagation](#Back-Propagation) - Training phase
 
-### Forward Propagation
+## Forward Propagation
 
 The input provide the initial information that then propagates up to the hidden units at each layer and finally produces output.
 
 During training forward propagation can contiune onward until it produces a scalar cost $J(\theta)$
 
-### Back Propagation
+## Back Propagation
 
 Back propagation (backprop) allows the information from the cost to then flow backwards through the network, in order to compute the gradient.
 
@@ -32,6 +32,14 @@ Back propagation (backprop) allows the information from the cost to then flow ba
 * Back-propagation aka. chain rule is the procedure to compute gradients of the loss w.r.t. parameters in a multi-layer neural network. (to minimize a complicated function of the parameters)
 
 ## Resources
+
+### Article
+
+Back Propagation
+
+* [**Back-Propagation is very simple. Who made it Complicated?**](https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c) - An three layer FCNN with different activation function step by step!
+* [**Yes you should understand backprop**](https://medium.com/@karpathy/yes-you-should-understand-backprop-e2f06eab496b) - A much deeper description explain about why understand backprop is so important
+* [A step by step back propagation example](https://mattmazur.com/2015/03/17/a-step-by-step-backpropagation-example/)
 
 ### Book
 
