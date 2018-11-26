@@ -5,9 +5,12 @@
 Table of content
 
 * BatchNorm
-* [Convolution](#Convolution-Layer)
-* Pooling
-* Dropout
+* [Convolution Layer](#Convolution-Layer) - CNN
+* [Pooling Layer](#Pooling-Layer) - CNN
+    * Max-pooling
+    * Average-pooling
+* [Fully-connected (Dense) Layer](#Fully-Connected-Layer-(Dense-Layer)) - CNN
+* [Dropout Layer](#Dropout-Layer) - CNN
 * Linear
 * LSTM
 * RNN
@@ -33,6 +36,22 @@ Sits between the input and output layers and applies an activation function befo
 Number of Layers of a NN = number of Hidden Layers + number of Output Layers
 
 ## Convolution Layer
+
+## Pooling Layer
+
+![pooling layer gif](https://mlnotebook.github.io/img/CNN/poolfig.gif)
+
+* Reduce numbers of feature
+
+### Max-Pooling
+
+Pooling using a "max" filter with stride equal to the kernel size
+
+### Average Pooling
+
+## Fully Connected Layer (Dense Layer)
+
+## Dropout Layer
 
 ## Resources
 

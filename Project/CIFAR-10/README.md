@@ -44,6 +44,8 @@ python3 generate_tagfile.py
 ### Instruction
 
 ```sh
+# Go to project directory
+cd FCNN
 # 1. Generate TFRecord
 python3 cifar_generate_dataset.py
 # 2. Training
@@ -56,9 +58,17 @@ python3 cifar_test.py
 
 ```sh
 # Generate filelist.txt
-find testpic -type f > filelist.txt
+find ../testpic -type f > filelist.txt
 # Inject into App
 cat filelist.txt | xargs python3 cifar_app.py
+```
+
+## CNN Version
+
+```sh
+# Go to project directory
+cd FCNN
+# Other things same as FCNN ....
 ```
 
 ## Link

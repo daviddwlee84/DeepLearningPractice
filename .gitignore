@@ -16,6 +16,10 @@ Project/CIFAR-10/cifar-10/
 Project/CIFAR-10/FCNN/data/
 Project/CIFAR-10/FCNN/model/
 
+Project/CIFAR-10/CNN/data/
+Project/CIFAR-10/CNN/model/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

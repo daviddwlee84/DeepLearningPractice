@@ -27,7 +27,8 @@ Subject|Technique|Framework|Remark
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
-[CIFAR-10](Project/CIFAR-10)|FCNN|Tensorflow|
+[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|
+[2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
 
@@ -40,7 +41,7 @@ Subject|Technique|Framework|Remark
 
 #### Computer Vision (CV)
 
-* `Convolusion Neural Network (CNN)`
+* [`Convolusion Neural Network (CNN)`](Notes/Technique/CNN.md)
 
 #### Natural Language Processing (NLP)
 
@@ -84,6 +85,7 @@ Subject|Technique|Framework|Remark
 * BatchNorm
 * Convolution
 * Pooling
+* Fully Connected (Dense)
 * Dropout
 * Linear
 * LSTM
@@ -151,12 +153,12 @@ General speaking
 
 ### Network Framework
 
-* LeNet
-* AlexNet
+* LeNet - CNN
+* AlexNet - CNN
 * ZFNet
-* VGG-Net
-* GoogLeNet
-* ResNet
+* VGG-Net - CNN
+* GoogleNet - CNN
+* ResNet - CNN
 * DenseNet
 * ResNeXt
 * DPN（Dual Path Network）
@@ -265,6 +267,8 @@ Toy
 * [**DeepNotes**](https://deepnotes.io/)
     * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
 * [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
+* [深度學習500問](https://github.com/scutan90/DeepLearning-500-questions)
+* [Machine Learning Notebook](https://mlnotebook.github.io/)
 
 #### Slides
 
