@@ -46,7 +46,7 @@ def pre_pic(picName):
                 im_arr[i][j] = 255
             else:
                 im_arr[i][j] = 0
-    
+
     # Reshape picture to one row
     nm_arr = im_arr.reshape((1, 16*16))
     # Normalize value to [0, 1]

@@ -10,7 +10,7 @@ class ImageData:
         self.labels = label
         self.num_examples, self.num_features = np.shape(data)
         self.__one_hot_len = len(self.labels[0])
-    
+
     # Return a batch of data and label
     def next_batch(self, batch_size):
         if self.__batch_pointer + batch_size <= self.num_examples:

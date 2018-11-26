@@ -10,7 +10,7 @@ Dataset
 # Training
 python3 backward.py
 # Testing
-python3 forward.py
+python3 test.py
 # Predict actual image (bug)
 python3 app.py path/to/images ...
 ```

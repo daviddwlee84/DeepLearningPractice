@@ -27,7 +27,7 @@ Subject|Technique|Framework|Remark
 [Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
-[Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Databset Class
+[Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
