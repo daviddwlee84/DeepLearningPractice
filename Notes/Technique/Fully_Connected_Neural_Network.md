@@ -35,6 +35,10 @@ Back propagation (backprop) allows the information from the cost to then flow ba
 
 ### Article
 
+Overview
+
+* [DIY AI: An old school matrix NN](https://towardsdatascience.com/diy-ai-an-old-school-matrix-nn-401a00021a55)
+
 Back Propagation
 
 * [**Back-Propagation is very simple. Who made it Complicated?**](https://medium.com/@14prakash/back-propagation-is-very-simple-who-made-it-complicated-97b794c97e5c) - An three layer FCNN with different activation function step by step!

@@ -47,21 +47,22 @@ def loadSemeionData(path, random_state=87):
     label = rowdata.iloc[:, -10:]
     return np.array(data), np.array(label)
 
-def getSemeionData(test=False):
+def getSemeionData(debug=False):
     data, label = loadSemeionData('semeion.data', random_state=87)
 
-    if test:
+    if debug:
+        # just for debug usage
         return ImageDataSet(data[:15, :], label[:15, :], test_set_ratio=0.3)
     else:
         return ImageDataSet(data, label, test_set_ratio=0.2, random_seed=87)
 
 def main():
-    test = getSemeionData(test=True)
+    test = getSemeionData(debug=True)
     print(test.train.next_batch(10))
     print(test.train.next_batch(10))
     print(test.train.num_examples)
     print(test.train.num_features)
-    print(test.train.images[0])
+    print(test.test.images[0])
 
 if __name__ == "__main__":
     main()

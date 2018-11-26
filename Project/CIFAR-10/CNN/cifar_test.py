@@ -11,7 +11,7 @@ import cifar_generate_dataset
 import numpy as np
 
 TEST_INTERVAL_SECS = 5 # Test each round for 5 seconds delay
-TEST_BATCH_NUM = 100
+TEST_BATCH_NUM = 10000
 
 def test():
     with tf.Graph().as_default() as g:
