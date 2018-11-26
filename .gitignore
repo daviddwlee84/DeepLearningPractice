@@ -19,6 +19,9 @@ Project/CIFAR-10/FCNN/model/
 Project/CIFAR-10/CNN/data/
 Project/CIFAR-10/CNN/model/
 
+# Semeion Handwritten Digit
+Project/SemeionHandwrittenDigit/model
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
