@@ -28,7 +28,8 @@ Subject|Technique|Framework|Remark
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
-[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
+[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
+[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Basic ver, Little change ver, LSTM ver
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
@@ -46,7 +47,7 @@ Subject|Technique|Framework|Remark
 
 #### Natural Language Processing (NLP)
 
-* `Recurrent Neural Network (RNN)`
+* [`Recurrent Neural Network (RNN)`](Notes/Technique/RNN.md)
 
 #### Uncategorized
 
@@ -198,6 +199,9 @@ Neon|NervanaSystems|Python|
 
 ### NLP
 
+* [Basis](Notes/Application/NLP/NLPBasis.md)
+    * Text segmentation
+    * Part-of-speech tagging (POS tagging)
 * Speech Recognition
     * End-to-End Models:
         * (Traditional --> HMM)
@@ -210,6 +214,7 @@ Neon|NervanaSystems|Python|
     * Word Pieces
     * Sequence-Training
         * Beam-Search Decoding Based EMBR
+    * Named Entity Recognizer (NER)
 * Neural Machine Translation (NMT)
     * Encoder LSTM + Decoder LSTM
     * Google NMT (GNMT)
@@ -217,6 +222,7 @@ Neon|NervanaSystems|Python|
     * WaveNet: A Generative Model for Raw Audio
     * [Tacotron](https://google.github.io/tacotron/): An end-to-end speech synthesis system
 * Personalized Recommendation
+* [Chatbot](Notes/Application/NLP/Chatbot.md)
 
 ## Books Recommendation
 
@@ -259,7 +265,10 @@ Toy
 
 #### MOOC
 
-* [Stanford - CS231n](http://cs231n.stanford.edu/)
+* [Stanford - CS231n: Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)
+* [Stanford - CS244n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
+    * [Hank's blog](http://www.hankcs.com/tag/cs224n/) ([github](https://github.com/hankcs/CS224n))
+    * [CS224n Chinese camp](https://github.com/learning511/cs224n-learning-camp)
 * [PKU - 人工智慧實踐：Tensorflow筆記](https://www.icourse163.org/course/PKU-1002536002)
 
 #### Document
