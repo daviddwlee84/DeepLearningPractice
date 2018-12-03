@@ -37,11 +37,16 @@ Number of Layers of a NN = number of Hidden Layers + number of Output Layers
 
 ## Convolution Layer
 
+Covolution Kernel aka. Filter
+
 ## Pooling Layer
+
+aka. Subsampling Layer
 
 ![pooling layer gif](https://mlnotebook.github.io/img/CNN/poolfig.gif)
 
 * Reduce numbers of feature
+* Prevent overfitting
 
 ### Max-Pooling
 

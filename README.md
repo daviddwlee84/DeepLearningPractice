@@ -30,6 +30,7 @@ Subject|Technique|Framework|Remark
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Basic ver, Little change ver, LSTM ver
+[Flowers](Project/Flowers)|CNN|Tensorflow|
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
