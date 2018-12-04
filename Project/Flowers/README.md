@@ -5,12 +5,14 @@
 > Modify image shape to fit the pretrained model.
 
 * Resnet_v2: [244, 244]
+
     ```py
     # ResNet-101 for image classification into 1000 classes:
     # inputs has shape [batch, 224, 224, 3]
     with slim.arg_scope(resnet_v2.resnet_arg_scope()):
         net, end_points = resnet_v2.resnet_v2_101(inputs, 1000, is_training=False)
     ```
+
 * Inception_v3: [299, 299]
 
 > Change global variable `IMG_RESHAPE` and `OUTPUT_FILE`
