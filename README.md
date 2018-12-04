@@ -30,7 +30,7 @@ Subject|Technique|Framework|Remark
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Basic ver, Little change ver, LSTM ver
-[Flowers](Project/Flowers)|CNN|Tensorflow|
+[Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
@@ -194,22 +194,11 @@ Neon|NervanaSystems|Python|
         * Residual networks
         * Other activation functions
 
-### Popular Image Datasets
-
-Dataset | Training Set Size | Testing Set Size | Number of Classes | Comments
-:------:|:---------------:|:---------------------:|:-----------:|:-----------:
-Flowers|2500 | 2500 | 5 | Various sizes (source: Flickr)
-[Cifar10](https://www.cs.toronto.edu/~kriz/cifar.html) | 60k| 10k | 10 |32x32 color
-[MNIST](http://yann.lecun.com/exdb/mnist/)| 60k | 10k | 10 | 28x28 gray
-[ImageNet](http://www.image-net.org/challenges/LSVRC/2012/)|1.2M| 50k | 1000 | Various sizes
-
-Transfer Learning
-
-* [tensorflow/models/research/slim](https://github.com/tensorflow/models/tree/master/research/slim)
-
 ## Applications
 
 ### CV
+
+* [Image Classification](Notes/Application/CV/ImageClassification.md)
 
 ### NLP
 
@@ -293,6 +282,11 @@ Toy
 * [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
 * [深度學習500問](https://github.com/scutan90/DeepLearning-500-questions)
 * [Machine Learning Notebook](https://mlnotebook.github.io/)
+
+#### Github
+
+* [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
+    * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 
 #### Slides
 

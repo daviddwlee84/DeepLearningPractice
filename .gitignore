@@ -24,6 +24,9 @@ Project/SemeionHandwrittenDigit/model
 
 # Flower
 Project/Flowers/flower_photos
+Project/Flowers/data/
+Project/Flowers/model/
+Project/Flowers/pretrained/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
