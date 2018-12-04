@@ -194,6 +194,19 @@ Neon|NervanaSystems|Python|
         * Residual networks
         * Other activation functions
 
+### Popular Image Datasets
+
+Dataset | Training Set Size | Testing Set Size | Number of Classes | Comments
+:------:|:---------------:|:---------------------:|:-----------:|:-----------:
+Flowers|2500 | 2500 | 5 | Various sizes (source: Flickr)
+[Cifar10](https://www.cs.toronto.edu/~kriz/cifar.html) | 60k| 10k | 10 |32x32 color
+[MNIST](http://yann.lecun.com/exdb/mnist/)| 60k | 10k | 10 | 28x28 gray
+[ImageNet](http://www.image-net.org/challenges/LSVRC/2012/)|1.2M| 50k | 1000 | Various sizes
+
+Transfer Learning
+
+* [tensorflow/models/research/slim](https://github.com/tensorflow/models/tree/master/research/slim)
+
 ## Applications
 
 ### CV
@@ -294,3 +307,14 @@ NLP
 CV
 
 * [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
+
+### Manipulate Github Large File (>100MB)
+
+`.gitattributes`
+
+* [Git large file storage](https://git-lfs.github.com/)
+* [Configuring Git Large File Storage](https://help.github.com/articles/configuring-git-large-file-storage/)
+* [Moving a file in your repository to Git Large File Storage](https://help.github.com/articles/moving-a-file-in-your-repository-to-git-large-file-storage/)
+    * [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) - `brew install bfg`
+        * [github](https://github.com/rtyley/bfg-repo-cleaner)
+    * [Removing sensitive data from a repository](https://help.github.com/articles/removing-sensitive-data-from-a-repository/) - git filter-branch
