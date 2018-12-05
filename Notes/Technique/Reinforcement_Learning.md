@@ -20,9 +20,13 @@ Q Learning is a strategy that finds the optimal action selection *policy* for an
 
 Q Learing
 
-* [Siraj Raval - How to use Q Learning in Video Games Easily]()
+* [Siraj Raval - How to use Q Learning in Video Games Easily](https://youtu.be/A5eihauRQvo)
 * [Siraj Raval - Deep Q Learning for Video Games](https://youtu.be/79pmNdyxEGo)
 
 ### Article
 
 * [Reinforcement Learning — Policy Gradient Explained](https://medium.com/@jonathan_hui/rl-policy-gradients-explained-9b13b688b146)
+
+### Github
+
+* [rlcode/reinforcement-learning](https://github.com/rlcode/reinforcement-learning) - Minimal and Clean Reinforcement Learning Examples

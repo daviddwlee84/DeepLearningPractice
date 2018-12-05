@@ -287,6 +287,8 @@ Toy
 
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
+* [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
+    * [github](https://github.com/diveintodeeplearning/d2l-zh)
 
 #### Slides
 
