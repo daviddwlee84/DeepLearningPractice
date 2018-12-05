@@ -29,7 +29,7 @@ Subject|Technique|Framework|Remark
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
-[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Basic ver, Little change ver, LSTM ver
+[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Little change ver, LSTM ver
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
@@ -194,6 +194,10 @@ Neon|NervanaSystems|Python|
         * Residual networks
         * Other activation functions
 
+## Paper Reading
+
+* [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](Notes/Paper/BERT.md) - [link](https://arxiv.org/abs/1810.04805)
+
 ## Applications
 
 ### CV
@@ -217,7 +221,7 @@ Neon|NervanaSystems|Python|
     * Word Pieces
     * Sequence-Training
         * Beam-Search Decoding Based EMBR
-    * Named Entity Recognizer (NER)
+    * [Named Entity Recognition (NER)](Notes/Application/NLP/NER.md)
 * Neural Machine Translation (NMT)
     * Encoder LSTM + Decoder LSTM
     * Google NMT (GNMT)
@@ -285,10 +289,10 @@ Toy
 
 #### Github
 
+* [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
+    * [English github](https://github.com/diveintodeeplearning/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
-* [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
-    * [github](https://github.com/diveintodeeplearning/d2l-zh)
 
 #### Slides
 

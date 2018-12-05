@@ -22,6 +22,11 @@ Project/CIFAR-10/CNN/model/
 # Semeion Handwritten Digit
 Project/SemeionHandwrittenDigit/model
 
+# Chinese NER
+Project/ChineseNER/model
+Project/ChineseNER/result
+Project/ChineseNER/log.txt
+
 # Flower
 Project/Flowers/flower_photos
 Project/Flowers/data/
