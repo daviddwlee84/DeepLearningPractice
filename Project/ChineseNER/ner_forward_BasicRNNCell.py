@@ -23,11 +23,9 @@ def forward(x, is_train=True, regularizer=None): #[batch, seqlen, emb_size]
         # In case of out of memory, the maximum of sentence is 600
         seq_len = 600
 
-    ###
-
+    ### Key Part
     rnn_cell = tf.nn.rnn_cell.BasicRNNCell(HIDDEN_SIZE)
     output, _ = tf.nn.dynamic_rnn(rnn_cell, x, dtype=tf.float32)
-
     ###
 
     weight_ho = get_weight(shape=[HIDDEN_SIZE, OUTPUT_NODE], regularizer=regularizer)

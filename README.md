@@ -29,7 +29,7 @@ Subject|Technique|Framework|Remark
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
-[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: Little change ver, LSTM ver
+[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: LSTM ver (And compare result)
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
