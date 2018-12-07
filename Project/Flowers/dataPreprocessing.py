@@ -13,9 +13,9 @@ TEST_PERCENTAGE = 10
 VALIDATION_PERCENTAGE = 10
 
 # Make sure the image shape fit the model !!!!!!!!!!!!!!VERY IMPORTANT!!!!!!!!!!!!!
-IMG_RESHAPE = [244, 244] # for resnet_v2
+IMG_RESHAPE = [224, 224] # for resnet_v2
 #IMG_RESHAPE = [299, 299] # for inception_v3
-OUTPUT_FILE = 'flower_processed_data_244x244.npy' # for resnet_v2
+OUTPUT_FILE = 'flower_processed_data_224x224.npy' # for resnet_v2
 #OUTPUT_FILE = 'flower_processed_data_299x299.npy' # for inception_v3
 
 # Load dataset and split into training, testing and validation data

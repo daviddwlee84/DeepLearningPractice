@@ -4,7 +4,7 @@
 
 > Modify image shape to fit the pretrained model.
 
-* Resnet_v2: [244, 244]
+* Resnet_v2: [224, 224] (I've tried 244x244 and it also worked @@)
 
     ```py
     # ResNet-101 for image classification into 1000 classes:

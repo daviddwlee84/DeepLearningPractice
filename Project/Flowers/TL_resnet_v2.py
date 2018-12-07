@@ -12,7 +12,7 @@ CKPT_FILE = 'pretrained/resnet_v2_152.ckpt'
 # =========================
 
 # Load preprocessed data
-INPUT_DATA = './data/flower_processed_data_244x244.npy'
+INPUT_DATA = './data/flower_processed_data_224x224.npy'
 # Path to store model
 TRAIN_FILE = 'model/resnet_v2_model/resnet_v2_flowers'
 
@@ -68,7 +68,7 @@ def main():
     print("%d training examples, %d validation examples and %d testing examples." % (
         n_training_example, len(validation_labels), len(testing_labels)))
 
-    images = tf.placeholder(tf.float32, [None, 244, 244, 3], name='input_images')
+    images = tf.placeholder(tf.float32, [None, 224, 224, 3], name='input_images')
     labels = tf.placeholder(tf.int64, [None], name='labels')
 
     with slim.arg_scope(resnet_v2.resnet_arg_scope()):
