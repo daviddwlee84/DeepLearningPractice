@@ -24,7 +24,7 @@ def forward(x, is_train=True, regularizer=None): #[batch, seqlen, emb_size]
         seq_len = 600
 
     ### Key Part
-    rnn_cell = tf.nn.rnn_cell.BasicRNNCell(HIDDEN_SIZE)
+    rnn_cell = tf.nn.rnn_cell.BasicRNNCell(HIDDEN_SIZE) # You can switch from BasicRNNCell to BasicLSTMCell
     output, _ = tf.nn.dynamic_rnn(rnn_cell, x, dtype=tf.float32)
     ###
 

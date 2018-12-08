@@ -7,8 +7,8 @@ import data_helper
 
 # ===== Use different model ===== #
 #import ner_forward_BasicRNNCell as ner_forward
-import ner_forward_fromScratch as ner_forward
-#import ner_forward_LSTM as ner_forward
+#import ner_forward_fromScratch as ner_forward
+import ner_forward_LSTM as ner_forward
 # =============================== #
 
 BATCH_SIZE = 128

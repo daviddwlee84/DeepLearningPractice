@@ -11,8 +11,8 @@ import conlleval
 
 # ===== Use different model ===== #
 #import ner_forward_BasicRNNCell as ner_forward
-import ner_forward_fromScratch as ner_forward
-#import ner_forward_LSTM as ner_forward
+#import ner_forward_fromScratch as ner_forward
+import ner_forward_LSTM as ner_forward
 # =============================== #
 
 MAX_SEQ_LEN = 600
@@ -59,9 +59,13 @@ def test(data):
 
         while True:
             with tf.Session() as sess:
+                # This will return a dict like variable (with key: value)
+                # ckpt.model_checkpoint_path will get the string value of "model_checkpoint_path"
+                # tf.train.latest_checkpoint can do the same thing
                 ckpt = tf.train.get_checkpoint_state(ner_backward.MODEL_SAVE_PATH)
                 if ckpt and ckpt.model_checkpoint_path:
                     saver.restore(sess, ckpt.model_checkpoint_path)
+                    # Parse the string to extract the number of the ckpt filename
                     global_step = ckpt.model_checkpoint_path.split('/')[-1].split('-')[-1]
                     predict_id = sess.run(predict, feed_dict={x: x_batch})
 
