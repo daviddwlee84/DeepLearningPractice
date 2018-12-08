@@ -136,4 +136,8 @@ def main():
         print('Final test accuracy = %.1f%%' % (test_accuracy * 100))
 
 if __name__ == '__main__':
+    toSaveDir = os.path.dirname(TRAIN_FILE)
+    if not os.path.exists(toSaveDir):
+        # if the folder doesn't exist then mkdir
+        os.makedirs(toSaveDir)
     main()
