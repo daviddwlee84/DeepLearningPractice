@@ -49,6 +49,8 @@ Subject|Technique|Framework|Remark
 #### Natural Language Processing (NLP)
 
 * [`Recurrent Neural Network (RNN)`](Notes/Technique/RNN.md)
+    * [`Long Short Term Memory (LSTM)`](Notes/Technique/LSTM.md)
+    * `Gated recurrent units (GRUs)`
 
 #### Uncategorized
 
@@ -67,7 +69,6 @@ Subject|Technique|Framework|Remark
 
 #### Text and Sequence
 
-* Long Short Term Memory (LSTM)
 * [Sequence-to-Sequence (seq-to-seq)](Notes/LearningFramework/seq-to-seq.md)
     * RNN-Based seq-to-seq
     * Convolution-based seq-to-seq
@@ -189,7 +190,7 @@ Neon|NervanaSystems|Python|
 * [Vanishing / Exploding gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
     * Solutions:
         * Multi-level hierarchy
-        * LSTM
+        * LSTM ([RNN - The Problem of Long-Term Dependencies](Notes/Technique/RNN.md#The-Problem-of-Long-Term-Dependencies))
         * Faster hardware
         * Residual networks
         * Other activation functions
