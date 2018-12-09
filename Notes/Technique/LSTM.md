@@ -120,6 +120,7 @@ TBD
 ### Article
 
 * [**Udnderstanding LSTM Networks**](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+* [試談RNN中Gate的變遷](https://wyydsb.xin/other/rnn.html)
 
 ### TensorFlow
 

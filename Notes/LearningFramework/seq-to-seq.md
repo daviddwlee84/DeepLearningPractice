@@ -14,6 +14,10 @@
 
 ## Recources
 
+### Tutorial
+
+* [Andrew Ng - RNN W1L02: Notation (of sequence model)](https://youtu.be/XeQN82D4bCQ)
+
 ### Paper
 
 * [Attention Is All You Need](https://arxiv.org/pdf/1706.03762.pdf)

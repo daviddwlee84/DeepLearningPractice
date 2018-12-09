@@ -28,8 +28,8 @@ Subject|Technique|Framework|Remark
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
-[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN (TODO: try ResNet)
-[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN|Tensorflow|TODO: LSTM ver (And compare result)
+[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
+[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
@@ -42,21 +42,25 @@ Subject|Technique|Framework|Remark
 * [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - And an overview of neural network training process including [forward](Notes/Technique/Fully_Connected_Neural_Network.md#Forward-Propagation) and [back](Notes/Technique/Fully_Connected_Neural_Network.md#Back-Propagation) propagation
     * Dense Neural Network (DNN)
 
-#### Computer Vision (CV)
+#### Image Learning
 
 * [`Convolusion Neural Network (CNN)`](Notes/Technique/CNN.md)
 
-#### Natural Language Processing (NLP)
+#### Sequence Learning
 
-* [`Recurrent Neural Network (RNN)`](Notes/Technique/RNN.md)
-    * [`Long Short Term Memory (LSTM)`](Notes/Technique/LSTM.md)
-    * `Gated recurrent units (GRUs)`
+Basic Block for Sequence Model!
+
+* [`Recurrent Neural Network (RNN)`](Notes/Technique/RNN.md) - Basis of Sequence model
+* [`Long Short Term Memory (LSTM)`](Notes/Technique/LSTM.md) - Imporvement of "memory" (brief introduce other regular RNN block)
+* `Gated Recurrent Units (GRUs)`
+
+#### [`Reinforcement Learning (RL)`](Notes/Technique/Reinforcement_Learning.md)
+
+* `Q Learning`
+* `Policy Gradient Methods (PG)`
 
 #### Uncategorized
 
-* [`Reinforcement Learning (RL)`](Notes/Technique/Reinforcement_Learning.md)
-    * `Q Learning`
-    * `Policy Gradient Methods (PG)`
 * `Generative Adversarial Network (GAN)`
 * `Variational Autoencoder (VAE)`
 * `Self-Organizing Map (SOM)`
@@ -69,13 +73,12 @@ Subject|Technique|Framework|Remark
 
 #### Text and Sequence
 
-* [Sequence-to-Sequence (seq-to-seq)](Notes/LearningFramework/seq-to-seq.md)
-    * RNN-Based seq-to-seq
+* [Sequence-to-Sequence (seq-to-seq)](Notes/LearningFramework/seq-to-seq.md) - Overview of sequence models
+    * [`Bidirectional RNN (BRNN)`](Notes/LearningFramework/BRNN.md) - RNN-Based seq-to-seq
     * Convolution-based seq-to-seq
-    * Transformer-based seq-to-seq
-    * Attention Is All You Need
-    * BERT
-* Gated Recurrent Unit (GRU) Neural Network
+    * [`Attention Model`](Notes/LearningFramework/Attention.md) - Transformer-based seq-to-seq
+    * [`Transformer`](Notes/LearningFramework/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
+    * [BERT](Notes/LearningFramework/BERT.md)
 * Word Piece Model (WPM) aka. SentencePiece
 
 #### Others
@@ -195,10 +198,6 @@ Neon|NervanaSystems|Python|
         * Residual networks
         * Other activation functions
 
-## Paper Reading
-
-* [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](Notes/Paper/BERT.md) - [link](https://arxiv.org/abs/1810.04805)
-
 ## Applications
 
 ### CV
@@ -222,7 +221,7 @@ Neon|NervanaSystems|Python|
     * Word Pieces
     * Sequence-Training
         * Beam-Search Decoding Based EMBR
-    * [Named Entity Recognition (NER)](Notes/Application/NLP/NER.md)
+* [Named Entity Recognition (NER)](Notes/Application/NLP/NER.md)
 * Neural Machine Translation (NMT)
     * Encoder LSTM + Decoder LSTM
     * Google NMT (GNMT)
@@ -230,7 +229,15 @@ Neon|NervanaSystems|Python|
     * WaveNet: A Generative Model for Raw Audio
     * [Tacotron](https://google.github.io/tacotron/): An end-to-end speech synthesis system
 * Personalized Recommendation
+* Machine Translation
+* Sentiment classification
 * [Chatbot](Notes/Application/NLP/Chatbot.md)
+
+### Other Sequence Learning Problem
+
+* Music generation
+* DNA sequence analysis
+* Video activity recognition
 
 ## Books Recommendation
 
