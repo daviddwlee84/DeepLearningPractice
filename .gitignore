@@ -33,6 +33,11 @@ Project/Flowers/data/
 Project/Flowers/model/
 Project/Flowers/pretrained/
 
+# Fruits
+Project/Fruits/fruits-360
+Project/Fruits/fruits.zip
+Project/Fruits/data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

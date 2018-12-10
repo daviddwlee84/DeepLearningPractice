@@ -31,6 +31,7 @@ Subject|Technique|Framework|Remark
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
+[Fruits](Project/Fruits)|CNN|Tensorflow|Multi-thread training and TFRecord transfering
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
@@ -52,7 +53,7 @@ Basic Block for Sequence Model!
 
 * [`Recurrent Neural Network (RNN)`](Notes/Technique/RNN.md) - Basis of Sequence model
 * [`Long Short Term Memory (LSTM)`](Notes/Technique/LSTM.md) - Imporvement of "memory" (brief introduce other regular RNN block)
-* `Gated Recurrent Units (GRUs)`
+* [`Gated Recurrent Units (GRUs)`](Notes/Technique/GRU.md)
 
 #### [`Reinforcement Learning (RL)`](Notes/Technique/Reinforcement_Learning.md)
 
@@ -153,10 +154,13 @@ General speaking
 * one-hot encoding
 * ground truth
 * Data Parallelism
-* Word Embedding
-* Word2Vec
 * Vanilla - means standard, usual, or unmodified version of something.
     * Vanilla gradient descent (aka. Batch gradient descent) - means the basic gradient descent algorithm without any bells or whistles.
+
+[Tricks for language model](Notes/Concept/LanguageModel.md)
+
+* Word Embedding
+* Word2Vec
 
 ### Network Framework
 
@@ -288,7 +292,6 @@ Toy
 
 #### Document
 
-* [Learning TensorFlow](https://learningtensorflow.com/)
 * [**DeepNotes**](https://deepnotes.io/)
     * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
 * [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
