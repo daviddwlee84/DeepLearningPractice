@@ -15,7 +15,7 @@ tfRecord_test = './data/cifar_test.tfrecords'
 resize_height = 32; resize_width = 32
 
 # Generate tfRecord file
-def write_tfRecordd(tfRecordName, image_path, label_path):
+def write_tfRecord(tfRecordName, image_path, label_path):
     writer = tf.python_io.TFRecordWriter(tfRecordName) # Create a writer
 
     with open(label_path, 'r') as label_file:
@@ -59,10 +59,10 @@ def generate_tfRecord():
     
     # Generate training set
     print("Generating training set...")
-    write_tfRecordd(tfRecord_train, image_train_path, label_train_path)
+    write_tfRecord(tfRecord_train, image_train_path, label_train_path)
     # Generate test set
     print("Generating test set...")
-    write_tfRecordd(tfRecord_test, image_test_path, label_test_path)
+    write_tfRecord(tfRecord_test, image_test_path, label_test_path)
 
 def read_tfRecord(tfRecord_path):
     filename_queue = tf.train.string_input_producer([tfRecord_path])
