@@ -24,7 +24,7 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 Subject|Technique|Framework|Remark
 -------|---------|---------|------
-[Perceptron Practice](Project/PerceptronPractice)|MLP|Numpy|XOR
+[Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|AND, OR and XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
@@ -136,6 +136,11 @@ General speaking
 * Newton’s Method
 * RMSProp
 * Stochastic Gradient Descent (SGD)
+
+Parameter
+
+* Learning Rate: Used to limit the amount each weight is corrected each time it is updated.
+* Epochs: The number of times to run through the training data while updating the weight.
 
 ### Regularization
 
