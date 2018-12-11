@@ -11,6 +11,8 @@
 
 ## Graph
 
+* [TensorFlow - Graphs and Sessions](https://www.tensorflow.org/guide/graphs)
+
 ## Session
 
 ## TFRecord
@@ -29,7 +31,8 @@ Convert dataset into .tfrecord format
 
 ## Save and Restore Model
 
-* [Keras - Save and restore models](https://www.tensorflow.org/tutorials/keras/save_and_restore_models)
+* [TensorFlow - Save and Restore](https://www.tensorflow.org/guide/saved_model)
+* [tf.keras - Save and restore models](https://www.tensorflow.org/tutorials/keras/save_and_restore_models)
 
 ## Others
 

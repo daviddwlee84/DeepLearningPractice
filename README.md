@@ -30,7 +30,7 @@ Subject|Technique|Framework|Remark
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
-[Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|Multi-thread training and TFRecord
+[Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|Multi-thread training and TFRecord TODO: Try more complex model
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories

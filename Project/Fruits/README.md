@@ -12,11 +12,14 @@ Motivation
 
 TODO
 
-* **test (evaluation)**
+* [X] test (evaluation)
 * figure out image processing part (the reshape part)
 * understand more about iterator (is it need to be feedable?!)
 * use another approach of multi-thread (start_queue_runners is deprecated)
 * how epochs and steps work (and global_step and how it restore)
+    * [What does global_step mean in Tensorflow?](https://stackoverflow.com/questions/41166681/what-does-global-step-mean-in-tensorflow)
+* Try more complex model (since this is a 83 classes classification problem )
+* Maybe there are other evaluation ways...
 
 ## Dataset
 
@@ -73,60 +76,109 @@ python3 model.py train 0
 ```
 
 ```txt
-[u22711@c009 FRUIT]$ head SingleThread.o1296; tail SingleThread.o1296
+[u22711@c009 FRUIT]$ head SingleThread.o1392; tail SingleThread.o1392
 
 ########################################################################
-#      Date:           Tue Dec 11 05:51:56 PST 2018
-#    Job ID:           1296.c009
+#      Date:           Tue Dec 11 08:28:02 PST 2018
+#    Job ID:           1392.c009
 #      User:           u22711
 # Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,walltime=06:00:00
 ########################################################################
 
 train mode with single thread
-After 0 training batch(s), loss on training batch is 138.253.
-After 1960 training batch(s), loss on training batch is 2.89478.
-After 1970 training batch(s), loss on training batch is 3.58743.
-After 1980 training batch(s), loss on training batch is 3.74264.
-After 1990 training batch(s), loss on training batch is 3.84824.
+After 1 training batch(s), loss on training batch is 124.949.
+After 1961 training batch(s), loss on training batch is 0.179715.
+After 1971 training batch(s), loss on training batch is 0.33047.
+After 1981 training batch(s), loss on training batch is 0.498585.
+After 1991 training batch(s), loss on training batch is 0.346279.
 
 ########################################################################
-# End of output for job 1296.c009
-# Date: Tue Dec 11 06:10:21 PST 2018
+# End of output for job 1392.c009
+# Date: Tue Dec 11 08:43:10 PST 2018
 ########################################################################
 ```
 
-Total: 18 mins 25 sec
+Total: 15 mins 8 sec
+
+```sh
+# Test
+python3 model.py test 0
+```
+
+```txt
+[u22711@c009 Fruits]$ cat testSingleThread.o1419
+
+########################################################################
+#      Date:           Tue Dec 11 08:50:50 PST 2018
+#    Job ID:           1419.c009
+#      User:           u22711
+# Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,walltime=06:00:00
+########################################################################
+
+test mode with single thread
+After 1991 training step(s), test accuracy = 0.03
+
+########################################################################
+# End of output for job 1419.c009
+# Date: Tue Dec 11 08:51:02 PST 2018
+########################################################################
+```
 
 ### Multi-thread
 
 ```sh
+# Training
 python3 model.py train 1
 ```
 
 ```txt
-[u22711@c009 FRUIT]$ head MultiThread.o1299; tail MultiThread.o1299
+[u22711@c009 FRUIT]$ head MultiThread.o1393; tail MultiThread.o1393
 
 ########################################################################
-#      Date:           Tue Dec 11 05:53:10 PST 2018
-#    Job ID:           1299.c009
+#      Date:           Tue Dec 11 08:28:25 PST 2018
+#    Job ID:           1393.c009
 #      User:           u22711
 # Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,walltime=06:00:00
 ########################################################################
 
 train mode with multi-thread
-After 0 training batch(s), loss on training batch is 73.8953.
-After 1960 training batch(s), loss on training batch is 4.4192.
-After 1970 training batch(s), loss on training batch is 4.41952.
-After 1980 training batch(s), loss on training batch is 4.42038.
-After 1990 training batch(s), loss on training batch is 4.42048.
+After 1 training batch(s), loss on training batch is 189.721.
+After 1961 training batch(s), loss on training batch is 4.41871.
+After 1971 training batch(s), loss on training batch is 4.41941.
+After 1981 training batch(s), loss on training batch is 4.42031.
+After 1991 training batch(s), loss on training batch is 4.42041.
 
 ########################################################################
-# End of output for job 1299.c009
-# Date: Tue Dec 11 06:08:38 PST 2018
+# End of output for job 1393.c009
+# Date: Tue Dec 11 08:42:39 PST 2018
 ########################################################################
 ```
 
-Total: 15 mins 28 sec
+Total: 14 mins 14 sec
+
+```sh
+# Test
+python3 model.py test 1
+```
+
+```txt
+[u22711@c009 Fruits-multi]$ cat testMultiThread.o1424
+
+########################################################################
+#      Date:           Tue Dec 11 08:58:32 PST 2018
+#    Job ID:           1424.c009
+#      User:           u22711
+# Resources:           neednodes=1:ppn=2,nodes=1:ppn=2,walltime=06:00:00
+########################################################################
+
+test mode with multi-thread
+After 1991 training step(s), test accuracy = 0
+
+########################################################################
+# End of output for job 1424.c009
+# Date: Tue Dec 11 08:58:47 PST 2018
+########################################################################
+```
 
 ## Trouble shooting
 

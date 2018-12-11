@@ -73,7 +73,7 @@ def training(datasetIterator, multiThread=True):
 
     data = tf.placeholder(tf.float32, [BATCH_SIZE, 100, 100, 3])
     labels = tf.placeholder(tf.float32, [BATCH_SIZE, PREDICT_CLASSES])
-    global_step = tf.train.get_global_step()
+    global_step = tf.train.create_global_step()
 
     logits, _ = cnn_model_fn(data)
 
@@ -118,11 +118,10 @@ def training(datasetIterator, multiThread=True):
             #string_record = sess.run(next_element, feed_dict={handle: data_handler})
             (features, label) = sess.run(next_element, feed_dict={handle: data_handler})
             reshaped_feature = np.reshape(features, [BATCH_SIZE, 100, 100, 3])
-            # _, loss_value, step = sess.run([train_op, loss, global_step], feed_dict={data: reshaped_feature, labels: label})
-            _, loss_value = sess.run([train_op, loss], feed_dict={data: reshaped_feature, labels: label})
+            _, loss_value, step = sess.run([train_op, loss, tf.train.get_global_step()], feed_dict={data: reshaped_feature, labels: label})
 
             if i % 10 == 0:
-                print("After %d training batch(s), loss on training batch is %g." % (i, loss_value))
+                print("After %d training batch(s), loss on training batch is %g." % (step, loss_value))
                 saver.save(sess, os.path.join(MODEL_SAVE_PATH, MODEL_NAME), global_step=global_step)
             i += 1
         
@@ -130,15 +129,47 @@ def training(datasetIterator, multiThread=True):
             coordinator.request_stop()
             coordinator.join(threads)
 
-#TODO
-def test(test_data, test_labels):
-    logits, predictions = cnn_model_fn(test_data)
+def test(datasetIterator, multiThread=False):
 
-    # Add evaluation metrics (for EVAL mode)
-    eval_metric_ops = {
-        "accuracy": tf.metrics.accuracy(
-            labels=test_labels, predictions=predictions["classes"])}
+    # This can write in tfrecord_manager.py next time
+    # seems like it doesn't need to be feedable to work
+    test_data, test_labels = datasetIterator.get_next()
 
+    data = tf.placeholder(tf.float32, [BATCH_SIZE, 100, 100, 3])
+    labels = tf.placeholder(tf.float32, [BATCH_SIZE, PREDICT_CLASSES])
+    global_step = tf.Variable(0, name='global_step', trainable=False, dtype=tf.int64)
+    _, predictions = cnn_model_fn(data)
+
+    saver = tf.train.Saver()
+
+    # Add evaluation metrics
+    # eval_metric_ops = tf.metrics.accuracy(
+    #         labels=tf.argmax(labels, 1), predictions=predictions["classes"])
+    eval_metric_ops = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(labels, 1), predictions["classes"]), tf.float32))
+        
+    with tf.Session() as sess:
+
+        ckpt = tf.train.latest_checkpoint(MODEL_SAVE_PATH)
+        if ckpt:
+            saver.restore(sess, ckpt)
+        else:
+            print('No checkpoint file found in', MODEL_SAVE_PATH)
+            return
+        
+        if multiThread:
+            coordinator = tf.train.Coordinator()
+            threads = tf.train.start_queue_runners(sess=sess, coord=coordinator)
+        
+        xs, y_ = sess.run([test_data, test_labels])
+        reshaped_xs = np.reshape(xs, [BATCH_SIZE, 100, 100, 3])
+
+        accuracy_score = sess.run(eval_metric_ops, feed_dict={data: reshaped_xs, labels: y_})
+        print("After %s training step(s), test accuracy = %g" % (sess.run(global_step), accuracy_score))
+        
+        if multiThread:    
+            coordinator.request_stop()
+            coordinator.join(threads)
+        
 def main(argv_mode, argv_thread):
     if argv_mode == 'train':
         # Load training and
@@ -147,9 +178,8 @@ def main(argv_mode, argv_thread):
         training(datasetIterator, multiThread=argv_thread)
     else:
         # Load test data
-        eval_data, eval_labels = loadDataset(BATCH_SIZE, NUM_EPOCHS, isTrain=False)
-        test(eval_data, eval_labels)
-
+        datasetIterator = loadDataset(BATCH_SIZE, NUM_EPOCHS, isTrain=False)
+        test(datasetIterator, multiThread=argv_thread)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
