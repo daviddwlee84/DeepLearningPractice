@@ -12,13 +12,12 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 * [`tensorflow`](https://tensorflow.org)
     * [github](https://github.com/tensorflow/tensorflow)
-    * [Brief Notes](Notes/Framework/Tensorflow.md)
-    * `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
-    * [`h5py`](https://www.h5py.org/) - HDF5 for Python: To store model in HDF5 binary data format
-    * [`pyyaml`](https://pyyaml.org/) - PyYAML: YAML framework
-* [`keras`](http://keras.io/)
-    * [github](https://github.com/keras-team/keras/)
-    * [Brief Notes](Notes/Framework/Keras.md)
+    * [Brief Notes](Notes/Framework/Tensorflow.md) - Placeholder, Graph, Session
+    * Model Save and Restore Notes - ckpt, transfer learning
+    * Data Manipulating Notes - TFRecord, Iterator
+    * Multi-thread Notes
+    * High-level API Notes - tf.keras, tf.layer
+    * simple demos with maybe jupyter notebook?!
 
 ## Project
 
@@ -26,12 +25,12 @@ Subject|Technique|Framework|Remark
 -------|---------|---------|------
 [Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|AND, OR and XOR
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
-[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow, Keras|Implement by different ways
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
-[Fruits](Project/Fruits)|CNN|Tensorflow|Multi-thread training and TFRecord transfering
+[Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|Multi-thread training and TFRecord
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
 
 ## Deep Learning Categories
@@ -197,6 +196,12 @@ Leaf|AutumnAI|Rust|
 Lasagne|Lasagne|Python|
 Neon|NervanaSystems|Python|
 
+* [`keras`](http://keras.io/)
+    * [github](https://github.com/keras-team/keras/)
+    * [Brief Notes](Notes/Framework/Keras.md)
+
+* `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
+
 ### Problem - Solution
 
 * [Vanishing / Exploding gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
@@ -316,6 +321,8 @@ Toy
 
 ### Summaries
 
+* [StateOfTheArt.ai](https://www.stateoftheart.ai/)
+
 NLP
 
 * [Tracking Progress in Natural Language Processing](https://github.com/sebastianruder/NLP-progress)
@@ -324,7 +331,9 @@ CV
 
 * [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
 
-### Manipulate Github Large File (>100MB)
+### Other
+
+Manipulate Github Large File (>100MB)
 
 `.gitattributes`
 
@@ -334,3 +343,12 @@ CV
     * [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) - `brew install bfg`
         * [github](https://github.com/rtyley/bfg-repo-cleaner)
     * [Removing sensitive data from a repository](https://help.github.com/articles/removing-sensitive-data-from-a-repository/) - git filter-branch
+
+Time measure
+
+* [Python decorator to measure the execution time of methods](https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d)
+
+## Deprecated notes
+
+* [`h5py`](https://www.h5py.org/) - HDF5 for Python: To store model in HDF5 binary data format
+* [`pyyaml`](https://pyyaml.org/) - PyYAML: YAML framework
