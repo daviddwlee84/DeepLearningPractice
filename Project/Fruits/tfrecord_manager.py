@@ -4,10 +4,14 @@ import numpy as np
 import os
 import json
 
+from functools import reduce
+
 # These imports are relevant for displaying and encoding image strings.
-import base64
+# import base64
+from PIL import Image
 
 IMAGE_SHAPE = [100, 100, 3]
+PREDICT_CLASSES = 83
 
 DATA_FOLDER = './data/'
 
@@ -23,9 +27,9 @@ def _bytes_feature(value):
     return tf.train.Feature(bytes_list=tf.train.BytesList(value=[value]))
 
 # For Labels
-def _int64_feature(value):
+def _int64_feature(onehot_list):
     """Returns an int64_list from a bool / enum / int / uint."""
-    return tf.train.Feature(int64_list=tf.train.Int64List(value=[value]))
+    return tf.train.Feature(int64_list=tf.train.Int64List(value=onehot_list))
 
 def create_example(image, label):
     """
@@ -50,14 +54,21 @@ def writeTFRecord(tfRecordName, imgFolder):
 
     classname_to_encode_dict = readImageLabelToDict()[0]
     for classname, label in classname_to_encode_dict.items():
+
+        oneHot_labels = [0] * PREDICT_CLASSES
+        oneHot_labels[label] = 1
+
         print('Processing', classname, '...', end=' ')
         for image_filename in os.listdir(os.path.join(imgFolder, classname)):
             image_path = os.path.join(imgFolder, classname, image_filename)
 
-            img_file = open(image_path, 'rb').read()
-            image_string = base64.b64encode(img_file)
+            # img_file = open(image_path, 'rb').read()
+            # image_string = base64.b64encode(img_file)
 
-            example = create_example(image_string, label)
+            image = Image.open(image_path)
+            image_string = image.tobytes()
+
+            example = create_example(image_string, oneHot_labels)
             writer.write(example.SerializeToString())
         print('finished!')
     writer.close()
@@ -66,7 +77,6 @@ def testPrintTFRecord(tfrecord):
     """
     Read one image from TFRecord and display it.
     """
-    from PIL import Image
     record_iterator = tf.python_io.tf_record_iterator(path=tfrecord)
     encode_to_classname_dict = readImageLabelToDict()[1]
     image_bytes = {}
@@ -74,19 +84,25 @@ def testPrintTFRecord(tfrecord):
         example = tf.train.Example()
         example.ParseFromString(string_record)
 
-        label = example.features.feature['label'].int64_list.value[0]
+        # 'google.protobuf.pyext._message.RepeatedScalarConta' object
+        oneHot_label = list(example.features.feature['label'].int64_list.value)
+        label = oneHot_label.index(1)
+
+        print('One-hot Label:', oneHot_label, '\nOriginal Label:', label)
         image_bytes[label] = example.features.feature['image_raw'].bytes_list.value[0]
         
-        testImgName = 'test.jpg'
-        with open(testImgName, 'wb') as f:
-            f.write(base64.b64decode(image_bytes[label]))
+        # testImgName = 'test.jpg'
+        # with open(testImgName, 'wb') as f:
+        #     f.write(base64.b64decode(image_bytes[label]))
 
+        img = Image.frombytes(mode='RGB', size=[100, 100], data=image_bytes[label])
         print('This is', encode_to_classname_dict[str(label)])
-        img = Image.open(testImgName)
+
+        # img = Image.open(testImgName)
         img.show()
 
         # Exit after 1 iteration as this is purely demonstrative.
-        break
+        break # if you try to comment this, it will be spectacular :P
 
 def dataPreprocessing(trainPath, testPath):
     """
@@ -106,13 +122,17 @@ def decode(serialized_example):
         # Defaults are not specified since both keys are required.
         features={
             'image_raw': tf.FixedLenFeature([], tf.string),
-            'label': tf.FixedLenFeature([], tf.int64),
+            'label': tf.FixedLenFeature([PREDICT_CLASSES], tf.int64),
         })
 
-    # Convert from a scalar string tensor (whose single string has
-    # length (IMAGE_SHAPE[0], IMAGE_SHAPE[1])) to a uint8 tensor with shape IMAGE_SHAPE.
+    # Convert from a scalar string tensor
+    # image_string = base64.b64decode(features['image_raw'])
     image = tf.decode_raw(features['image_raw'], tf.uint8)
-    image.set_shape(IMAGE_SHAPE)
+    image.set_shape(reduce(lambda x, y: x*y, IMAGE_SHAPE)) # [100 * 100 * 3]
+    # image_decoded = tf.image.decode_jpeg(image_string)
+    # image_decoded = tf.decode_raw(image_string, tf.uint8)
+    # image_resized = tf.image.resize_images(image_decoded, IMAGE_SHAPE)
+    image = tf.cast(image, tf.float32)
 
     # Convert label from a scalar uint8 tensor to an int32 scalar.
     label = tf.cast(features['label'], tf.int32)
@@ -127,7 +147,7 @@ def readTFRecord(filename, batch_size, num_epochs):
 
         # The map transformation takes a function and applies it to every element
         # of the dataset.
-        dataset.map(decode)
+        dataset = dataset.map(decode)
 
         # The shuffle transformation uses a finite-sized buffer to shuffle elements
         # in memory. The parameter is the number of elements in the buffer. For
@@ -138,7 +158,7 @@ def readTFRecord(filename, batch_size, num_epochs):
         dataset = dataset.batch(batch_size)
 
         iterator = dataset.make_one_shot_iterator()
-    return iterator.get_next()
+    return iterator
 
 def loadDataset(batch_size, num_epochs, isTrain=True):
     """Reads input data num_epochs times.
@@ -156,7 +176,7 @@ def loadDataset(batch_size, num_epochs, isTrain=True):
         over the dataset once. On the other hand there is no special initialization
         required.
     """
-    filename = os.path.join(TRAIN_FILE if isTrain else TEST_FILE)
+    filename = os.path.join(DATA_FOLDER, TRAIN_FILE if isTrain else TEST_FILE)
     return readTFRecord(filename, batch_size, num_epochs)
 
 def generateImageLabel(path, saveTo=IMG_LABEL_JSON):

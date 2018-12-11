@@ -21,6 +21,22 @@ Convert dataset into .tfrecord format
 * [TensorFlow - Importing Data - Consuming TFRecord data](https://www.tensorflow.org/guide/datasets#consuming_tfrecord_data)
 * [a good example of reading a TFRecord file is with a tf.data.TFRecordDataset](https://github.com/tensorflow/tensorflow/blob/r1.11/tensorflow/examples/how_tos/reading_data/fully_connected_reader.py)
 
+### Importing Data
+
+* [TensorFlow - Importing Data](https://www.tensorflow.org/guide/datasets)
+* [blog about TensorFlow Importing data](https://jhui.github.io/2017/11/21/TensorFlow-Importing-data/)
+* [How to use Dataset in TensorFlow](https://towardsdatascience.com/how-to-use-dataset-in-tensorflow-c758ef9e4428)
+
+## Save and Restore Model
+
+* [Keras - Save and restore models](https://www.tensorflow.org/tutorials/keras/save_and_restore_models)
+
+## Others
+
+### Eager mode
+
+* [8 Things To Do Differently in Tensorflow’s Eager Execution Mode](https://medium.com/coinmonks/8-things-to-do-differently-in-tensorflows-eager-execution-mode-47cf429aa3ad)
+
 ## Resources
 
 ### Tutorial
