@@ -45,3 +45,4 @@ Convert dataset into .tfrecord format
 ### Tutorial
 
 * [Learning TensorFlow](https://learningtensorflow.com/)
+* [MorvanZhou/Tensorflow-Tutorial](https://github.com/MorvanZhou/Tensorflow-Tutorial)

@@ -312,6 +312,10 @@ Toy
 
 * [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
     * [English github](https://github.com/diveintodeeplearning/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
+* [**Machine Learning cheatsheets for Stanford's CS 229**](https://github.com/afshinea/stanford-cs-229-machine-learning)
+    * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)
+* [**Deep Learning cheatsheets for Stanford's CS 230**](https://github.com/afshinea/stanford-cs-230-deep-learning)
+    * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 
