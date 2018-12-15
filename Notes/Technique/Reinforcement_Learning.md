@@ -8,7 +8,7 @@
 
 ### Terms of Reinforcement Learning
 
-* Agent:
+* Agent
 * Action (A)
 * Discount factor (gamma γ)
 * Environment: Physical world in which the agent operates
@@ -164,7 +164,7 @@ Deep version of Q-learning
 
 ## DDPG(Deep Deterministic Policy Gradient)
 
-Deep version of Policy Gradient
+Actor-Critic + DQN
 
 ## Summary
 
@@ -182,6 +182,7 @@ Grarantees: Converges to a local minima of $J(\theta)$, often good enough|Guaran
     * [code](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-rl-pong)
     * [slides](https://docs.google.com/presentation/d/1qLVvgKxZlM6_oOZ4-ZoOAB0wTh2IdhbFvuBhsMvmK9I/pub)
 * [**Stanford - Deep Reinforcement Learning**](https://youtu.be/lvoHnicueoE)
+    * [slides](http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture14.pdf)
 * [**莫煩 - Reinforcement Lerning**](https://morvanzhou.github.io/tutorials/machine-learning/reinforcement-learning/)
     * [github - Reinforcement Learning Methods and Tutorials](https://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow)
     * [English Youbube playlist](https://www.youtube.com/playlist?list=PLXO45tsB95cIplu-fLMpUEEZTwrDNh6Ba)
