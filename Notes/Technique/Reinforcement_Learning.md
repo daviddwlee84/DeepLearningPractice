@@ -19,6 +19,16 @@
 * Q-value or action-value (Q)
 * Trajectory
 
+### Other Terms in RL
+
+(Some terms using in Monte Carlo Tree Search (MCTS))
+
+* Exploration: Keep searching for new strategies
+* Exploitation: While exploiting the best strategies found thus far
+
+- State Value: How good a given state is for an agent to be in. A measurement of the expected oucome (or reward) if we're in this state with respect to our final goal.
+- Playout: A simulation of the game that mimics the cause and effect of random action until reach a 'terminal' point. (reliant on a *forward model* that can tell us outcomes of an action of any state)
+
 ## Background
 
 ### Markov Decision Processes (MDPs)
