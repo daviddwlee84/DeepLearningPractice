@@ -1,4 +1,17 @@
-# Sequence-to-Sequence Model
+# Sequence-to-Sequence (Encoder-Decoder) Model
+
+* **Encoder**: Input sequence --> Hidden states of input
+* **Decoder**: Hidden state of output --> Output sequence
+
+- Prediction of an output sequenc conditioned on an input sequence
+
+Applications
+
+* Machine translation
+* Response generation in dialogue models
+* Summarization
+* Answer generation
+* Paraphrase generation
 
 ## Neural Recurrent Sequence Models
 
@@ -8,9 +21,15 @@
 
 ## Transformer-based seq-to-seq
 
-## Attention
+## Attention (The Encoder-Attention-Decoder) Architecture
+
+**Attention**: "Pay attention to" different sub-sequences of the input when generating each of the token of the output
+
+Modeling alignment in machine translation
 
 ## Bidirectional Encode Representations from Transformers (BERT)
+
+Self-attention, borrowed from NMT, is powerful in representing contexts and responses
 
 ## Recources
 

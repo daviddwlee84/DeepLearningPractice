@@ -31,7 +31,7 @@ Subject|Technique|Framework|Remark
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
 [Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|Multi-thread training and TFRecord TODO: Try more complex model
-[2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|||Reinforcement Learning
+[2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|Reinforcement Learning
 
 ## Deep Learning Categories
 
@@ -73,13 +73,17 @@ Basic Block for Sequence Model!
 
 #### Text and Sequence
 
-* [Sequence-to-Sequence (seq-to-seq)](Notes/LearningFramework/seq-to-seq.md) - Overview of sequence models
+* [Sequence-to-Sequence (seq-to-seq) (Encoder-Decoder) Architecture](Notes/LearningFramework/seq-to-seq.md) - Overview of sequence models
     * [`Bidirectional RNN (BRNN)`](Notes/LearningFramework/BRNN.md) - RNN-Based seq-to-seq
     * Convolution-based seq-to-seq
     * [`Attention Model`](Notes/LearningFramework/Attention.md) - Transformer-based seq-to-seq
     * [`Transformer`](Notes/LearningFramework/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
-    * [BERT](Notes/LearningFramework/BERT.md)
 * Word Piece Model (WPM) aka. SentencePiece
+
+#### [Transfer Learning in NLP](Notes/Technique/NLPTransferLearning.md)
+
+* `ELMo`
+* [`BERT`](Notes/LearningFramework/BERT.md)
 
 #### Others
 
@@ -163,8 +167,15 @@ Parameter
 
 [Tricks for language model](Notes/Concept/LanguageModel.md)
 
-* Word Embedding
-* Word2Vec
+* Embedding
+    * Word Embedding
+        * Word2Vec
+        * GloVe
+        * FastText
+    * Sentence Embedding
+    * Context Embedding
+* CNN for NLP
+* RNN for NLP
 
 ### Network Framework
 
@@ -201,16 +212,6 @@ Neon|NervanaSystems|Python|
     * [Brief Notes](Notes/Framework/Keras.md)
 
 * `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
-
-### Problem - Solution
-
-* [Vanishing / Exploding gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
-    * Solutions:
-        * Multi-level hierarchy
-        * LSTM ([RNN - The Problem of Long-Term Dependencies](Notes/Technique/RNN.md#The-Problem-of-Long-Term-Dependencies))
-        * Faster hardware
-        * Residual networks
-        * Other activation functions
 
 ## Applications
 
