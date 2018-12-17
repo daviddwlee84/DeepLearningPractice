@@ -39,6 +39,9 @@ Project/Fruits/fruits.zip
 Project/Fruits/data
 Project/Fruits/model
 
+# Dogs
+Project/Dogs/data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

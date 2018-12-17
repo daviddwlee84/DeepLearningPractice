@@ -21,17 +21,18 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 ## Project
 
-Subject|Technique|Framework|Remark
--------|---------|---------|------
-[Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|AND, OR and XOR
-[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|with Cross Entropy
-[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|Implement by different ways
-[Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|Made a Tensorflow like Dataset Class
-[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|Comparison of FCNN and CNN
-[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|TODO: LSTM testing
-[Flowers](Project/Flowers)|CNN|Tensorflow|Transfer Learning
-[Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|Multi-thread training and TFRecord TODO: Try more complex model
-[2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|Reinforcement Learning
+Subject|Technique|Framework|Complexity|Remark
+-------|---------|---------|----------|------
+[Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|○○○○●|AND, OR and XOR
+[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|○○○○●|with Cross Entropy
+[MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|○○●●●|Implement by different ways
+[Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|○○○●●|Made a Tensorflow like Dataset Class
+[CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|○○●●●|Comparison of FCNN and CNN
+[Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|○●●●●|TODO: LSTM testing
+[Flowers](Project/Flowers)|CNN|Tensorflow|○○●●●|Transfer Learning
+[Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|○○●●●|Multi-thread training and TFRecord TODO: Try more complex model
+[Dogs!](Project/Dogs)|CNN|Keras (compare with sklearn SVM)|○○○●●|Using images from ImageNet
+[2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|●●●●●|Reinforcement Learning
 
 ## Deep Learning Categories
 
