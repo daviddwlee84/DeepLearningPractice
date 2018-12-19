@@ -249,6 +249,7 @@ Neon|NervanaSystems|Python|
 * Machine Translation
 * Sentiment classification
 * [Chatbot](Notes/Application/NLP/Chatbot.md)
+    * [Sequential Matching Network (SMN)](Notes/LearningFramework/SMN.md)
 
 ### Other Sequence Learning Problem
 
