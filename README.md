@@ -18,6 +18,9 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
     * Multi-thread Notes
     * High-level API Notes - tf.keras, tf.layer
     * simple demos with maybe jupyter notebook?!
+* [`keras`](https://keras.io)
+    * [github](https://github.com/keras-team/keras/)
+    * [Brief Notes](Notes/Framework/Keras.md)
 
 ## Project
 
@@ -208,12 +211,6 @@ Deeplearning4J|DeepLearning4J|Java, Scala|
 Leaf|AutumnAI|Rust|
 Lasagne|Lasagne|Python|
 Neon|NervanaSystems|Python|
-
-* [`keras`](http://keras.io/)
-    * [github](https://github.com/keras-team/keras/)
-    * [Brief Notes](Notes/Framework/Keras.md)
-
-* `tf.keras`: Implementation of the Keras API meant to be a high-level API for TensorFlow.
 
 ## Applications
 
