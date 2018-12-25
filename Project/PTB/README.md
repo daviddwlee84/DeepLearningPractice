@@ -7,10 +7,6 @@ PTB - [readme](PTB_data/README)
 * [RNNLM Toolkit](http://www.fit.vutbr.cz/~imikolov/rnnlm/)
   * Download basic example `wget http://www.fit.vutbr.cz/~imikolov/rnnlm/simple-examples.tgz`
 
-TED Talk (for translation corpus) - [readme](TED_data/README.txt)
-
-* [The IWSLT 2015 Evaluation Campaign includes the MT track on TED Talks](https://wit3.fbk.eu/mt.php?release=2015-01)
-
 ## Usage
 
 ```sh
