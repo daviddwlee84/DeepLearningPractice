@@ -49,6 +49,8 @@ Project/PTB/train_data/
 # Chinese NMT
 Project/ChineseNMT/output_vocab/
 Project/ChineseNMT/train_data/
+Project/ChineseNMT/seq2seq_model/
+Project/ChineseNMT/attention_model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

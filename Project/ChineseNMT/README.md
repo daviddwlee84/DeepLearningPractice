@@ -8,10 +8,18 @@ TED Talk (for translation corpus) - [readme](TED_data/README.txt)
 
 ## Usage
 
+### Data proprocessing
+
 ```sh
 # Data Preprocessing
 mkdir output_vocab train_data
 python3 DataPreprocessing.py
+```
+
+### Training
+
+```sh
+python3 train.py
 ```
 
 ## Links
