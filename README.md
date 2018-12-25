@@ -34,8 +34,9 @@ Subject|Technique|Framework|Complexity|Remark
 [Chinese Named Entity Recognizer](Project/ChineseNER)|RNN, LSTM|Tensorflow|○●●●●|TODO: LSTM testing
 [Flowers](Project/Flowers)|CNN|Tensorflow|○○●●●|Transfer Learning
 [Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|○○●●●|Multi-thread training and TFRecord TODO: Try more complex model
-[Dogs!](Project/Dogs)|CNN|Keras (compare with sklearn SVM)|○○○●●|Using images from ImageNet
 [Trigonometric Function Prediction](Project/RNNTrigonometricFunc)|RNN|Tensorflow|○○○○●|Predict sine, cosine using LSTM
+[Penn TreeBank](Project/PTB)|RNN, LSTM|Tensorflow||Language corpus preprocessing and training
+[Dogs!](Project/Dogs)|CNN|Keras (compare with sklearn SVM)|○○○●●|Using images from ImageNet
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|●●●●●|Reinforcement Learning
 
 ## Deep Learning Categories

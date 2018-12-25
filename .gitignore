@@ -42,6 +42,9 @@ Project/Fruits/model
 # Dogs
 Project/Dogs/data
 
+# PTB
+Project/PTB/output_vocab/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
