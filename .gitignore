@@ -46,6 +46,10 @@ Project/Dogs/data
 Project/PTB/output_vocab/
 Project/PTB/train_data/
 
+# Chinese NMT
+Project/ChineseNMT/output_vocab/
+Project/ChineseNMT/train_data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
