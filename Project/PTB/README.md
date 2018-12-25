@@ -9,7 +9,7 @@
 
 ```sh
 # Data Preprocessing
-mkdir output_vocab
+mkdir output_vocab train_data
 python3 DataPreprocessing.py
 ```
 

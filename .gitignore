@@ -44,6 +44,7 @@ Project/Dogs/data
 
 # PTB
 Project/PTB/output_vocab/
+Project/PTB/train_data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
