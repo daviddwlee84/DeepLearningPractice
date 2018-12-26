@@ -22,6 +22,30 @@ python3 DataPreprocessing.py
 python3 train.py
 ```
 
+### Test
+
+```sh
+python3 test.py
+```
+
+## Result
+
+```txt
+English: This is a test . <eos>
+Chinese (seq2seq): <sos>這是一個測試。<eos>
+Chinese (attention): <sos>這是一個測試。<eos>
+
+English: Please give me a hundred on my final score . For the sake of how hard I paid on this course . <eos>
+Chinese (seq2seq): <sos>請給我一分鐘。我的下一個問題是，我花了很長的時間才這樣做。<eos>
+Chinese (attention): <sos>我最後一個人在這兒為我付出的錢。我的工作。<eos>
+
+English: I just can't understand why I am so handsom . <eos>
+Chinese (seq2seq): <sos>我只是想要解決我的問題。<eos>
+Chinese (attention): <sos>我明白了為什麼我只是在理解這個理論，我為什麼只能在這個理論上解釋我的理解。<eos>
+```
+
+### Training time and loss
+
 Seq2seq
 
 ```txt
@@ -72,25 +96,9 @@ After 9010 steps, per token cost is 2.571
 
 > Training attention model is much slower than seq2seq model (about two times)
 
-### Test
-
-```sh
-python3 test.py
-```
-
-## Result
-
-```txt
-English: This is a test . <eos>
-Chinese (seq2seq): <sos>这是一个测试。<eos>
-Chinese (attention): <sos>这是一个测试。<eos>
-
-English: Please give me a hundred on my final score . For the sake of how hard I paid on this course . <eos>
-Chinese (seq2seq): <sos>請給我一分鐘。我的下一個問題是，我花了很長的時間才這樣做。<eos>
-Chinese (attention): <sos>我最后一个人在这儿为我付出的钱。我的工作。<eos>
-```
-
 ## TODO
+
+### training
 
 Current version can only translate one sentence per run.
 Make it a better way to reuse the model.
@@ -99,7 +107,11 @@ Make it a better way to reuse the model.
 ValueError: Variable XXX already exists, disallowed. Did you mean to set reuse=True or reuse=tf.AUTO_REUSE in VarScope?
 ```
 
+### testing
+
 Multiple graph will conflict now.
+
+[TensorFlow Graphs and Sessions](https://www.tensorflow.org/guide/graphs) - Programming with multiple graphs
 
 ## Links
 
