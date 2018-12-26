@@ -9,6 +9,12 @@ KEEP_PROB = 0.8                      # Probability of node not be dropout
 MAX_GRAD_NORM = 5                    # Maxumum of gradient limit
 SHARE_EMB_AND_SOFTMAX = True         # Share weights with softmax and embedding layer
 
+# ID of <sos> and <eos> in vocabulary table
+# In the decode process we'll need <sos> as the first input
+# and check whether the sentence reach <eos>
+SOS_ID = 1
+EOS_ID = 2
+
 class AttentionNMTModel(object):
     def __init__(self):
         # Define Encoder and decoder
@@ -114,3 +120,75 @@ class AttentionNMTModel(object):
             zip(grads, trainable_variables))
 
         return cost_per_token, train_op
+
+    def inference(self, src_input):
+        # Although we'll only inference one sentence, but dynamic_rnn require
+        # input to be a batch, so we reshape it to [1, sentence length]
+        src_size = tf.convert_to_tensor([len(src_input)], dtype=tf.int32)
+        src_input = tf.convert_to_tensor([src_input], dtype=tf.int32)
+        src_emb = tf.nn.embedding_lookup(self.src_embedding, src_input)
+
+        # Use bidirectional_dynamic_rnn construct Encoder
+        # (this is the same one as forward)
+        with tf.variable_scope("encoder"):
+            enc_outputs, _ = tf.nn.bidirectional_dynamic_rnn(
+                self.enc_cell_fw, self.enc_cell_bw, src_emb, src_size, 
+                dtype=tf.float32)
+            enc_outputs = tf.concat([enc_outputs[0], enc_outputs[1]], -1)    
+
+        with tf.variable_scope("decoder"):
+            # Define attention mechanism of the decoder
+            attention_mechanism = tf.contrib.seq2seq.BahdanauAttention(
+                HIDDEN_SIZE, enc_outputs,
+                memory_sequence_length=src_size)
+            # Concatenate self.dec_cell and attention together
+            attention_cell = tf.contrib.seq2seq.AttentionWrapper(
+                self.dec_cell, attention_mechanism,
+                attention_layer_size=HIDDEN_SIZE)
+   
+        # Set maximum decode steps
+        # to prevent from infinity loop in extreme situation
+        MAX_DEC_LEN=100
+
+        with tf.variable_scope("decoder/rnn/attention_wrapper"):
+            # Use a dynamic size TensorArray to store generated sentence
+            init_array = tf.TensorArray(dtype=tf.int32, size=0,
+                dynamic_size=True, clear_after_read=False)
+            # Insert first word <sos> as the input of decoder
+            init_array = init_array.write(0, SOS_ID)
+            # Call attention_cell.zero_state to construct initial recurrent state
+            # Recurrent state include hidden state of RNN, TensorArray which
+            # store the generated sentence and a integer to record decode step
+            init_loop_var = (
+                attention_cell.zero_state(batch_size=1, dtype=tf.float32),
+                init_array, 0)
+
+            # Loop condition of tf.while_loop:
+            # Recurrent until decode <eos> or reach the maximum steps
+            def continue_loop_condition(state, trg_ids, step):
+                return tf.reduce_all(tf.logical_and(
+                    tf.not_equal(trg_ids.read(step), EOS_ID),
+                    tf.less(step, MAX_DEC_LEN-1)))
+
+            def loop_body(state, trg_ids, step):
+                # Read the last output and get its embedding
+                trg_input = [trg_ids.read(step)]
+                trg_emb = tf.nn.embedding_lookup(self.trg_embedding,
+                                                 trg_input)
+                # Use attention_cell to calculate one forward step
+                dec_outputs, next_state = attention_cell.call(
+                    state=state, inputs=trg_emb)
+                # Calculate every possible words' logit
+                # and pick word with the maximum logist as the output os this step
+                output = tf.reshape(dec_outputs, [-1, HIDDEN_SIZE])
+                logits = (tf.matmul(output, self.softmax_weight)
+                          + self.softmax_bias)
+                next_id = tf.argmax(logits, axis=1, output_type=tf.int32)
+                # Write this word into trg_ids of recurrent state
+                trg_ids = trg_ids.write(step+1, next_id[0])
+                return next_state, trg_ids, step+1
+
+            # Execute tf.while_loop until return final state
+            state, trg_ids, step = tf.while_loop(
+                continue_loop_condition, loop_body, init_loop_var)
+            return trg_ids.stack()
