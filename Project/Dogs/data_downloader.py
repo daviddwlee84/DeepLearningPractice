@@ -34,7 +34,6 @@ def download_single_image(url, destination):
 
             resized = resizeimage.resize_cover(image, (IMAGE_MIN_WIDTH, IMAGE_MIN_HEIGHT))
             resized.save(file_destination, 'jpeg', icc_profile=resized.info.get('icc_profile'))
-        # except (IOError, HTTPException, CertificateError) as e:
         except (IOError, UnicodeEncodeError, ValueError) as e:
             print(e)
             return False
@@ -49,7 +48,7 @@ def download_single_image(url, destination):
         # Try opening as array to see if there are any errors
         try:
             load_image_as_array(file_destination) # don't know why this won't work
-            Image.open(file_destination)
+            Image.open(file_destination) # and this either
         except (OSError, ValueError) as e:
             os.remove(file_destination)
             print("Invalid Image:", url)

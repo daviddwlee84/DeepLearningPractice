@@ -9,6 +9,10 @@ Classification of Dog, Hot Dog and Dog Food.
 * 14,197,122 images, 21841 synsets indexed (2018/12/17)
 * 334MB for only compressed image URLs
 
+> *synset* is a short for *synonym set*.
+>
+> (information science) A set of one or more synonyms that are interchangeable in some context without changing the truth value of the proposition in which they are embedded.
+
 ### Data
 
 Class|Description
@@ -26,7 +30,7 @@ The url of images may be invalid
 * Invalid image (can't be opened as array)
 * ValueError: Unknown url type
 
-> we'll deal with them in data_downloader.py and invalid_image_deleter.py
+> we'll deal with them in `data_downloader.py` and `invalid_image_deleter.py`
 
 ## Dependencies
 
@@ -174,6 +178,20 @@ a = urllib.request.urlopen('http://static.flickr.com/2611/3680714896_bb5cbc89cb.
 b = io.BytesIO(a.read()) # Seem like this step is redundant, not sure.
 c = Image.open(b)
 c.show()
+```
+
+Visualize data augmentation
+
+```py
+# First make a directory to store the processed data
+# mkdir test
+
+# Main
+from keras.preprocessing.image import ImageDataGenerator
+# Can add more data augmentation trick
+gen = ImageDataGenerator(horizontal_flip=True, width_shift_range=0.2, height_shift_range=0.2)
+iterator = gen.flow_from_directory('data', save_to_dir='./test')
+next(iterator) # Test a batch (default 32)
 ```
 
 ## Links

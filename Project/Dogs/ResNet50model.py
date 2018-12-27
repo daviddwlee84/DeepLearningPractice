@@ -1,3 +1,4 @@
+# Use TensorFlow keras API
 from tensorflow.python.keras.applications.resnet50 import ResNet50, preprocess_input
 from tensorflow.python.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.python.keras.models import Sequential
@@ -42,6 +43,7 @@ def buildDataGenerator(dataset_path):
     # flow_from_dicrectory will auto label the image by the folder structure!
     train_gen = data_generator.flow_from_directory(dataset_path,
                                         subset="training",
+                                        # Subset of data ("training" or "validation") if validation_split is set in ImageDataGenerator
                                         target_size=(IMAGE_SIZE, IMAGE_SIZE),
                                         shuffle=True, seed=SEED,
                                         batch_size=BATCH_SIZE,
@@ -60,33 +62,41 @@ def buildDataGenerator(dataset_path):
     
     test_generator = ImageDataGenerator(preprocessing_function=preprocess_input)
 
-    test_gen = test_generator.flow_from_directory(dataset_path,
+    test_gen = test_generator.flow_from_directory(dataset_path, # Can be replace with custom data
                                         target_size=(IMAGE_SIZE, IMAGE_SIZE),
                                         shuffle=True, seed=SEED,
                                         batch_size=1,
                                         class_mode=None)
+                                        # class_mode: If None, no labels are returned 
+                                        # (the generator will only yield batches of image data,
+                                        # which is useful to use with model.predict_generator(),
+                                        # model.evaluate_generator(), etc.).
+                                        # Please note that in case of class_mode None,
+                                        # the data still needs to reside in a subdirectory of directory for it to work correctly.
 
     return train_gen, eval_gen, test_gen
 
 def training(model, train_gen, eval_gen):
     model.fit_generator(train_gen,
-        steps_per_epoch=STEP_SIZE_TRAIN,
+        steps_per_epoch=STEP_SIZE_TRAIN, # Don't know why it can't set None here.
         epochs=EPOCHS,
         validation_data=eval_gen,
         validation_steps=STEP_SIZE_VALID)
 
 def evaluation(model, eval_gen):
+    # This will return loss and any other custom metrics e.g. accuracy
     output = model.evaluate_generator(generator=eval_gen,
                              steps=STEP_SIZE_VALID, verbose=1)
     for name, value in zip(model.metrics_names, output):
         print(name, ':', value)
 
 def predict_gen(model, test_gen, testNum=100, output_csv="resnet_results.csv"):
+    # test_gen.reset()
     # Predict
-    pred = model.predict_generator(test_gen, steps=testNum, verbose=1)
+    pred = model.predict_generator(test_gen, steps=testNum, verbose=1) # Not sure why test_gen's shuffle didn't work
     predicted_class_indices = np.argmax(pred, axis=1)
 
-    labels = (test_gen.class_indices)
+    labels = (test_gen.class_indices) # return a dict which key=label value=encode
     labels = dict((v,k) for k,v in labels.items())
     predictions = [labels[k] for k in predicted_class_indices]
     

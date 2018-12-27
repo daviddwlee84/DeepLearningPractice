@@ -1,9 +1,11 @@
+# Use TensorFlow as backend
 from keras.preprocessing.image import ImageDataGenerator
 from keras.applications.vgg16 import VGG16, preprocess_input
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D
 
 from data_downloader import DATASET_PATH
+# Basically use function in ResNet50model because they share the same keras API
 from ResNet50model import buildDataGenerator, training, evaluation, predict_gen, predict
 
 # VGG16
