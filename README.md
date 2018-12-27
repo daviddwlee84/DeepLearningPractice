@@ -36,8 +36,8 @@ Subject|Technique|Framework|Complexity|Remark
 [Fruits](Project/Fruits)|CNN|Tensorflow (and tf.layer)|○○●●●|Multi-thread training and TFRecord TODO: Try more complex model
 [Trigonometric Function Prediction](Project/RNNTrigonometricFunc)|RNN|Tensorflow|○○○○●|Predict sine, cosine using LSTM
 [Penn TreeBank](Project/PTB)|RNN, LSTM|Tensorflow|○○●●●|Language corpus preprocessing and training
-[Chinese Neural Machine Translation](Project/ChineseNMT)|RNN, Attention|Tensorflow|○●●●●|A practice of Seq2Seq and Attention
-[Dogs!](Project/Dogs)|CNN|Keras (compare with sklearn SVM)|○○○●●|Using images from ImageNet
+[Chinese Neural Machine Translation](Project/ChineseNMT)|RNN, Attention|Tensorflow|○●●●●|A practice of Seq2Seq and Attention TODO: Multi-graph, Try transformer
+[Dogs!](Project/Dogs)|CNN|Keras|○○●●●|Using images from ImageNet, Keras Transfer learning and Data augmentation
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|●●●●●|Reinforcement Learning
 
 ## Deep Learning Categories
