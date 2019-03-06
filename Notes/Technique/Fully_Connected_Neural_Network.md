@@ -2,23 +2,49 @@
 
 ## Brief Description
 
-Alias or some similar terms
+> Alias or some similar terms
+>
+> * Multilayer Perceptron (MLP)
+> * Dense Neural Network (DNN)
+> * Deep Neural Network (DNN)
+> * Artificial Neural Network (ANN)
 
-* Multilayer Perceptron (MLP)
-* Dense Neural Network (DNN)
-* Deep Neural Network (DNN)
-* Artificial Neural Network (ANN)
+Definition of ANNs
 
-### Quick View
+Properties of ANNs
 
-Table TBD
+* Many neuron-like *threshold switching units*
+* Many *weighted* interconnections among units
+* Highly parallel, distributed process
+* Learning by adaption of the connection *weights*
+
+* [Wiki - Artificial neural network](https://en.wikipedia.org/wiki/Artificial_neural_network)
 
 ### Neural Network Process
 
 * [Forward Propagation](#Forward-Propagation) - Prediction phase
 * [Back Propagation](#Back-Propagation) - Training phase
 
+### Evolution
+
+* [Perceptron (1st stage)](Perceptron.md)
+  * too simple, that can't even represent a simple formula
+* Multi-Layer Network (2nd stage) - this note
+  * [XOR Perceptron](../../Project/PerceptronPractice)
+
+## Multi-Layer
+
+Mapping from space to space
+
+### Hidden Layer
+
+* Each hidden layer maps to a new feature space
+* Each hidden node is a new constructed feature
+* Original problem may become spearable (or easier)
+
 ## Forward Propagation
+
+> Propagate activation from input to output layer
 
 The input provide the initial information that then propagates up to the hidden units at each layer and finally produces output.
 
@@ -26,10 +52,59 @@ During training forward propagation can contiune onward until it produces a scal
 
 ## Back Propagation
 
+> Propagate errors from output to hidden layer
+
 Back propagation (backprop) allows the information from the cost to then flow backwards through the network, in order to compute the gradient.
 
 * Back-propagation is an algorithm that computes the *chain rule*, with a specific order of operations that is highly efficient.
 * Back-propagation aka. chain rule is the procedure to compute gradients of the loss w.r.t. parameters in a multi-layer neural network. (to minimize a complicated function of the parameters)
+
+### Training Algorithm
+
+Three Protocols
+
+* Batch Training
+* Online Training
+* Stochastic Training
+
+#### Stochastic Backpropagation
+
+#### Batch Backpropagation
+
+## Others Notes
+
+### On Training
+
+* *No guarantee of convergence* (may *oscillate* or reach a local minima)
+* In practice, many large networks can be trained on *large amounts of data* for realistic problems
+* *Many epochs* (ten of thousands) may be needed for adequate training.
+* *Termination criteria*
+  * Number of epochs
+  * Threshold on training set error
+  * No decrease in error
+  * Increased error on a validation set
+  * ...
+* To *avoid local minima*: several trails with different random initial weights with majority or voting techniques
+
+### Choosing Learning Rate η
+
+#### Adjusting η durning training
+
+### Over-training Prevention, Overfitting Avoidance
+
+TBD
+
+Reason
+
+* Using *too many hidden units* leads to over-fitting
+
+Solution
+
+* Keep an *hold-out validation* set and test accuracy after every epoch
+
+#### Dropout Training
+
+Each time decide whether to delete one hidden unit with some probability p.
 
 ## Resources
 

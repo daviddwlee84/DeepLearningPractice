@@ -9,6 +9,10 @@ Table of Content
 * Leaky ReLU
 * Softmax
 
+## Concept
+
+### Non-linearities
+
 ## Linear
 
 ## Sigmoid (Logistic Function)
@@ -19,7 +23,16 @@ $$
 \operatorname{sigmoid}(z_i) = \frac{1}{1 + \exp(z_i)}
 $$
 
+Gradient
+
+$$
+\frac{\partial E}{\partial w_i} = \sum_{d\in D}(t_d-o_d)\frac{\partial}{\partial w_i}(-o_d) = \cdots = \sum_{d\in D}(t_d-o_d)\operatorname{sig}(w\cdot x_d)(1-\operatorname{sig}(w \cdot x_d))\cdot x_{i,d}
+$$
+
 ## Hyperbolic Tangent
+
+* Tanh is just a rescaled and shifted sigmoid
+* Tanh often performs well for deep nets
 
 ## Rectified Linear Unit
 

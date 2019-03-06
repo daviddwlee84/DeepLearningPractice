@@ -39,6 +39,9 @@ Subject|Technique|Framework|Complexity|Remark
 [Chinese Neural Machine Translation](Project/ChineseNMT)|RNN, Attention|Tensorflow|○●●●●|A practice of Seq2Seq and Attention TODO: Multi-graph, Try transformer
 [Dogs!](Project/Dogs)|CNN|Keras|○○●●●|Using images from ImageNet, Keras Transfer learning and Data augmentation
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|●●●●●|Reinforcement Learning
+[Online ImageNet Classifier](Project/ImgClassifierAPI)|CNN|Keras|○○●●●|(TODO) Using Keras Applications combine with RESTful API
+[First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
+[YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
 
 ## Deep Learning Categories
 
@@ -184,6 +187,10 @@ Parameter
 * CNN for NLP
 * RNN for NLP
 
+* Capsule net with GRU
+    * [Kaggle kernel - Capsule net with GRU](https://www.kaggle.com/chongjiujjin/capsule-net-with-gru)
+    * [Kaggle kernel - Capsule net with GRU on Preprocessed data](https://www.kaggle.com/fizzbuzz/capsule-net-with-gru-on-preprocessed-data)
+
 ### Network Framework
 
 * LeNet - CNN
@@ -194,7 +201,8 @@ Parameter
 * ResNet - CNN
 * DenseNet
 * ResNeXt
-* DPN（Dual Path Network）
+* DPN (Dual Path Network)
+* [CliqueNet](https://github.com/iboing/CliqueNet)
 
 ### Programming Framework
 
@@ -301,6 +309,8 @@ Toy
 * [Stanford - CS244n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
     * [Hank's blog](http://www.hankcs.com/tag/cs224n/) ([github](https://github.com/hankcs/CS224n))
     * [CS224n Chinese camp](https://github.com/learning511/cs224n-learning-camp)
+* [MIT Deep Learning](https://deeplearning.mit.edu/)
+    * [Github](https://github.com/lexfridman/mit-deep-learning) - Tutorials, assignments, and competitions for MIT Deep Learning related courses
 * [PKU - 人工智慧實踐：Tensorflow筆記](https://www.icourse163.org/course/PKU-1002536002)
 
 #### Document
@@ -329,6 +339,7 @@ Toy
 ### Summaries
 
 * [StateOfTheArt.ai](https://www.stateoftheart.ai/)
+* [**Papers With Code: Browse state-of-the-art**](https://paperswithcode.com/state-of-the-art)
 
 NLP
 
@@ -338,6 +349,12 @@ CV
 
 * [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
 
+### Lexical Database
+
+* [WordNet](https://wordnet.princeton.edu/)
+  * [Open Multilingual Wordnet](http://compling.hss.ntu.edu.sg/omw/)
+* [BabelNet](https://babelnet.org/)
+
 ### Other
 
 Manipulate Github Large File (>100MB)
@@ -345,6 +362,7 @@ Manipulate Github Large File (>100MB)
 `.gitattributes`
 
 * [Git large file storage](https://git-lfs.github.com/)
+* [Bitbucket tutorial - Git LFS](https://www.atlassian.com/git/tutorials/git-lfs#clone-respository)
 * [Configuring Git Large File Storage](https://help.github.com/articles/configuring-git-large-file-storage/)
 * [Moving a file in your repository to Git Large File Storage](https://help.github.com/articles/moving-a-file-in-your-repository-to-git-large-file-storage/)
     * [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/) - `brew install bfg`

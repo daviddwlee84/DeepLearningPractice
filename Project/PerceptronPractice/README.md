@@ -1,5 +1,8 @@
 # Perceptron Practice
 
+* [Perceptron Notes](../../Notes/Technique/Perceptron.md)
+* [Multi-Layer Perceptron Notes](../../Notes/Technique/Fully_Connected_Neural_Network.md)
+
 ## Introduction
 
 ![Truth Table and Graph](https://cdn-images-1.medium.com/max/800/1*Tc8UgR_fjI_h0p3y4H9MwA.png)
