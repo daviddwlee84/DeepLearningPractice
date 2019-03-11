@@ -42,6 +42,8 @@ Subject|Technique|Framework|Complexity|Remark
 [Online ImageNet Classifier](Project/ImgClassifierAPI)|CNN|Keras|○○●●●|(TODO) Using Keras Applications combine with RESTful API
 [First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
 [YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
+[Word Similarity](Project/WordSimilarity)|||(TODO) Word Similarity Based on Dictionary and Based on Corpus
+[Relation Classification](Project/RelationClassification)|||(TODO) Semantic Relation Extraction and Classification in Scientific Papers
 
 ## Deep Learning Categories
 
@@ -372,6 +374,16 @@ Manipulate Github Large File (>100MB)
 Time measure
 
 * [Python decorator to measure the execution time of methods](https://medium.com/pythonhive/python-decorator-to-measure-the-execution-time-of-methods-fa04cb6bb36d)
+
+Export Markdown
+
+* [Pandoc](https://pandoc.org/)
+  * [User Manual](https://pandoc.org/MANUAL.html)
+* toDOCX
+  * `pandoc -o output.docx -f markdown -t docx filename.md`
+  * [PDFtoDOCX](https://pdf2docx.com/)
+* toPPT
+  * [Smallpdf PDF to PPT Converter](https://smallpdf.com/pdf-to-ppt)
 
 ## Deprecated notes
 

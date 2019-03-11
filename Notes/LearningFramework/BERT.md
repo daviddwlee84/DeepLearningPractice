@@ -14,3 +14,7 @@ TBD
 ### Tutorial
 
 * [TDLS: BERT, Pretranied Deep Bidirectional Transformers for Language Understanding (algorithm)](https://youtu.be/BhlOGGzC0Q0) - TODO
+
+### Application
+
+* [terrifyzhao/bert-utils](https://github.com/terrifyzhao/bert-utils) - Generate sentence vector, document classification, document similarity
