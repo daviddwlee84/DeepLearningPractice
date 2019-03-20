@@ -11,7 +11,7 @@ NLP Task
   * Coreference Resolution
 * Sequence Labeling
   * Word Segmentation 分詞
-    * Word Segmentation
+    * [Word Segmentation]((../../Concept/ChineseWordSegmentation.md))
     * Sentences Segmentation
   * Information Extraction
     * Name Entity Recognition (NER)
