@@ -111,6 +111,19 @@ Before|After
 
 ### NLP Tools
 
+* [flair](https://github.com/zalandoresearch/flair) - A very simple framework for state-of-the-art NLP
+
+#### Chinese
+
 * [jieba](https://github.com/fxsjy/jieba) - 結巴中文分詞
 * [pkuseg](https://github.com/lancopku/pkuseg-python)
+  * [Trainer._decode_tokAcc](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/trainer.py#L233) - token accuracy
 * [THULAC](https://github.com/thunlp/THULAC-Python) (THU Lexical Analyzer for Chinese)
+* [LTP](https://github.com/HIT-SCIR/ltp) (Language Technology Platform)
+* [NLPIR](https://github.com/NLPIR-team/NLPIR)
+
+### Article
+
+* [中文分詞工具測評](https://rsarxiv.github.io/2016/11/29/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%84/)
+  * [SIGHAN Bakeoff 2005](http://sighan.cs.uchicago.edu/bakeoff2005/)
+    * [icwb2-data.zip](http://sighan.cs.uchicago.edu/bakeoff2005/data/icwb2-data.zip) - Score script (Evaluation), test gold data, training words data
