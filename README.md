@@ -43,7 +43,8 @@ Subject|Technique|Framework|Complexity|Remark
 [First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
 [YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
 [Word Similarity](Project/WordSimilarity)|||(TODO) Word Similarity Based on Dictionary and Based on Corpus
-[Relation Classification](Project/RelationClassification)|||(TODO) Semantic Relation Extraction and Classification in Scientific Papers
+[Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|||(TODO) Semantic Relation Extraction and Classification in Scientific Papers
+[Medical Corpus](Project/MedicalCorpus)|RNN|Tensorflow|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 
 ## Deep Learning Categories
 
@@ -293,6 +294,13 @@ Toy
 
 ## Resources
 
+### Corpus/NLP Dataset
+
+* SemCor
+* [SENSEVAL](https://web.eecs.umich.edu/~mihalcea/senseval/)
+* SemEval
+  * [wiki](https://en.wikipedia.org/wiki/SemEval)
+
 ### Tutorial
 
 #### Course
@@ -350,6 +358,12 @@ NLP
 CV
 
 * [Awesome Computer Vision](https://github.com/jbhuang0604/awesome-computer-vision) - A curated list of awesome computer vision resources
+
+### Article
+
+NLP
+
+* [初入NLP領域的一些小建議](https://zhuanlan.zhihu.com/p/59184256)
 
 ### Lexical Database
 
