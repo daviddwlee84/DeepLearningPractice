@@ -42,8 +42,8 @@ Subject|Technique|Framework|Complexity|Remark
 [Online ImageNet Classifier](Project/ImgClassifierAPI)|CNN|Keras|○○●●●|(TODO) Using Keras Applications combine with RESTful API
 [First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
 [YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
-[Word Similarity](Project/WordSimilarity)|||(TODO) Word Similarity Based on Dictionary and Based on Corpus
-[Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|||(TODO) Semantic Relation Extraction and Classification in Scientific Papers
+[Word Similarity](Project/WordSimilarity)||||(TODO) Word Similarity Based on Dictionary and Based on Corpus
+[Text Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|Multiple Models|Multiple Libraries|●●●●●|SemEval2018 Task 7 Semantic Relation Extraction and Classification in Scientific Papers
 [Medical Corpus](Project/MedicalCorpus)|RNN|Tensorflow|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 
 ## Deep Learning Categories
