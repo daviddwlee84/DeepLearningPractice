@@ -7,6 +7,7 @@
 #
 # But by using tools, I've changed the processing oder
 #
+# (TODO) Data clean up ($$_ space)
 # I. Word Segmentation and Pre-POS tagging
 # II. POS tagging and General NER
 # III. Medical NER
@@ -58,6 +59,16 @@ def loadAnswerIntoDict(seg_ans_path:str, pos_ans_path:str, ner_ans_path:str):
     return seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dict
 
 
+## Dumping Data
+
+def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
+
+    print("Dumping result into {}...".format(data_path))
+    with open(data_path, 'w') as result:
+        for seq_num, string in result_dict.items():
+            result.write(str(seq_num) + ' ' + string + '\n')
+
+
 ## I. Word Segmentation and Pre-POS tagging
 
 def _firstWordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
@@ -95,6 +106,49 @@ def wordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
 
 ## II. POS tagging and General NER
 
+def _jiebaPOSMapper(pre_pos_list_dict:dict):
+    new_pos_list_dict = {}
+    return new_pos_list_dict
+
+def _pkusegPOSMapper(pre_pos_list_dict:dict):
+
+    pkusegExtraTags = {
+        'nx': 'n',
+        'nz': 'n',
+        'vd': 'v',
+        'vn': 'v',
+        'vx': 'v',
+        'ad': 'a',
+        'an': 'a'
+    }
+
+    new_pos_list_dict = {}
+    for seq_num, pre_pos_list in pre_pos_list_dict.items():
+        new_pos_list = []
+        for word_with_tag in pre_pos_list:
+            word, tag = word_with_tag.split('/')
+            if tag in pkusegExtraTags:
+                tag = pkusegExtraTags[tag]
+            new_word_with_tag = word + '/' + tag
+            new_pos_list.append(new_word_with_tag)
+        new_pos_list_dict[seq_num] = new_pos_list
+
+    return new_pos_list_dict
+
+def posWithGeneralNER(pre_pos_list_dict:dict, tools='pkuseg'):
+    assert tools in ('pkuseg') # currently only support pkuseg
+    print("Part-of-speech tagging with General NER using {}...".format(tools))
+
+    if tools == 'pkuseg':
+        new_pos_list_dict = _pkusegPOSMapper(pre_pos_list_dict)
+    elif tools == 'jieba':
+        new_pos_list_dict = _jiebaPOSMapper(pre_pos_list_dict)
+
+    new_pos_dict = {}
+    for seq_num, new_pos_list in new_pos_list_dict.items():
+        new_pos_dict[seq_num] = " ".join(new_pos_list)
+
+    return new_pos_dict, new_pos_list_dict
 
 ## III. Medical NER
 
@@ -106,20 +160,31 @@ def wordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
 def main():
 
     ## Loading data
-    # raw_data_path = 'data/raw_59.txt'
-    raw_data_path = 'sample_data/raw.txt'
+    raw_data_path = 'data/raw_59.txt'
+    # raw_data_path = 'sample_data/raw.txt'
 
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
 
+    # TODO: delete $$_ before I.
+
     ## Prediction
     # I. Word Segmentation and Pre-POS
-    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(raw_data_dict, tools='jieba')
+    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(raw_data_dict, tools='jieba')
 
-    print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
+    # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
 
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(raw_data_dict, tools='pkuseg')
 
-    print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
+    # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
+
+    # II. POS tagging and General NER
+
+    new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict)
+
+    # print(new_pos_dict, new_pos_list_dict)
+
+    ## Export Result
+    dumpResultIntoTxt(new_pos_dict)
 
     ## Evaluation
     seg_ans_path = 'sample_data/segment.txt'
@@ -127,7 +192,7 @@ def main():
     ner_ans_path = 'sample_data/ner.txt'
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
-    print(seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic)
+    # print(seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic)
 
 if __name__ == "__main__":
     main()

@@ -34,6 +34,8 @@ And with two phases
 
 ### Task
 
+> The output filename must be `1_ 59` and `2_ 59` for two phases result. (just inlcude the result after Medical NER)
+
 #### Chinese word segmentation
 
 1. Must followed the standard. Each word segment must split by a single space.
@@ -93,11 +95,43 @@ Before|After
 
 ## First phase
 
+Idea:
+
+1. quick word segmentation using tool
+2. make some rules to seperate words haven't been segmented or combine the mis-segmented words
+3. modify the POS table to fit the standard (26 tags) (e.g. `tag_to_idx` in pkuseg)
+
+Todo:
+
+need to find the medical dictionary with tags to filter the medical named-entities
+
 ### Chinese word segmentation by tool
+
+Tried pkuseg with medicine model and jieba
+
+```py
+# Word segmentation with POS tagging
+
+# pkuseg
+from pkuseg import pkuseg
+pseg = pkuseg(model_name='medicine', postag=True)
+words = pseg.cut(chinese_string)
+
+# jieba
+import jieba.posseg as jseg
+words = jseg.cut(chinese_string)
+
+for word, flag in words:
+    pass
+```
 
 ### Part-of-speech tagging by tool
 
 ### Named-entity recognition by tool
+
+> (deprecated) Using the medicine corpus offered by pkuseg ([release v0.0.16](https://github.com/lancopku/pkuseg-python/releases/tag/v0.0.16))
+>
+> This contain a string with medical words seperated by `\n` (but also other words...)
 
 ## Second phase
 
@@ -117,7 +151,6 @@ Before|After
 
 * [jieba](https://github.com/fxsjy/jieba) - 結巴中文分詞
 * [pkuseg](https://github.com/lancopku/pkuseg-python)
-  * [Trainer._decode_tokAcc](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/trainer.py#L233) - token accuracy
 * [THULAC](https://github.com/thunlp/THULAC-Python) (THU Lexical Analyzer for Chinese)
 * [LTP](https://github.com/HIT-SCIR/ltp) (Language Technology Platform)
 * [NLPIR](https://github.com/NLPIR-team/NLPIR)
@@ -127,3 +160,63 @@ Before|After
 * [中文分詞工具測評](https://rsarxiv.github.io/2016/11/29/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%84/)
   * [SIGHAN Bakeoff 2005](http://sighan.cs.uchicago.edu/bakeoff2005/)
     * [icwb2-data.zip](http://sighan.cs.uchicago.edu/bakeoff2005/data/icwb2-data.zip) - Score script (Evaluation), test gold data, training words data
+
+## Other
+
+### pkuseg trace code
+
+#### token accuracy
+
+* [Trainer._decode_tokAcc](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/trainer.py#L233) - token accuracy
+
+#### download model
+
+> default location `~/.pkuseg`
+
+* [download_model](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/download.py#L30) - called in [`__init__.py`](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/__init__.py#L183)
+  * [model_urls](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/config.py#L20)
+
+#### pkuseg POS
+
+POS Tags: [`tags.txt`](https://github.com/lancopku/pkuseg-python/blob/master/tags.txt)
+
+dict: `tag_to_idx`
+
+There are 35 different tags. But in our standard we only have 26. Thus we need some sort of map.
+
+And I found that the first 26 POS is match the standard. The pkuseg has done some extra work on NER.
+
+```txt
+nr  人名
+ns  地名
+nt  机构名称
+nx  外文字符
+nz  其它专名
+vd  副动词
+vn  名动词
+vx  形式动词
+ad  副形词
+an  名形词
+```
+
+But we only need `nr`, `ns` and `nt` in this experiment.
+
+So I map `nx`, `nz` to `n`. And map `vd`, `vn`, `vx` to `v`. And map `ad`, `an` to `a`
+
+### jieba trace code
+
+#### jieba POS
+
+* [GithubGist - hscspring/结巴词性标记集](https://gist.github.com/hscspring/c985355e0814f01437eaf8fd55fd7998)
+
+#### medicine dictionary
+
+> string
+
+```py
+In [15]: a[:100]
+Out[15]: '中国\n发展\n工作\n经济\n国家\n记者\n我们\n一个\n问题\n建设\n人民\n全国\n进行\n政府\n社会\n市场\n他们\n改革\n下\n北京\n我国\n国际\n地区\n管理\n领导\n公司\n技术\n关系\n世界\n重要\n干部\n美国\n组织\n群众'
+
+In [17]: a[20000:20100]
+Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林\n和平区\n冒充\n小国\n滨州\n逆向\n漏水\n咽喉\n潜伏\n潜水\n中信\n灵芝\n天涯\n中年人\n白人\n自备\n触摸\n俗称\n刘建国\n诊疗\n反倒\n改动\n说说\n节制\n板'
+```
