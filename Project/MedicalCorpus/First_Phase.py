@@ -146,7 +146,7 @@ def deleteMeaninglessSpace(raw_data_dict:dict):
 
 ## I. Word Segmentation and Pre-POS tagging
 
-def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'):
+def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba'):
     assert tools in ('pkuseg', 'jieba')
     print("Chinese word segmenting and Pre-part-of-speech tagging using {}...".format(tools))
 
@@ -171,7 +171,7 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'
                 continue
             
             if flag == 'nr': # people name
-                print(word, flag)
+                # print(word, flag) # useful to find mis-classified name
                 if len(word) >= 2 and word[0:2] in lastName:  # e.g. 司馬
                     word_seg_list_dict[seq_num].append(word[0:2])
                     pre_pos_list_dict[seq_num].append(word[0:2]+'/nr')
@@ -212,7 +212,7 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'
 
     return word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict
 
-def wordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'):
+def wordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba'):
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = _firstWordSegmentationWithPOS(cleaned_raw_data_dict, tools)
     return word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict
 
@@ -297,7 +297,7 @@ def _pkusegPOSMapper(pre_pos_list_dict:dict):
 
     return new_pos_list_dict
 
-def posWithGeneralNER(pre_pos_list_dict:dict, tools='pkuseg'):
+def posWithGeneralNER(pre_pos_list_dict:dict, tools:str='jieba'):
     assert tools in ('pkuseg', 'jieba')
     print("Part-of-speech tagging with General NER using {}...".format(tools))
 
@@ -313,6 +313,65 @@ def posWithGeneralNER(pre_pos_list_dict:dict, tools='pkuseg'):
     return new_pos_dict, new_pos_list_dict
 
 ## III. Medical NER
+
+def _loadMedicalDict(data_path:str='user_dict/medical_ner.txt'):
+    with open(data_path, 'r') as f:
+        medical_raw = f.readlines()
+    
+    # (NER: (tag, postfix_prefix_normal))
+    medical_dictionary = {}
+
+    for line in medical_raw:
+        ner, tag = line.split()
+        if ner[0] == '_': # postfix
+            medical_dictionary[ner[1:]] = (tag, 'postfix')
+        elif ner[-1] == '_': # prefix
+            medical_dictionary[ner[:-1]] = (tag, 'prefix')
+        else:
+            medical_dictionary[ner] = (tag, 'normal')
+    
+    return medical_dictionary
+            
+def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
+    to_mark_list_dict = defaultdict(list) # seq_num: [((pos_start, pos_end), tag)] 
+
+    for seq_num, word_seg_list in word_seg_list_dict.items():
+        for i, word in enumerate(word_seg_list):
+            for ner, (tag, post_pre_fix) in medical_dictionary.items():
+                if post_pre_fix == 'normal' and ner == word:
+                    to_mark_list_dict[seq_num].append(((i, i), tag))
+                elif post_pre_fix == 'postfix' and ner in word:
+                    pass
+                elif post_pre_fix == 'prefix' and ner in word:
+                    pass
+
+    return to_mark_list_dict
+
+def medicalNER(word_seg_list_dict: dict, new_pos_list_dict:dict, tools:str='jieba'):
+    assert tools in ('pkuseg', 'jieba') # no difference between two tools for now
+    print("Medical NER using {}...".format(tools))
+
+    medical_dictionary = _loadMedicalDict()
+
+    to_mark_list_dict = _findToMarkPosition(word_seg_list_dict, medical_dictionary)
+
+    medical_ner_list_dict = {}
+
+    for seq_num in new_pos_list_dict.keys():
+        medical_list = new_pos_list_dict[seq_num]
+
+        if seq_num in to_mark_list_dict:
+            for (pos_start, pos_end), tag in to_mark_list_dict[seq_num]:
+                medical_list[pos_start] = '[' + medical_list[pos_start]
+                medical_list[pos_end] = medical_list[pos_end] + ']' + tag
+
+        medical_ner_list_dict[seq_num] = medical_list
+            
+    medical_ner_dict = {}
+    for seq_num, medical_ner_list in medical_ner_list_dict.items():
+        medical_ner_dict[seq_num] = " ".join(medical_ner_list)
+
+    return medical_ner_dict, medical_ner_list_dict
 
 
 ## Evaluation
@@ -423,8 +482,11 @@ def main():
     # new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='pkuseg')
     dumpResultIntoTxt(new_pos_dict, data_path='1_ 59_pos.txt')
 
+    ## III. Medical NER
+    medical_ner_dict, medical_ner_list_dict = medicalNER(word_seg_list_dict, new_pos_list_dict)
+
     ## Export Result
-    dumpResultIntoTxt(new_pos_dict)
+    dumpResultIntoTxt(medical_ner_dict)
 
     ## Evaluation using pdf example
     raw_data_path = 'sample_data/raw.txt'
@@ -441,6 +503,8 @@ def main():
         cleaned_raw_data_dict, tools='pkuseg')
     _, jieba_pos_list_dict = posWithGeneralNER(jieba_pre_pos_list_dict, tools='jieba')
     _, pkuseg_pos_list_dict = posWithGeneralNER(pkuseg_pre_pos_list_dict, tools='pkuseg')
+    _, jieba_medical_ner_list_dict = medicalNER(jieba_word_seg_list_dict, jieba_pos_list_dict)
+    _, pkuseg_medical_ner_list_dict = medicalNER(pkuseg_word_seg_list_dict, pkuseg_pos_list_dict)
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
     print('Test jieba word segmentation')
@@ -455,6 +519,10 @@ def main():
     print('\nGold POS:\n', pos_ans_list_dict)
     print('\njieba:\n', jieba_pos_list_dict)
     print('\npkuseg:\n', pkuseg_pos_list_dict)
+
+    print('\nGold medical NER:\n', ner_ans_list_dic)
+    print('\njieba:\n', jieba_medical_ner_list_dict)
+    print('\npkuseg:\n', pkuseg_medical_ner_list_dict)
 
 if __name__ == "__main__":
     _jiebaPOSRule()

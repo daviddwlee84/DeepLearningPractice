@@ -412,7 +412,19 @@ Idea: Common pattern
 
 * `XX症`
 * `XX炎`
-* `XX 損傷`
+* `XX損傷`
+
+Make a medical dictionary with some technique
+
+* `\w+`: normal mode (this will have highest priority)
+* `_\w+`: as postfix
+* `\w_`: as prefix
+
+e.g.
+
+* `抗生素 tre`
+* `_症 sym`
+* `XX損傷 des`
 
 ## Second phase
 
@@ -459,11 +471,13 @@ Idea: Common pattern
   * [ ] symbol and english didn't work
 * [ ] [num-num problem](#Dealing-with-number-number)
 * [ ] `<sup> </sup>` `<sub> </sub>`
-* [ ] medical NER
+* [X] medical NER
   * [ ] find corpus
     * [A 醫學百科 症狀](http://www.a-hospital.com/w/%E7%97%87%E7%8A%B6)
-  * [ ] split
-  * [ ] add tag
+  * [X] split
+  * [X] add tag
+  * [ ] more than two words
+  * [ ] prefix and postfix detection
 
 ### pkuseg trace code
 
