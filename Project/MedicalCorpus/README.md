@@ -39,7 +39,7 @@ And with two phases
 #### Chinese word segmentation
 
 1. Must followed the standard. Each word segment must split by a single space.
-2. Delete the meaningless space `$$_` (`\u0020`) or `$$__` (`\u3000`)
+2. Delete the meaningless space `$$_` (`\u0020`) or `$$__` (`\u3000`) (found that this should be doing befor segmentation)
 
 > the number of `_` means how many spaces are
 
@@ -97,13 +97,67 @@ Before|After
 
 Idea:
 
-1. quick word segmentation using tool
-2. make some rules to seperate words haven't been segmented or combine the mis-segmented words
-3. modify the POS table to fit the standard (26 tags) (e.g. `tag_to_idx` in pkuseg)
+1. clean up space (`$$_` first)
+2. quick word segmentation using tool
+3. make some rules to seperate words haven't been segmented or combine the mis-segmented words
+4. ~~modify the POS table to fit the standard (26 tags) (e.g. `tag_to_idx` in pkuseg)~~. Map the POS to our standard.
+5. doing medical dictionary on raw data and found the position of each medical NER
+6. then decorate the previous result
 
 Todo:
 
 need to find the medical dictionary with tags to filter the medical named-entities
+
+### Clean up space character
+
+Check all the space (`$$_`) between words (no `$$__` exist in my raw data)
+
+```py
+import re
+with open('data/raw_59.txt') as f:
+    text = f.read()
+space_re = r'...\$\$_...'
+re.findall(space_re, text)
+```
+
+```txt
+['复循环$$_（C）', '3-1$$_第一年', '次0.$$_3g，', 'lus$$_Aci', 'lus$$_Cap', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '/Qt$$_=（C', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_$$_', 'p>/$$_L，嗜', '为2.$$_2kb', '为9.$$_9kb', 'tal$$_dia', '养治疗$$_此类患', '69.$$_4kJ', '日2.$$_29g', '第二节$$_生理性', '素0.$$_01～', '松0.$$_1～0', '-18$$_间隔缺', '∶10$$_000', '第一节$$_支气管', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '5U/$$_（kg', '素0.$$_5mg', '/kg$$_qd或', '于10$$_000', '或18$$_Gy（', 'Ron$$_T现象', 'ral$$_inf', 'ive$$_inf', 'ent$$_or$', 'ive$$_inf', 'ell$$_tra', 'low$$_vir', 'ian$$_stu', '_of$$_ren', 'ase$$_in$', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '）头颅$$_MRI', '宿主病$$_（GV', 'hle$$_189', 'ial$$_hem', '为2.$$_5/1', '或0.$$_25%', 'mic$$_imp', '量0.$$_05～', ' 表2$$_常量和', '99.$$_9%。', 'ler$$_nod', '于5.$$_7mm', ' 1.$$_DIC', 'ked$$_AS，', '段Xq$$_22，', 'mal$$_rec', 'ive$$_AS，', 'mal$$_dom', 'ant$$_AS，', 'tal$$_hyp', '素试验$$_（结素', '症治疗$$_①静止', '泮0.$$_5mg', '第三节$$_肺结核', 'aan$$_vir', '、0.$$_5%碘', '（pH$$_3～5', ' 1.$$_ATP', 'APD$$_KT/', '为2.$$_0/w', '于1.$$_9/w', 'CPD$$_KT/', '为2.$$_1/w', 'IPD$$_KT/', '为2.$$_2/w', '低体温$$_体温常', 'ase$$_inh', 'ong$$_QT$', 'val$$_syn', '第四节$$_小儿药']
+```
+
+```py
+re.findall(r'(\D\D)\$\$_(\D\D)', text)
+```
+
+```txt
+[('循环', '（C'), ('us', 'Ac'), ('us', 'Ca'), ('Qt', '=（'), ('$_', 'SI'), ('>/', 'L，'), ('al', 'di'), ('治疗', '此类'), ('二节', '生理'), ('一节', '支气'), ('U/', '（k'), ('kg', 'qd'), ('on', 'T现'), ('al', 'in'), ('ve', 'in'), ('nt', 'or'), ('ve', 'in'), ('ll', 'tr'), ('ow', 'vi'), ('us', 'in'), ('an', 'st'), ('dy', 'of'), ('al', 'di'), ('se', 'in'), ('头颅', 'MR'), ('主病', '（G'), ('al', 'he'), ('ic', 'im'), ('er', 'no'), ('ed', 'AS'), ('al', 're'), ('ve', 'AS'), ('al', 'do'), ('nt', 'AS'), ('al', 'hy'), ('试验', '（结'), ('治疗', '①静'), ('三节', '肺结'), ('an', 'vi'), ('PD', 'KT'), ('PD', 'KT'), ('PD', 'KT'), ('体温', '体温'), ('se', 'in'), ('ng', 'QT'), ('al', 'sy'), ('四节', '小儿')]
+```
+
+Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, replace it with normal space.
+
+> * `string.replace("pattern", "replace")`
+> * `re.sub(r"pattern", "replace", string)`
+
+```py
+# Replace all the '$$_' with ' '
+# all the $$_ not surrounding by digital
+replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', text)
+# all the $$_ surrounding by english letter
+replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
+
+# check the rest of the '$$_'
+re.findall(space_re, replaced_space)
+```
+
+```txt
+['次0.$$_3g，', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_ SI', '为2.$$_2kb', '为9.$$_9kb', '69.$$_4kJ', '日2.$$_29g', '素0.$$_01～', '松0.$$_1～0', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '素0.$$_5mg', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '为2.$$_5/1', '或0.$$_25%', '量0.$$_05～', '99.$$_9%。', '于5.$$_7mm', ' 1.$$_DIC', '泮0.$$_5mg', '、0.$$_5%碘', ' 1.$$_ATP', '为2.$$_0/w', '于1.$$_9/w', 'KT/$$_Vur', '为2.$$_1/w', '为2.$$_2/w']
+```
+
+> There is a weird thing `KT/$$_Vur` => On the 186th line `CCPD$$_KT/$$_Vurea为2.$$_1/w，NIPD$$_KT/Vurea为` => There are `KT/Vurea` following it. So it should delete as usual.
+
+```py
+# Delete all the other '$$_'
+cleaned_text = replaced_space.replace('$$_', '')
+```
 
 ### Chinese word segmentation by tool
 
@@ -127,11 +181,18 @@ for word, flag in words:
 
 ### Part-of-speech tagging by tool
 
+* [pkuseg POS](#pkuseg-POS)
+* [jieba POS](#jieba-POS)
+
 ### Named-entity recognition by tool
 
 > (deprecated) Using the medicine corpus offered by pkuseg ([release v0.0.16](https://github.com/lancopku/pkuseg-python/releases/tag/v0.0.16))
 >
 > This contain a string with medical words seperated by `\n` (but also other words...)
+
+Found some thing in previous result which need to be fixed.
+
+* `小儿脑性/n 瘫痪/v`
 
 ## Second phase
 
@@ -160,6 +221,13 @@ for word, flag in words:
 * [中文分詞工具測評](https://rsarxiv.github.io/2016/11/29/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%84/)
   * [SIGHAN Bakeoff 2005](http://sighan.cs.uchicago.edu/bakeoff2005/)
     * [icwb2-data.zip](http://sighan.cs.uchicago.edu/bakeoff2005/data/icwb2-data.zip) - Score script (Evaluation), test gold data, training words data
+
+### Regular Expression
+
+* [**Stackoverflow - Python string.replace regular expression**](https://stackoverflow.com/questions/16720541/python-string-replace-regular-expression)
+* [w3schools Python RegEx](https://www.w3schools.com/python/python_regex.asp)
+* [txt2re](http://txt2re.com/)
+* [Regular-Expressions.info](https://www.regular-expressions.info/)
 
 ## Other
 
@@ -204,6 +272,8 @@ But we only need `nr`, `ns` and `nt` in this experiment.
 So I map `nx`, `nz` to `n`. And map `vd`, `vn`, `vx` to `v`. And map `ad`, `an` to `a`
 
 ### jieba trace code
+
+> TODO: maybe try to use the dictionary offered by pkuseg for jieba (maybe need some adjustment)
 
 #### jieba POS
 

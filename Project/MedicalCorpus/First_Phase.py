@@ -14,6 +14,7 @@
 
 
 from collections import defaultdict
+import re # Regular Expression
 
 # Data Processing
 from pkuseg import pkuseg
@@ -69,9 +70,28 @@ def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
             result.write(str(seq_num) + ' ' + string + '\n')
 
 
+## Data clean up
+
+def cleanSpaceUp(raw_data_dict:dict):
+    cleaned_raw_data_dict = {}
+
+    for seq_num, string in raw_data_dict.items():
+        # Replace all the '$$_' with ' '
+        # all the $$_ not surrounding by digital
+        replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', string)
+        # all the $$_ surrounding by english letter
+        replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
+
+        # Delete all the other '$$_'
+        cleaned_text = replaced_space.replace('$$_', '')
+
+        cleaned_raw_data_dict[seq_num] = cleaned_text
+            
+    return cleaned_raw_data_dict
+
 ## I. Word Segmentation and Pre-POS tagging
 
-def _firstWordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
+def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'):
     assert tools in ('pkuseg', 'jieba')
     print("Chinese word segmenting and Pre-part-of-speech tagging using {}...".format(tools))
 
@@ -81,7 +101,7 @@ def _firstWordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
     pre_pos_list_dict = defaultdict(list)
     pre_pos_dict = {}
 
-    for seq_num, string in raw_data_dict.items():
+    for seq_num, string in cleaned_raw_data_dict.items():
         
         if tools == 'pkuseg':
             words = pseg.cut(string)
@@ -99,8 +119,8 @@ def _firstWordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
 
     return word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict
 
-def wordSegmentationWithPOS(raw_data_dict:dict, tools:str='pkuseg'):
-    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = _firstWordSegmentationWithPOS(raw_data_dict, tools)
+def wordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'):
+    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = _firstWordSegmentationWithPOS(cleaned_raw_data_dict, tools)
     return word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict
 
 
@@ -165,15 +185,16 @@ def main():
 
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
 
-    # TODO: delete $$_ before I.
+    # delete $$_ before I.
+    cleaned_raw_data_dict = cleanSpaceUp(raw_data_dict)
 
     ## Prediction
     # I. Word Segmentation and Pre-POS
-    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(raw_data_dict, tools='jieba')
+    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='jieba')
 
     # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
 
-    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(raw_data_dict, tools='pkuseg')
+    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='pkuseg')
 
     # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
 
