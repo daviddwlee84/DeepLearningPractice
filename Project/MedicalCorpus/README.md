@@ -171,7 +171,7 @@ for word, flag in words:
 ```
 
 * **Evaluation of the default performance of segmentation**
-  * jieba
+  * jieba (jieba has auto `'\n'` problem. So this report is not quite fair)
 
     ```txt
     === Evaluation reault of word segment ===
@@ -206,6 +206,30 @@ Original setting segmentation problem
   * pkuseg: `表 3&1`
   * [Dealing with number-number](#Dealing-with-number-number) (7 `\d-\d` pattern)
 
+**After solving `$$_` and auto `\n` problem**:
+
+* jieba
+
+    ```txt
+    === Evaluation reault of word segment ===
+    F1: 88.11%
+    P : 86.96%
+    R : 89.29%
+    ER: 10.43%
+    =========================================
+    ```
+
+* pkuseg
+
+    ```txt
+    === Evaluation reault of word segment ===
+    F1: 85.71%
+    P : 80.87%
+    R : 91.18%
+    ER: 7.83%
+    =========================================
+    ```
+
 #### Soluiton for customized segment
 
 jieba (the `user_dict_file` [example](https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py))
@@ -223,6 +247,112 @@ pkuseg.pkuseg(user_dict='my_dict.txt')
 ```
 
 > [POS User dictionary](#User-dictionary)
+
+#### Last name problem
+
+1. Get the last name list on the internet.
+2. Split the word length grater than "a last name" with `/nr` tag.
+
+Here is the imporvement after split name.
+
+```txt
+Test jieba word segmentation
+line: 3 found error: (58, 60) => 抗生
+line: 3 found error: (60, 61) => 素
+=== Evaluation reault of word segment ===
+F1: 98.26%
+P : 98.26%
+R : 98.26%
+ER: 1.74%
+=========================================
+```
+
+```txt
+Test pkuseg word segmentation
+line: 1 found error: (5, 8) => 应详细
+line: 1 found error: (40, 46) => 自主心跳呼吸
+line: 1 found error: (70, 73) => 光反应
+line: 3 found error: (3, 6) => 缺损者
+line: 3 found error: (21, 26) => 短暂菌血症
+line: 3 found error: (32, 35) => 创伤性
+line: 3 found error: (43, 46) => 细菌性
+line: 3 found error: (58, 61) => 抗生素
+line: 4 found error: (3, 10) => 耀辉$$_孙锟
+=== Evaluation reault of word segment ===
+F1: 86.24%
+P : 81.74%
+R : 91.26%
+ER: 7.83%
+=========================================
+```
+
+wierd thing tagging with nr (TODO)
+
+```txt
+龙 nr
+粟粒状 nr
+阿托品 nr
+埃希菌 nr
+克雷伯 nr
+广谱抗 nr
+维生素 nr
+青少年 nr
+晨 nr
+左心室 nr
+毛发 nr
+内含子 nr
+甘露醇 nr
+张力 nr
+帕米来 nr
+律 nr
+段 nr
+过敏 nr
+许春娣 nr
+雷诺 nr
+周 nr
+洛贝林 nr
+安全性 nr
+凯瑞 nr
+青光眼 nr
+应予以 nr
+常继发 nr
+门静脉 nr
+史 nr
+幸存者 nr
+高达 nr
+地高辛 nr
+应予以 nr
+关键因素 nr
+小梁 nr
+束 nr
+窦 nr
+窦 nr
+束 nr
+迟发性 nr
+地西泮 nr
+巨 nr
+欧氏 nr
+张力 nr
+白蛋白 nr
+若有阳 nr
+显微镜 nr
+巧克力 nr
+灵敏性 nr
+林 nr
+麻醉 nr
+地西泮 nr
+利培 nr
+麻风 nr
+马拉 nr
+姬鼠 nr
+高峰 nr
+易 nr
+青壮年 nr
+周 nr
+行为矫正 nr
+青少年 nr
+广谱抗 nr
+```
 
 ### Part-of-speech tagging by tool
 

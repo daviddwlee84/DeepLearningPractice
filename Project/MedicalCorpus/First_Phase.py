@@ -35,12 +35,20 @@ def _jiebaPOSRule():
     needExtract = [
         '体格检查',
         '光反应',
+        '对光',
         '创伤性',
-        '抗生素',
+        '细菌性',
     ]
     for del_word in needExtract:
         jieba.del_word(del_word)
 
+lastName = ['赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许',
+            '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章',
+            '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳',
+            '酆', '鲍', '史', '唐', '费', '廉', '岑', '薛', '雷', '贺', '倪', '汤', '滕', '殷', '罗', '毕', '郝', '邬', '安', '常',
+            '乐', '于', '时', '傅', '皮', '卞', '齐', '康', '伍', '余', '元', '卜', '顾', '孟', '平', '黄', '和', '穆', '萧', '尹',
+            '姚', '邵', '堪', '汪', '祁', '毛', '禹', '狄', '米', '贝', '明', '臧', '计', '伏', '成', '戴', '谈', '宋', '茅', '庞',
+            '熊', '纪', '舒', '屈', '项', '祝', '董', '梁', '司马']
 
 ## Loading data
 
@@ -126,6 +134,26 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'
         spaceDetector = 0
         for word, flag in words:
             word_with_tag = word + '/' + flag
+
+            if word == '\n': # jieba will retain last \n as word
+                continue
+            
+            if flag == 'nr': # people name
+                print(word, flag)
+                if len(word) >= 2 and word[0:2] in lastName:  # e.g. 司馬
+                    word_seg_list_dict[seq_num].append(word[0:2])
+                    pre_pos_list_dict[seq_num].append(word[0:2]+'/nr')
+                    word = word[2:]
+                    word_with_tag = word_with_tag[2:]
+                    if len(word) == 2: # only lastname
+                        continue
+                elif word[0] in lastName:
+                    word_seg_list_dict[seq_num].append(word[0])
+                    pre_pos_list_dict[seq_num].append(word[0]+'/nr')
+                    if len(word) == 1: # only lastname
+                        continue
+                    word = word[1:]
+                    word_with_tag = word_with_tag[1:]
 
             word_seg_list_dict[seq_num].append(word)
             pre_pos_list_dict[seq_num].append(word_with_tag)
@@ -271,7 +299,7 @@ def _toSegEvalFormat(string_list:list):
         eval_format_list.append((start, end))
     return eval_format_list
 
-def _scorerSingle(pred_eval_list:list, gold_eval_list:list):
+def _scorerSingle(pred_eval_list:list, gold_eval_list:list, print_fail_num:int=0):
     e = 0
     c = 0
     N = len(gold_eval_list)
@@ -281,10 +309,14 @@ def _scorerSingle(pred_eval_list:list, gold_eval_list:list):
             c += 1
         else:
             e += 1
+            if print_fail_num:
+                print('line:', print_fail_num, 'found error:',
+                      pred_start_end, '=>', debugHelper(print_fail_num, *pred_start_end, 'sample_data/raw.txt'))
+                
     
     return e, c, N
 
-def _scorer(pred_eval_list_dict:dict, gold_eval_list_dict:dict):
+def _scorer(pred_eval_list_dict:dict, gold_eval_list_dict:dict, print_fail:bool=False):
     N = 0 # gold segment words number
     e = 0 # wrong number of word segment
     c = 0 # correct number of word segment
@@ -292,7 +324,10 @@ def _scorer(pred_eval_list_dict:dict, gold_eval_list_dict:dict):
     for seq_num in gold_eval_list_dict.keys():
         pred_eval_list = pred_eval_list_dict[seq_num]
         gold_eval_list = gold_eval_list_dict[seq_num]
-        temp_e, temp_c, temp_N = _scorerSingle(pred_eval_list, gold_eval_list)
+        if print_fail:
+            temp_e, temp_c, temp_N = _scorerSingle(pred_eval_list, gold_eval_list, int(seq_num))
+        else:
+            temp_e, temp_c, temp_N = _scorerSingle(pred_eval_list, gold_eval_list)
 
         N += temp_N
         e += temp_e
@@ -305,7 +340,7 @@ def _scorer(pred_eval_list_dict:dict, gold_eval_list_dict:dict):
 
     return R, P, F1, ER
 
-def wordSegmentEvaluaiton(pred_list_dict:dict, gold_list_dict:dict):
+def wordSegmentEvaluaiton(pred_list_dict:dict, gold_list_dict:dict, print_fail:bool=False):
 
     pred_eval_list_dict = {}
     gold_eval_list_dict = {}
@@ -316,7 +351,7 @@ def wordSegmentEvaluaiton(pred_list_dict:dict, gold_list_dict:dict):
         pred_eval_list_dict[seq_num] = _toSegEvalFormat(pred_list)
         gold_eval_list_dict[seq_num] = _toSegEvalFormat(gold_list)
     
-    P, R, F1, ER = _scorer(pred_eval_list_dict, gold_eval_list_dict)
+    P, R, F1, ER = _scorer(pred_eval_list_dict, gold_eval_list_dict, print_fail)
         
     print('=== Evaluation reault of word segment ===')
     print('F1: %.2f%%' % (F1*100))
@@ -325,6 +360,15 @@ def wordSegmentEvaluaiton(pred_list_dict:dict, gold_list_dict:dict):
     print('ER: %.2f%%' %  (ER*100))
     print('=========================================')
 
+
+# Print the word index that _scorer said. (if you enable print_fail of wordSegmentEvaluaiton)
+def debugHelper(seq_num:int, start_num:int, end_num:int, raw_data_path:str):
+    # PS. start from 1
+    with open(raw_data_path, 'r') as f:
+        lines = f.readlines()
+    _, string = lines[seq_num-1].split(' ', 1) # skip the line number
+    # print('line:', seq_num, (start_num, end_num), '=>', string[start_num-1:end_num-1])
+    return string[start_num-1:end_num-1]
 
 def main():
 
@@ -368,9 +412,9 @@ def main():
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
     print('Test jieba word segmentation')
-    wordSegmentEvaluaiton(jieba_word_seg_list_dict, seg_ans_list_dict)
+    wordSegmentEvaluaiton(jieba_word_seg_list_dict, seg_ans_list_dict, print_fail=True)
     print('Test pkuseg word segmentation')
-    wordSegmentEvaluaiton(pkuseg_word_seg_list_dict, seg_ans_list_dict)
+    wordSegmentEvaluaiton(pkuseg_word_seg_list_dict, seg_ans_list_dict, print_fail=True)
 
     print('\nGold segment:\n', seg_ans_list_dict)
     print('\njieba:\n', jieba_word_seg_list_dict)
