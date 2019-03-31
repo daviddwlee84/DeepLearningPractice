@@ -257,13 +257,11 @@ Here is the imporvement after split name.
 
 ```txt
 Test jieba word segmentation
-line: 3 found error: (58, 60) => 抗生
-line: 3 found error: (60, 61) => 素
 === Evaluation reault of word segment ===
-F1: 98.26%
-P : 98.26%
-R : 98.26%
-ER: 1.74%
+F1: 100.00%
+P : 100.00%
+R : 100.00%
+ER: 0.00%
 =========================================
 ```
 
@@ -276,17 +274,16 @@ line: 3 found error: (3, 6) => 缺损者
 line: 3 found error: (21, 26) => 短暂菌血症
 line: 3 found error: (32, 35) => 创伤性
 line: 3 found error: (43, 46) => 细菌性
-line: 3 found error: (58, 61) => 抗生素
 line: 4 found error: (3, 10) => 耀辉$$_孙锟
 === Evaluation reault of word segment ===
-F1: 86.24%
-P : 81.74%
-R : 91.26%
-ER: 7.83%
+F1: 87.56%
+P : 83.33%
+R : 92.23%
+ER: 7.02%
 =========================================
 ```
 
-wierd thing tagging with nr (TODO)
+wierd thing tagging with nr
 
 ```txt
 龙 nr
@@ -307,7 +304,6 @@ wierd thing tagging with nr (TODO)
 律 nr
 段 nr
 过敏 nr
-许春娣 nr
 雷诺 nr
 周 nr
 洛贝林 nr
@@ -321,12 +317,8 @@ wierd thing tagging with nr (TODO)
 幸存者 nr
 高达 nr
 地高辛 nr
-应予以 nr
 关键因素 nr
 小梁 nr
-束 nr
-窦 nr
-窦 nr
 束 nr
 迟发性 nr
 地西泮 nr
@@ -338,9 +330,7 @@ wierd thing tagging with nr (TODO)
 显微镜 nr
 巧克力 nr
 灵敏性 nr
-林 nr
 麻醉 nr
-地西泮 nr
 利培 nr
 麻风 nr
 马拉 nr
@@ -348,11 +338,32 @@ wierd thing tagging with nr (TODO)
 高峰 nr
 易 nr
 青壮年 nr
-周 nr
 行为矫正 nr
 青少年 nr
 广谱抗 nr
 ```
+
+#### The `<sup></sup>` and `<sub></sub>` problem
+
+* `<sup></sup>`
+  * `10<sup>12</sup>`
+  * `Ca<sup>2+</sup>`
+  * `10<sup>9</sup>`
+  * `10<sup>9</sup>`
+  * `<sup>*</sup>`
+* `<sub></sub>`
+  * `PaO<sub>2</sub>`
+  * `CO<sub>2</sub>`
+  * `U<sub>1</sub>`
+  * `PaO<sub>2</sub>`
+  * `PaCO<sub>2</sub>`
+  * `PaO<sub>2</sub>`
+  * `PaCO<sub>2</sub>`
+  * `CD<sub>33</sub>`
+  * `CD<sub>13</sub>`
+  * `CD<sub>15</sub>`
+  * `CD<sub>11</sub>b`
+  * `CD<sub>36</sub>`
 
 ### Part-of-speech tagging by tool
 
@@ -397,6 +408,12 @@ Found some thing in previous result which need to be fixed.
 
 * `小儿脑性/n 瘫痪/v`
 
+Idea: Common pattern
+
+* `XX症`
+* `XX炎`
+* `XX 損傷`
+
 ## Second phase
 
 ### Chinese word segmentation by learning
@@ -437,9 +454,16 @@ Found some thing in previous result which need to be fixed.
 
 ### TODO
 
-* [X] - fix `$$_`
-* [ ] - add user dictionary
-* [ ] - [num-num problem](#Dealing-with-number-number)
+* [X] fix `$$_`
+* [X] add user dictionary
+  * [ ] symbol and english didn't work
+* [ ] [num-num problem](#Dealing-with-number-number)
+* [ ] `<sup> </sup>` `<sub> </sub>`
+* [ ] medical NER
+  * [ ] find corpus
+    * [A 醫學百科 症狀](http://www.a-hospital.com/w/%E7%97%87%E7%8A%B6)
+  * [ ] split
+  * [ ] add tag
 
 ### pkuseg trace code
 

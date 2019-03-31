@@ -25,9 +25,31 @@ jieba.load_userdict('user_dict/user_dict.txt')
 import jieba.posseg as jseg
 
 def _jiebaPOSRule():
+    needAdd = [
+        ('10<sup>12</sup>', 'w'), # symbol didn't work (TOTO)
+        ('Ca<sup>2+</sup>', 'n'),
+        ('10<sup>9</sup>', 'w'),
+        ('<sup>*</sup>', 'x'),
+        ('PaO<sub>2</sub>', 'n'),
+        ('CO<sub>2</sub>', 'n'),
+        ('U<sub>1</sub>', 'n'),
+        ('PaO<sub>2</sub>', 'n'),
+        ('PaCO<sub>2</sub>', 'n'),
+        ('PaO<sub>2</sub>', 'n'),
+        ('PaCO<sub>2</sub>', 'n'),
+        ('CD<sub>33</sub>', 'n'),
+        ('CD<sub>13</sub>', 'n'),
+        ('CD<sub>15</sub>', 'n'),
+        ('CD<sub>11</sub>b', 'n'),
+        ('CD<sub>36</sub>', 'n'),
+    ]
+    for add_word, tag in needAdd:
+        jieba.add_word(add_word, freq=100, tag=tag)
+
     needRetain = [
-        '$$_', # this rule didn't work...
         '去大脑',
+        '广谱', # 广谱抗生素
+        '阳转',
     ]
     for retain_word in needRetain:
         jieba.suggest_freq(retain_word, tune=True)
@@ -38,6 +60,16 @@ def _jiebaPOSRule():
         '对光',
         '创伤性',
         '细菌性',
+        '行为矫正',
+        '粟粒状',
+        '安全性',
+        '应予以',
+        '常继发',
+        '迟发性',
+        '灵敏性',
+        '若有阳',
+        'sup', # english didn't work (TOTO)
+        'sub',
     ]
     for del_word in needExtract:
         jieba.del_word(del_word)
