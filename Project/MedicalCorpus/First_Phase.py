@@ -75,18 +75,13 @@ def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
 
 ## Data clean up
 
-def cleanSpaceUp(raw_data_dict:dict):
+def deleteMeaninglessSpace(raw_data_dict:dict):
     cleaned_raw_data_dict = {}
 
     for seq_num, string in raw_data_dict.items():
-        # Replace all the '$$_' with ' '
-        # all the $$_ not surrounding by digital
-        replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', string)
-        # all the $$_ surrounding by english letter
-        replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
-
-        # Delete all the other '$$_'
-        cleaned_text = replaced_space.replace('$$_', '')
+        # Delete meaningless '$$_'
+        # all the $$_ surrounding by digital
+        cleaned_text = re.sub(r'(\d.)\$\$_(\d)', r'\1\2', string)
 
         cleaned_raw_data_dict[seq_num] = cleaned_text
             
@@ -254,7 +249,7 @@ def main():
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
 
     # delete $$_ before I.
-    cleaned_raw_data_dict = cleanSpaceUp(raw_data_dict)
+    cleaned_raw_data_dict = deleteMeaninglessSpace(raw_data_dict)
 
     ## Prediction
     # I. Word Segmentation and Pre-POS
@@ -265,8 +260,7 @@ def main():
     # II. POS tagging and General NER
 
     new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict)
-
-    # print(new_pos_dict, new_pos_list_dict)
+    dumpResultIntoTxt(new_pos_dict, data_path='1_ 59_pos.txt')
 
     ## Export Result
     dumpResultIntoTxt(new_pos_dict)
@@ -279,9 +273,13 @@ def main():
     ner_ans_path = 'sample_data/ner.txt'
 
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
-    # cleaned_raw_data_dict = cleanSpaceUp(raw_data_dict)
-    _, pkuseg_word_seg_list_dict, _, _ = wordSegmentationWithPOS(raw_data_dict, tools='pkuseg')
-    _, jieba_word_seg_list_dict, _, _ = wordSegmentationWithPOS(raw_data_dict, tools='jieba')
+    cleaned_raw_data_dict = deleteMeaninglessSpace(raw_data_dict)
+    _, pkuseg_word_seg_list_dict, _, pkuseg_pre_pos_list_dict = wordSegmentationWithPOS(
+        raw_data_dict, tools='pkuseg')
+    _, jieba_word_seg_list_dict, _, jieba_pre_pos_list_dict = wordSegmentationWithPOS(
+        raw_data_dict, tools='jieba')
+    _, pkuseg_pos_list_dict = posWithGeneralNER(pkuseg_pre_pos_list_dict)
+    _, jieba_pos_list_dict = posWithGeneralNER(jieba_pre_pos_list_dict)
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
     print('Test pkuseg word segmentation')
@@ -292,6 +290,10 @@ def main():
     print('\nGold segment:\n', seg_ans_list_dict)
     print('\npkuseg:\n', pkuseg_word_seg_list_dict)
     print('\njieba:\n', jieba_word_seg_list_dict)
+
+    print('\nGold POS:\n', pos_ans_list_dict)
+    print('\npkuseg:\n', pkuseg_pos_list_dict)
+    print('\njieba:\n', jieba_pos_list_dict)
 
 if __name__ == "__main__":
     main()

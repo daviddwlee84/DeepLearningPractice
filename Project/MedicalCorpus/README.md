@@ -63,28 +63,28 @@ Example of space
 
 Confusing Example
 
-Before|After
-------|------
-`“一、”、“（二）”、“3.”、“（4）”、“5）”`|`“一/m 、/w”、“（/w 二/m ）/w”、“3/m ./w”、“（/w 4/m ）/w”、“5/m ）/w”`
-`abc<sub>xyz</sub>`|`abc<sub>xyz</sub>/n`
+| Before                                             | After                                                                             |
+| -------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `“一、”、“（二）”、“3.”、“（4）”、“5）”` | `“一/m 、/w”、“（/w 二/m ）/w”、“3/m ./w”、“（/w 4/m ）/w”、“5/m ）/w”` |
+| `abc<sub>xyz</sub>`                                | `abc<sub>xyz</sub>/n`                                                             |
 
 #### Medical NER
 
 The format must be `[named-entity]tab`
 
-Tag|NER
----|---
-dis|disease
-sym|symptom
-tes|test
-tre|treatment
-bod|body part
+| Tag | NER       |
+| --- | --------- |
+| dis | disease   |
+| sym | symptom   |
+| tes | test      |
+| tre | treatment |
+| bod | body part |
 
 Example
 
-Before|After
-------|------
-`左下肺/n`|`[左下肺/n]bod`
+| Before     | After           |
+| ---------- | --------------- |
+| `左下肺/n` | `[左下肺/n]bod` |
 
 ### Evaluation
 
@@ -115,9 +115,12 @@ need to find the medical dictionary with tags to filter the medical named-entiti
 
 ### Clean up meaningless space character
 
-Check all the space (`$$_`) between words (no `$$__` exist in my raw data)
+Check all the space (`$$_`) between words (no `$$__` exist in my raw data (e.g. line 33: `表6-15$$_$$_`))
+
+> total number of `$$_` is 107 in my raw data.
 
 ```py
+# observe the surrounding of some $$_
 import re
 with open('data/raw_59.txt') as f:
     text = f.read()
@@ -129,18 +132,23 @@ re.findall(space_re, text)
 ['复循环$$_（C）', '3-1$$_第一年', '次0.$$_3g，', 'lus$$_Aci', 'lus$$_Cap', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '/Qt$$_=（C', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_$$_', 'p>/$$_L，嗜', '为2.$$_2kb', '为9.$$_9kb', 'tal$$_dia', '养治疗$$_此类患', '69.$$_4kJ', '日2.$$_29g', '第二节$$_生理性', '素0.$$_01～', '松0.$$_1～0', '-18$$_间隔缺', '∶10$$_000', '第一节$$_支气管', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '5U/$$_（kg', '素0.$$_5mg', '/kg$$_qd或', '于10$$_000', '或18$$_Gy（', 'Ron$$_T现象', 'ral$$_inf', 'ive$$_inf', 'ent$$_or$', 'ive$$_inf', 'ell$$_tra', 'low$$_vir', 'ian$$_stu', '_of$$_ren', 'ase$$_in$', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '）头颅$$_MRI', '宿主病$$_（GV', 'hle$$_189', 'ial$$_hem', '为2.$$_5/1', '或0.$$_25%', 'mic$$_imp', '量0.$$_05～', ' 表2$$_常量和', '99.$$_9%。', 'ler$$_nod', '于5.$$_7mm', ' 1.$$_DIC', 'ked$$_AS，', '段Xq$$_22，', 'mal$$_rec', 'ive$$_AS，', 'mal$$_dom', 'ant$$_AS，', 'tal$$_hyp', '素试验$$_（结素', '症治疗$$_①静止', '泮0.$$_5mg', '第三节$$_肺结核', 'aan$$_vir', '、0.$$_5%碘', '（pH$$_3～5', ' 1.$$_ATP', 'APD$$_KT/', '为2.$$_0/w', '于1.$$_9/w', 'CPD$$_KT/', '为2.$$_1/w', 'IPD$$_KT/', '为2.$$_2/w', '低体温$$_体温常', 'ase$$_inh', 'ong$$_QT$', 'val$$_syn', '第四节$$_小儿药']
 ```
 
+Delete the space (`$$_`) surrounding by number, decimal.
+
 ```py
-re.findall(r'(\D\D)\$\$_(\D\D)', text)
+replaced_space = re.sub(r'(\d.)\$\$_(\d)', r'\1\2', text)
+```
+
+Observe the rest of the spaces
+
+```py
+re.findall('....\$\$_....', replaced_space)
 ```
 
 ```txt
-[('循环', '（C'), ('us', 'Ac'), ('us', 'Ca'), ('Qt', '=（'), ('$_', 'SI'), ('>/', 'L，'), ('al', 'di'), ('治疗', '此类'), ('二节', '生理'), ('一节', '支气'), ('U/', '（k'), ('kg', 'qd'), ('on', 'T现'), ('al', 'in'), ('ve', 'in'), ('nt', 'or'), ('ve', 'in'), ('ll', 'tr'), ('ow', 'vi'), ('us', 'in'), ('an', 'st'), ('dy', 'of'), ('al', 'di'), ('se', 'in'), ('头颅', 'MR'), ('主病', '（G'), ('al', 'he'), ('ic', 'im'), ('er', 'no'), ('ed', 'AS'), ('al', 're'), ('ve', 'AS'), ('al', 'do'), ('nt', 'AS'), ('al', 'hy'), ('试验', '（结'), ('治疗', '①静'), ('三节', '肺结'), ('an', 'vi'), ('PD', 'KT'), ('PD', 'KT'), ('PD', 'KT'), ('体温', '体温'), ('se', 'in'), ('ng', 'QT'), ('al', 'sy'), ('四节', '小儿')]
+['表3-1$$_第一年小', 'llus$$_Acid', 'ilus$$_Caps', 's/Qt$$_=（Cc', 'O2）×$$_100%', '6-15$$_$$_S', 'up>/$$_L，嗜酸', 'atal$$_diag', '营养治疗$$_此类患者', ' 第二节$$_生理性贫', '9-18$$_间隔缺损', ' 第一节$$_支气管哮', '8kPa$$_（60m', '1mg=$$_125U', '15U/$$_（kg•', 'g/kg$$_qd或b', '）或18$$_Gy（年', '④Ron$$_T现象；', 'iral$$_infe', 'tive$$_infe', 'tent$$_or$$', 'tive$$_infe', 'cell$$_tran', 'slow$$_viru', 'sian$$_stud', '$_of$$_rena', 'ease$$_in$$', '抗宿主病$$_（GVH', 'ehle$$_1897', 'nial$$_hemo', 'omic$$_impr', '8 表2$$_常量和微', 'sler$$_node', '6 1.$$_DIC治', 'nked$$_AS，X', '中段Xq$$_22，为', 'omal$$_rece', 'sive$$_AS，A', 'omal$$_domi', 'nant$$_AS，A', 'ital$$_hypo', '菌素试验$$_（结素试', '对症治疗$$_①静止性', ' 第三节$$_肺结核病', 'taan$$_viru', '酸（pH$$_3～5）', '6 1.$$_ATP耗', 'CAPD$$_KT/V', 'CCPD$$_KT/$', 'NIPD$$_KT/V', '.低体温$$_体温常在', 'rase$$_inhi', 'long$$_QT$$', 'rval$$_synd', ' 第四节$$_小儿药物']
 ```
 
-Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, ~~replace it with normal space.~~ keep it.
-
-> * `string.replace("pattern", "replace")`
-> * `re.sub(r"pattern", "replace", string)`
+Maybe we should leave the rest of the things
 
 ### Chinese word segmentation by tool
 
@@ -162,29 +170,28 @@ for word, flag in words:
     pass
 ```
 
-#### Evaluation of the default performance of segmentation
+* **Evaluation of the default performance of segmentation**
+  * jieba
 
-jieba
+    ```txt
+    === Evaluation reault of word segment ===
+    F1: 60.61%
+    P : 60.87%
+    R : 60.34%
+    ER: 40.00%
+    =========================================
+    ```
 
-```txt
-=== Evaluation reault of word segment ===
-F1: 60.61%
-P : 60.87%
-R : 60.34%
-ER: 40.00%
-=========================================
-```
+  * pkuseg
 
-pkuseg
-
-```txt
-=== Evaluation reault of word segment ===
-F1: 83.11%
-P : 79.13%
-R : 87.50%
-ER: 11.30%
-=========================================
-```
+    ```txt
+    === Evaluation reault of word segment ===
+    F1: 83.11%
+    P : 79.13%
+    R : 87.50%
+    ER: 11.30%
+    =========================================
+    ```
 
 Original setting segmentation problem
 
@@ -197,6 +204,7 @@ Original setting segmentation problem
 * `表3-1`
   * jieba: `表 3 - 1`
   * pkuseg: `表 3&1`
+  * [Dealing with number-number](#Dealing-with-number-number) (7 `\d-\d` pattern)
 
 #### Soluiton for customized segment
 
@@ -218,6 +226,12 @@ pkuseg.pkuseg(user_dict='my_dict.txt')
 
 * [pkuseg POS](#pkuseg-POS)
 * [jieba POS](#jieba-POS)
+
+#### Dealing with number-number
+
+pkuseg: `表3-1` -> `表/n 3&1/v`
+
+Find all the pos string with & in it.
 
 ### Named-entity recognition by tool
 
@@ -269,7 +283,7 @@ Found some thing in previous result which need to be fixed.
 
 ### TODO
 
-* [ ] - fix `$$_`
+* [X] - fix `$$_`
 * [ ] - add user dictionary
 
 ### pkuseg trace code
@@ -372,6 +386,21 @@ Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林
 ```
 
 ### Deprecated notes
+
+#### Clean up space character
+
+```py
+re.findall(r'(\D\D)\$\$_(\D\D)', text)
+```
+
+```txt
+[('循环', '（C'), ('us', 'Ac'), ('us', 'Ca'), ('Qt', '=（'), ('$_', 'SI'), ('>/', 'L，'), ('al', 'di'), ('治疗', '此类'), ('二节', '生理'), ('一节', '支气'), ('U/', '（k'), ('kg', 'qd'), ('on', 'T现'), ('al', 'in'), ('ve', 'in'), ('nt', 'or'), ('ve', 'in'), ('ll', 'tr'), ('ow', 'vi'), ('us', 'in'), ('an', 'st'), ('dy', 'of'), ('al', 'di'), ('se', 'in'), ('头颅', 'MR'), ('主病', '（G'), ('al', 'he'), ('ic', 'im'), ('er', 'no'), ('ed', 'AS'), ('al', 're'), ('ve', 'AS'), ('al', 'do'), ('nt', 'AS'), ('al', 'hy'), ('试验', '（结'), ('治疗', '①静'), ('三节', '肺结'), ('an', 'vi'), ('PD', 'KT'), ('PD', 'KT'), ('PD', 'KT'), ('体温', '体温'), ('se', 'in'), ('ng', 'QT'), ('al', 'sy'), ('四节', '小儿')]
+```
+
+Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, ~~replace it with normal space.~~ keep it.
+
+> * `string.replace("pattern", "replace")`
+> * `re.sub(r"pattern", "replace", string)`
 
 ```py
 # Replace all the '$$_' with ' '
