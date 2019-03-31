@@ -208,7 +208,7 @@ Original setting segmentation problem
 
 #### Soluiton for customized segment
 
-jieba (the [`user_dict_file` example](https://github.com/fxsjy/jieba/blob/master/test/userdict.txt))
+jieba (the `user_dict_file` [example](https://github.com/fxsjy/jieba/blob/master/test/test_userdict.py))
 
 ```py
 jieba.load_userdict(user_dict_file_name)
@@ -222,6 +222,8 @@ pkuseg
 pkuseg.pkuseg(user_dict='my_dict.txt')
 ```
 
+> [POS User dictionary](#User-dictionary)
+
 ### Part-of-speech tagging by tool
 
 * [pkuseg POS](#pkuseg-POS)
@@ -232,6 +234,28 @@ pkuseg.pkuseg(user_dict='my_dict.txt')
 pkuseg: `表3-1` -> `表/n 3&1/v`
 
 Find all the pos string with & in it.
+
+#### User dictionary
+
+```py
+from pkuseg import pkuseg
+pseg = pkuseg(model_name='medicine', postag=True,
+              user_dict='user_dict/user_dict.txt')
+jieba.load_userdict('user_dict/user_dict.txt')
+import jieba.posseg as jseg
+```
+
+jieba dictionary format ([example](https://github.com/fxsjy/jieba/blob/master/test/userdict.txt))
+
+`word`, `word_frequency(optional)`, `pos_tag(optional)`
+
+> pkuseg only have `word`...
+
+Effect after using user dictionary
+
+* `三凹征 fuckyou`
+  * jieba: `'三凹征/fuckyou'`
+  * pkuseg: `'三凹征/j'`
 
 ### Named-entity recognition by tool
 
@@ -285,6 +309,7 @@ Found some thing in previous result which need to be fixed.
 
 * [X] - fix `$$_`
 * [ ] - add user dictionary
+* [ ] - [num-num problem](#Dealing-with-number-number)
 
 ### pkuseg trace code
 
@@ -385,6 +410,11 @@ In [17]: a[20000:20100]
 Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林\n和平区\n冒充\n小国\n滨州\n逆向\n漏水\n咽喉\n潜伏\n潜水\n中信\n灵芝\n天涯\n中年人\n白人\n自备\n触摸\n俗称\n刘建国\n诊疗\n反倒\n改动\n说说\n节制\n板'
 ```
 
+### Generator
+
+* TypeError: object of type 'generator' has no len()
+* TypeError: 'generator' object is not subscriptable
+
 ### Deprecated notes
 
 #### Clean up space character
@@ -422,4 +452,38 @@ re.findall(space_re, replaced_space)
 ```py
 # Delete all the other '$$_'
 cleaned_text = replaced_space.replace('$$_', '')
+```
+
+#### jieba space combiner
+
+```py
+# Combine '$', '$', '_' into $$_
+# Combine '$/x', '$/x', '_/x' into $$_
+# equivalent to join than replace '$ $ _ ' (delete)
+def _jiebaSpaceCombiner(pos_or_word_seg_list:list, func:str):
+    assert func in ('seg', 'pos')
+    if func == 'pos':
+        print(pos_or_word_seg_list)
+    idx_head_to_pop_from_list = []
+    for i in range(len(pos_or_word_seg_list)-2):
+        if func == 'seg' and pos_or_word_seg_list[i:i+3] == ['$', '$', '_']:  # for word segment
+            idx_head_to_pop_from_list.append(i)
+        elif func == 'pos' and pos_or_word_seg_list[i:i+3] == ['$/x', '$/x', '_/x']:  # for POS
+            idx_head_to_pop_from_list.append(i)
+    shift = 0
+    for j in idx_head_to_pop_from_list:
+        j += shift
+        for k in range(3):
+            pos_or_word_seg_list.pop(j)
+            if k == 2:
+                pos_or_word_seg_list.insert(j, '$$_')
+                shift -= 2
+    return pos_or_word_seg_list
+
+
+
+# in _firstWordSegmentationWithPOS
+if tools == 'jieba':
+    word_seg_list_dict[seq_num] = _jiebaSpaceCombiner(word_seg_list_dict[seq_num], func='seg')
+    pre_pos_list_dict[seq_num] = _jiebaSpaceCombiner(pre_pos_list_dict[seq_num], func='pos')
 ```

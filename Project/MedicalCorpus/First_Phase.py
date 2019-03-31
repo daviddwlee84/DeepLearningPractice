@@ -13,13 +13,33 @@
 # III. Medical NER
 
 
+import jieba
 from collections import defaultdict
 import re # Regular Expression
 
 # Data Processing
 from pkuseg import pkuseg
-pseg = pkuseg(model_name='medicine', postag=True)
+pseg = pkuseg(model_name='medicine', postag=True,
+              user_dict='user_dict/user_dict.txt')
+jieba.load_userdict('user_dict/user_dict.txt')
 import jieba.posseg as jseg
+
+def _jiebaPOSRule():
+    needRetain = [
+        '$$_', # this rule didn't work...
+        '去大脑',
+    ]
+    for retain_word in needRetain:
+        jieba.suggest_freq(retain_word, tune=True)
+
+    needExtract = [
+        '体格检查',
+        '光反应',
+        '创伤性',
+        '抗生素',
+    ]
+    for del_word in needExtract:
+        jieba.del_word(del_word)
 
 
 ## Loading data
@@ -67,10 +87,7 @@ def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
     print("Dumping result into {}...".format(data_path))
     with open(data_path, 'w') as result:
         for seq_num, string in result_dict.items():
-            if string[-1] == '\n': # jieba
-                result.write(str(seq_num) + ' ' + string)
-            else: # pkuseg
-                result.write(str(seq_num) + ' ' + string + '\n')
+            result.write(str(seq_num) + ' ' + string + '\n')
 
 
 ## Data clean up
@@ -106,12 +123,30 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'
         elif tools == 'jieba':
             words = jseg.cut(string)
 
+        spaceDetector = 0
         for word, flag in words:
             word_with_tag = word + '/' + flag
 
             word_seg_list_dict[seq_num].append(word)
             pre_pos_list_dict[seq_num].append(word_with_tag)
+        
+            # only work with jieba
+            if word == '$' and spaceDetector == 0:
+                spaceDetector += 1
+            elif word == '$' and spaceDetector == 1:
+                spaceDetector += 1
+            elif word == '_' and spaceDetector == 2:
+                spaceDetector = 0
+                for _ in range(3):
+                    word_seg_list_dict[seq_num].pop()
+                    pre_pos_list_dict[seq_num].pop()
+                word_seg_list_dict[seq_num].append('$$_')
+                pre_pos_list_dict[seq_num].append('$$_')
+                spaceDetector = 0
+            else:
+                spaceDetector = 0
 
+    for seq_num in word_seg_list_dict.keys():
         word_seg_dict[seq_num] = " ".join(word_seg_list_dict[seq_num])
         pre_pos_dict[seq_num] = " ".join(pre_pos_list_dict[seq_num])
 
@@ -125,7 +160,53 @@ def wordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='pkuseg'):
 ## II. POS tagging and General NER
 
 def _jiebaPOSMapper(pre_pos_list_dict:dict):
+
+    jiebaExtraTags = {
+        'ad': 'a',
+        'an': 'a',
+        'df': 'd',
+        'dg': 'd',
+        'mg': 'm',
+        'mq': 'm',
+        'ng': 'n',
+        'nrfg': 'n',
+        'nrt': 'n',
+        'nz': 'n',
+        'rg': 'r',
+        'rr': 'r',
+        'rz': 'r',
+        'tg': 't',
+        'ud': 'u',
+        'ug': 'u',
+        'uj': 'u',
+        'ul': 'u',
+        'uv': 'u',
+        'uz': 'u',
+        'vd': 'v',
+        'vg': 'v',
+        'vi': 'v',
+        'vn': 'v',
+        'vq': 'v',
+        'zg': 'z'
+    }
+
     new_pos_list_dict = {}
+    for seq_num, pre_pos_list in pre_pos_list_dict.items():
+        new_pos_list = []
+        for word_with_tag in pre_pos_list:
+            if word_with_tag == '$$_':
+                new_pos_list.append('$$_')
+                continue
+            try:
+                word, tag = word_with_tag.split('/')
+            except ValueError: # jieba: "//x"
+                word, tag = re.sub(r'(.*)/(\w+)', r'\1 \2', word_with_tag).split()
+            if tag in jiebaExtraTags:
+                tag = jiebaExtraTags[tag] # equivalent to pick first char
+            new_word_with_tag = word + '/' + tag
+            new_pos_list.append(new_word_with_tag)
+        new_pos_list_dict[seq_num] = new_pos_list
+
     return new_pos_list_dict
 
 def _pkusegPOSMapper(pre_pos_list_dict:dict):
@@ -144,6 +225,9 @@ def _pkusegPOSMapper(pre_pos_list_dict:dict):
     for seq_num, pre_pos_list in pre_pos_list_dict.items():
         new_pos_list = []
         for word_with_tag in pre_pos_list:
+            if word_with_tag == '$$_':
+                new_pos_list.append('$$_')
+                continue
             word, tag = word_with_tag.split('/')
             if tag in pkusegExtraTags:
                 tag = pkusegExtraTags[tag]
@@ -154,7 +238,7 @@ def _pkusegPOSMapper(pre_pos_list_dict:dict):
     return new_pos_list_dict
 
 def posWithGeneralNER(pre_pos_list_dict:dict, tools='pkuseg'):
-    assert tools in ('pkuseg') # currently only support pkuseg
+    assert tools in ('pkuseg', 'jieba')
     print("Part-of-speech tagging with General NER using {}...".format(tools))
 
     if tools == 'pkuseg':
@@ -253,13 +337,14 @@ def main():
 
     ## Prediction
     # I. Word Segmentation and Pre-POS
-    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='jieba')
-    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='pkuseg')
+    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='jieba')
+    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='pkuseg')
     dumpResultIntoTxt(word_seg_dict, data_path='1_ 59_segment.txt')
 
     # II. POS tagging and General NER
 
-    new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict)
+    new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='jieba')
+    # new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='pkuseg')
     dumpResultIntoTxt(new_pos_dict, data_path='1_ 59_pos.txt')
 
     ## Export Result
@@ -274,26 +359,27 @@ def main():
 
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
     cleaned_raw_data_dict = deleteMeaninglessSpace(raw_data_dict)
-    _, pkuseg_word_seg_list_dict, _, pkuseg_pre_pos_list_dict = wordSegmentationWithPOS(
-        raw_data_dict, tools='pkuseg')
     _, jieba_word_seg_list_dict, _, jieba_pre_pos_list_dict = wordSegmentationWithPOS(
-        raw_data_dict, tools='jieba')
-    _, pkuseg_pos_list_dict = posWithGeneralNER(pkuseg_pre_pos_list_dict)
-    _, jieba_pos_list_dict = posWithGeneralNER(jieba_pre_pos_list_dict)
+        cleaned_raw_data_dict, tools='jieba')
+    _, pkuseg_word_seg_list_dict, _, pkuseg_pre_pos_list_dict = wordSegmentationWithPOS(
+        cleaned_raw_data_dict, tools='pkuseg')
+    _, jieba_pos_list_dict = posWithGeneralNER(jieba_pre_pos_list_dict, tools='jieba')
+    _, pkuseg_pos_list_dict = posWithGeneralNER(pkuseg_pre_pos_list_dict, tools='pkuseg')
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
-    print('Test pkuseg word segmentation')
-    wordSegmentEvaluaiton(pkuseg_word_seg_list_dict, seg_ans_list_dict)
     print('Test jieba word segmentation')
     wordSegmentEvaluaiton(jieba_word_seg_list_dict, seg_ans_list_dict)
+    print('Test pkuseg word segmentation')
+    wordSegmentEvaluaiton(pkuseg_word_seg_list_dict, seg_ans_list_dict)
 
     print('\nGold segment:\n', seg_ans_list_dict)
-    print('\npkuseg:\n', pkuseg_word_seg_list_dict)
     print('\njieba:\n', jieba_word_seg_list_dict)
+    print('\npkuseg:\n', pkuseg_word_seg_list_dict)
 
     print('\nGold POS:\n', pos_ans_list_dict)
-    print('\npkuseg:\n', pkuseg_pos_list_dict)
     print('\njieba:\n', jieba_pos_list_dict)
+    print('\npkuseg:\n', pkuseg_pos_list_dict)
 
 if __name__ == "__main__":
+    _jiebaPOSRule()
     main()
