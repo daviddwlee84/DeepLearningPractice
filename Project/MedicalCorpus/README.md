@@ -88,16 +88,21 @@ Before|After
 
 ### Evaluation
 
-* Precision (P)
-* Recall (R)
+> * N: gold segment words number
+> * e: wrong number of word segment
+> * c: correct number of word segment
+
+* Precision (P) = c/N
+* Recall (R) = c/(c+e)
 * F1-score (F1)
   * `F1 = 2 * P * R / (P + R)`
+* Error Rate (ER) = e/N (additional in this project)
 
 ## First phase
 
 Idea:
 
-1. clean up space (`$$_` first)
+1. clean up meaningless space (`$$_` first)
 2. quick word segmentation using tool
 3. make some rules to seperate words haven't been segmented or combine the mis-segmented words
 4. ~~modify the POS table to fit the standard (26 tags) (e.g. `tag_to_idx` in pkuseg)~~. Map the POS to our standard.
@@ -108,7 +113,7 @@ Todo:
 
 need to find the medical dictionary with tags to filter the medical named-entities
 
-### Clean up space character
+### Clean up meaningless space character
 
 Check all the space (`$$_`) between words (no `$$__` exist in my raw data)
 
@@ -132,32 +137,10 @@ re.findall(r'(\D\D)\$\$_(\D\D)', text)
 [('循环', '（C'), ('us', 'Ac'), ('us', 'Ca'), ('Qt', '=（'), ('$_', 'SI'), ('>/', 'L，'), ('al', 'di'), ('治疗', '此类'), ('二节', '生理'), ('一节', '支气'), ('U/', '（k'), ('kg', 'qd'), ('on', 'T现'), ('al', 'in'), ('ve', 'in'), ('nt', 'or'), ('ve', 'in'), ('ll', 'tr'), ('ow', 'vi'), ('us', 'in'), ('an', 'st'), ('dy', 'of'), ('al', 'di'), ('se', 'in'), ('头颅', 'MR'), ('主病', '（G'), ('al', 'he'), ('ic', 'im'), ('er', 'no'), ('ed', 'AS'), ('al', 're'), ('ve', 'AS'), ('al', 'do'), ('nt', 'AS'), ('al', 'hy'), ('试验', '（结'), ('治疗', '①静'), ('三节', '肺结'), ('an', 'vi'), ('PD', 'KT'), ('PD', 'KT'), ('PD', 'KT'), ('体温', '体温'), ('se', 'in'), ('ng', 'QT'), ('al', 'sy'), ('四节', '小儿')]
 ```
 
-Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, replace it with normal space.
+Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, ~~replace it with normal space.~~ keep it.
 
 > * `string.replace("pattern", "replace")`
 > * `re.sub(r"pattern", "replace", string)`
-
-```py
-# Replace all the '$$_' with ' '
-# all the $$_ not surrounding by digital
-replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', text)
-# all the $$_ surrounding by english letter
-replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
-
-# check the rest of the '$$_'
-re.findall(space_re, replaced_space)
-```
-
-```txt
-['次0.$$_3g，', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_ SI', '为2.$$_2kb', '为9.$$_9kb', '69.$$_4kJ', '日2.$$_29g', '素0.$$_01～', '松0.$$_1～0', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '素0.$$_5mg', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '为2.$$_5/1', '或0.$$_25%', '量0.$$_05～', '99.$$_9%。', '于5.$$_7mm', ' 1.$$_DIC', '泮0.$$_5mg', '、0.$$_5%碘', ' 1.$$_ATP', '为2.$$_0/w', '于1.$$_9/w', 'KT/$$_Vur', '为2.$$_1/w', '为2.$$_2/w']
-```
-
-> There is a weird thing `KT/$$_Vur` => On the 186th line `CCPD$$_KT/$$_Vurea为2.$$_1/w，NIPD$$_KT/Vurea为` => There are `KT/Vurea` following it. So it should delete as usual.
-
-```py
-# Delete all the other '$$_'
-cleaned_text = replaced_space.replace('$$_', '')
-```
 
 ### Chinese word segmentation by tool
 
@@ -177,6 +160,58 @@ words = jseg.cut(chinese_string)
 
 for word, flag in words:
     pass
+```
+
+#### Evaluation of the default performance of segmentation
+
+jieba
+
+```txt
+=== Evaluation reault of word segment ===
+F1: 60.61%
+P : 60.87%
+R : 60.34%
+ER: 40.00%
+=========================================
+```
+
+pkuseg
+
+```txt
+=== Evaluation reault of word segment ===
+F1: 83.11%
+P : 79.13%
+R : 87.50%
+ER: 11.30%
+=========================================
+```
+
+Original setting segmentation problem
+
+* `'应详细'`
+  * jieba: `'应', '详细'` (O)
+  * pkuseg: `'应详细'`
+* `'三凹征'`
+  * jieba: `'三', '凹征'`
+  * pkuseg: `'三凹征'` (O)
+* `表3-1`
+  * jieba: `表 3 - 1`
+  * pkuseg: `表 3&1`
+
+#### Soluiton for customized segment
+
+jieba (the [`user_dict_file` example](https://github.com/fxsjy/jieba/blob/master/test/userdict.txt))
+
+```py
+jieba.load_userdict(user_dict_file_name)
+jieba.add_word(word, freq=None, tag=None)
+jieba.suggest_freq(segment, tune=True)
+```
+
+pkuseg
+
+```py
+pkuseg.pkuseg(user_dict='my_dict.txt')
 ```
 
 ### Part-of-speech tagging by tool
@@ -218,6 +253,7 @@ Found some thing in previous result which need to be fixed.
 
 ### Article
 
+* [[原創]中文分詞器分詞效果的評測方法](https://www.codelast.com/%E5%8E%9F%E5%88%9B%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%99%A8%E5%88%86%E8%AF%8D%E6%95%88%E6%9E%9C%E7%9A%84%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/)
 * [中文分詞工具測評](https://rsarxiv.github.io/2016/11/29/%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%B7%A5%E5%85%B7%E6%B5%8B%E8%AF%84/)
   * [SIGHAN Bakeoff 2005](http://sighan.cs.uchicago.edu/bakeoff2005/)
     * [icwb2-data.zip](http://sighan.cs.uchicago.edu/bakeoff2005/data/icwb2-data.zip) - Score script (Evaluation), test gold data, training words data
@@ -230,6 +266,11 @@ Found some thing in previous result which need to be fixed.
 * [Regular-Expressions.info](https://www.regular-expressions.info/)
 
 ## Other
+
+### TODO
+
+* [ ] - fix `$$_`
+* [ ] - add user dictionary
 
 ### pkuseg trace code
 
@@ -271,9 +312,48 @@ But we only need `nr`, `ns` and `nt` in this experiment.
 
 So I map `nx`, `nz` to `n`. And map `vd`, `vn`, `vx` to `v`. And map `ad`, `an` to `a`
 
+#### dictionary format
+
+medicine corpus
+
+`.pkuseg/medicine/features.pkl` => a `dict`
+
+```py
+import pickle as pkl
+features = pkl.load(open('features.pkl', 'rb'))
+
+features = {
+    'unigram': ...,
+    'bigram': ...,
+    'feature_to_idx': ...,
+    'tag_to_idx': ...
+}
+```
+
+`.pkuseg/medicine/medicine_dict.pkl` => a `str`
+
+```py
+medicine = pkl.load(open('medicine_dict.pkl', 'rb'))
+medicine_dict = medicine.split('\n')
+```
+
 ### jieba trace code
 
+#### jieba append dictionary
+
 > TODO: maybe try to use the dictionary offered by pkuseg for jieba (maybe need some adjustment)
+
+Get the medical dictionary from pkuseg. Subtract the general words in other general corpus/dictionary. Then insert into jeiba
+
+```py
+medicine = pickle.load(open('%smedicine_dict.pkl' % pickle_dir, 'rb'))
+medicine_dict = medicine.split('\n')
+
+ctb8 = pickle.load(open('%sctb8.pkl' % pickle_dir, 'rb'))
+msra = pickle.load(open('%smsra.pkl' % pickle_dir, 'rb'))
+weibo = pickle.load(open('%sweibo.pkl' % pickle_dir, 'rb'))
+other_dict = set([*ctb8, *msra, *weibo])
+```
 
 #### jieba POS
 
@@ -289,4 +369,28 @@ Out[15]: '中国\n发展\n工作\n经济\n国家\n记者\n我们\n一个\n问题
 
 In [17]: a[20000:20100]
 Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林\n和平区\n冒充\n小国\n滨州\n逆向\n漏水\n咽喉\n潜伏\n潜水\n中信\n灵芝\n天涯\n中年人\n白人\n自备\n触摸\n俗称\n刘建国\n诊疗\n反倒\n改动\n说说\n节制\n板'
+```
+
+### Deprecated notes
+
+```py
+# Replace all the '$$_' with ' '
+# all the $$_ not surrounding by digital
+replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', text)
+# all the $$_ surrounding by english letter
+replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
+
+# check the rest of the '$$_'
+re.findall(space_re, replaced_space)
+```
+
+```txt
+['次0.$$_3g，', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_ SI', '为2.$$_2kb', '为9.$$_9kb', '69.$$_4kJ', '日2.$$_29g', '素0.$$_01～', '松0.$$_1～0', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '素0.$$_5mg', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '为2.$$_5/1', '或0.$$_25%', '量0.$$_05～', '99.$$_9%。', '于5.$$_7mm', ' 1.$$_DIC', '泮0.$$_5mg', '、0.$$_5%碘', ' 1.$$_ATP', '为2.$$_0/w', '于1.$$_9/w', 'KT/$$_Vur', '为2.$$_1/w', '为2.$$_2/w']
+```
+
+> There is a weird thing `KT/$$_Vur` => On the 186th line `CCPD$$_KT/$$_Vurea为2.$$_1/w，NIPD$$_KT/Vurea为` => There are `KT/Vurea` following it. So it should delete as usual.
+
+```py
+# Delete all the other '$$_'
+cleaned_text = replaced_space.replace('$$_', '')
 ```

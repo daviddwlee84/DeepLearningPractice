@@ -67,7 +67,10 @@ def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
     print("Dumping result into {}...".format(data_path))
     with open(data_path, 'w') as result:
         for seq_num, string in result_dict.items():
-            result.write(str(seq_num) + ' ' + string + '\n')
+            if string[-1] == '\n': # jieba
+                result.write(str(seq_num) + ' ' + string)
+            else: # pkuseg
+                result.write(str(seq_num) + ' ' + string + '\n')
 
 
 ## Data clean up
@@ -175,14 +178,79 @@ def posWithGeneralNER(pre_pos_list_dict:dict, tools='pkuseg'):
 
 ## Evaluation
 
+# from segment to evaluation-able format
+# e.g.
+# 計算機 總是 有問題  => (1, 4) (4, 6) (6, 9)
+# 計算機 總 是 有問題 => (1, 4) (4, 5) (5, 6) (6, 9)
+def _toSegEvalFormat(string_list:list):
+    eval_format_list = []
+    word_count = 1 # start from 1
+    for string in string_list:
+        start = word_count
+        word_count += len(string)
+        end = word_count
+        eval_format_list.append((start, end))
+    return eval_format_list
+
+def _scorerSingle(pred_eval_list:list, gold_eval_list:list):
+    e = 0
+    c = 0
+    N = len(gold_eval_list)
+
+    for pred_start_end in pred_eval_list:
+        if pred_start_end in gold_eval_list:
+            c += 1
+        else:
+            e += 1
+    
+    return e, c, N
+
+def _scorer(pred_eval_list_dict:dict, gold_eval_list_dict:dict):
+    N = 0 # gold segment words number
+    e = 0 # wrong number of word segment
+    c = 0 # correct number of word segment
+
+    for seq_num in gold_eval_list_dict.keys():
+        pred_eval_list = pred_eval_list_dict[seq_num]
+        gold_eval_list = gold_eval_list_dict[seq_num]
+        temp_e, temp_c, temp_N = _scorerSingle(pred_eval_list, gold_eval_list)
+
+        N += temp_N
+        e += temp_e
+        c += temp_c
+    
+    R = c/N
+    P = c/(c+e)
+    F1 = (2*P*R)/(P+R)
+    ER = e/N
+
+    return R, P, F1, ER
+
+def wordSegmentEvaluaiton(pred_list_dict:dict, gold_list_dict:dict):
+
+    pred_eval_list_dict = {}
+    gold_eval_list_dict = {}
+    for seq_num in gold_list_dict.keys():
+        pred_list = pred_list_dict[seq_num]
+        gold_list = gold_list_dict[seq_num]
+        
+        pred_eval_list_dict[seq_num] = _toSegEvalFormat(pred_list)
+        gold_eval_list_dict[seq_num] = _toSegEvalFormat(gold_list)
+    
+    P, R, F1, ER = _scorer(pred_eval_list_dict, gold_eval_list_dict)
+        
+    print('=== Evaluation reault of word segment ===')
+    print('F1: %.2f%%' % (F1*100))
+    print('P : %.2f%%' %  (P*100))
+    print('R : %.2f%%' %  (R*100))
+    print('ER: %.2f%%' %  (ER*100))
+    print('=========================================')
 
 
 def main():
 
     ## Loading data
     raw_data_path = 'data/raw_59.txt'
-    # raw_data_path = 'sample_data/raw.txt'
-
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
 
     # delete $$_ before I.
@@ -191,12 +259,8 @@ def main():
     ## Prediction
     # I. Word Segmentation and Pre-POS
     # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='jieba')
-
-    # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
-
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='pkuseg')
-
-    # print(word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict)
+    dumpResultIntoTxt(word_seg_dict, data_path='1_ 59_segment.txt')
 
     # II. POS tagging and General NER
 
@@ -207,13 +271,27 @@ def main():
     ## Export Result
     dumpResultIntoTxt(new_pos_dict)
 
-    ## Evaluation
+    ## Evaluation using pdf example
+    raw_data_path = 'sample_data/raw.txt'
+
     seg_ans_path = 'sample_data/segment.txt'
     pos_ans_path = 'sample_data/pos.txt'
     ner_ans_path = 'sample_data/ner.txt'
+
+    raw_data_dict = loadRawDataIntoDict(raw_data_path)
+    # cleaned_raw_data_dict = cleanSpaceUp(raw_data_dict)
+    _, pkuseg_word_seg_list_dict, _, _ = wordSegmentationWithPOS(raw_data_dict, tools='pkuseg')
+    _, jieba_word_seg_list_dict, _, _ = wordSegmentationWithPOS(raw_data_dict, tools='jieba')
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
-    # print(seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic)
+    print('Test pkuseg word segmentation')
+    wordSegmentEvaluaiton(pkuseg_word_seg_list_dict, seg_ans_list_dict)
+    print('Test jieba word segmentation')
+    wordSegmentEvaluaiton(jieba_word_seg_list_dict, seg_ans_list_dict)
+
+    print('\nGold segment:\n', seg_ans_list_dict)
+    print('\npkuseg:\n', pkuseg_word_seg_list_dict)
+    print('\njieba:\n', jieba_word_seg_list_dict)
 
 if __name__ == "__main__":
     main()

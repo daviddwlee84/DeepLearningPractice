@@ -53,7 +53,7 @@ Project/ChineseNMT/seq2seq_model/
 Project/ChineseNMT/attention_model/
 
 # Medical Corpus
-Project/MedicalCorpus/1_ 59.txt
+Project/MedicalCorpus/1_ 59*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
