@@ -7,7 +7,7 @@
 #
 # But by using tools, I've changed the processing oder
 #
-# (TODO) Data clean up ($$_ space)
+# Data clean up ($$_ space)
 # I. Word Segmentation and Pre-POS tagging
 # II. POS tagging and General NER
 # III. Medical NER
@@ -25,26 +25,26 @@ jieba.load_userdict('user_dict/user_dict.txt')
 import jieba.posseg as jseg
 
 def _jiebaPOSRule():
-    needAdd = [
-        ('10<sup>12</sup>', 'w'), # symbol didn't work (TOTO)
-        ('Ca<sup>2+</sup>', 'n'),
-        ('10<sup>9</sup>', 'w'),
-        ('<sup>*</sup>', 'x'),
-        ('PaO<sub>2</sub>', 'n'),
-        ('CO<sub>2</sub>', 'n'),
-        ('U<sub>1</sub>', 'n'),
-        ('PaO<sub>2</sub>', 'n'),
-        ('PaCO<sub>2</sub>', 'n'),
-        ('PaO<sub>2</sub>', 'n'),
-        ('PaCO<sub>2</sub>', 'n'),
-        ('CD<sub>33</sub>', 'n'),
-        ('CD<sub>13</sub>', 'n'),
-        ('CD<sub>15</sub>', 'n'),
-        ('CD<sub>11</sub>b', 'n'),
-        ('CD<sub>36</sub>', 'n'),
-    ]
-    for add_word, tag in needAdd:
-        jieba.add_word(add_word, freq=100, tag=tag)
+    # needAdd = [
+    #     ('10<sup>12</sup>', 'w'), # symbol didn't work (TOTO)
+    #     ('Ca<sup>2+</sup>', 'n'),
+    #     ('10<sup>9</sup>', 'w'),
+    #     ('<sup>*</sup>', 'x'),
+    #     ('PaO<sub>2</sub>', 'n'),
+    #     ('CO<sub>2</sub>', 'n'),
+    #     ('U<sub>1</sub>', 'n'),
+    #     ('PaO<sub>2</sub>', 'n'),
+    #     ('PaCO<sub>2</sub>', 'n'),
+    #     ('PaO<sub>2</sub>', 'n'),
+    #     ('PaCO<sub>2</sub>', 'n'),
+    #     ('CD<sub>33</sub>', 'n'),
+    #     ('CD<sub>13</sub>', 'n'),
+    #     ('CD<sub>15</sub>', 'n'),
+    #     ('CD<sub>11</sub>b', 'n'),
+    #     ('CD<sub>36</sub>', 'n'),
+    # ]
+    # for add_word, tag in needAdd:
+    #     jieba.add_word(add_word, freq=100, tag=tag)
 
     needRetain = [
         '去大脑',
@@ -190,7 +190,7 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba')
             word_seg_list_dict[seq_num].append(word)
             pre_pos_list_dict[seq_num].append(word_with_tag)
         
-            # only work with jieba
+            # only work with jieba (pkuseg will change $$_ to $$&...)
             if word == '$' and spaceDetector == 0:
                 spaceDetector += 1
             elif word == '$' and spaceDetector == 1:
@@ -263,6 +263,13 @@ def _jiebaPOSMapper(pre_pos_list_dict:dict):
                 word, tag = re.sub(r'(.*)/(\w+)', r'\1 \2', word_with_tag).split()
             if tag in jiebaExtraTags:
                 tag = jiebaExtraTags[tag] # equivalent to pick first char
+
+            if tag == 'x': # TODO
+                if word in ('，', '：', '。', '（', '）', '；'):  # symbol
+                    tag = 'w'
+                elif word in ('①', '②', '③', '④'):  # number symbol
+                    tag = 'm'
+                
             new_word_with_tag = word + '/' + tag
             new_pos_list.append(new_word_with_tag)
         new_pos_list_dict[seq_num] = new_pos_list
@@ -340,6 +347,15 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
             for ner, (tag, post_pre_fix) in medical_dictionary.items():
                 if post_pre_fix == 'normal' and ner == word:
                     to_mark_list_dict[seq_num].append(((i, i), tag))
+                elif post_pre_fix == 'normal' and word in ner: # ner is combined with multiple word
+                    candidate_word = word
+                    for j in range(i+1, len(word_seg_list)):
+                        candidate_word += word_seg_list[j]
+                        if len(candidate_word) > len(ner):
+                            break
+                        elif len(candidate_word) == len(ner): # candidate
+                            if candidate_word == ner:
+                                to_mark_list_dict[seq_num].append(((i, j), tag))
                 elif post_pre_fix == 'postfix' and ner in word:
                     pass
                 elif post_pre_fix == 'prefix' and ner in word:
@@ -378,8 +394,9 @@ def medicalNER(word_seg_list_dict: dict, new_pos_list_dict:dict, tools:str='jieb
 
 # from segment to evaluation-able format
 # e.g.
-# 計算機 總是 有問題  => (1, 4) (4, 6) (6, 9)
-# 計算機 總 是 有問題 => (1, 4) (4, 5) (5, 6) (6, 9)
+# Gold: 計算機 總是 有問題  => (1, 4) (4, 6) (6, 9)
+# Predict: 計算機 總 是 有問題 => (1, 4) (4, 5) (5, 6) (6, 9)
+# correct: (1, 4) (6, 9) error: (4, 5) (5, 6)
 def _toSegEvalFormat(string_list:list):
     eval_format_list = []
     word_count = 1 # start from 1
