@@ -345,6 +345,8 @@ wierd thing tagging with nr
 
 #### The `<sup></sup>` and `<sub></sub>` problem
 
+There are the following case occuring in corpus.
+
 * `<sup></sup>`
   * `10<sup>12</sup>`
   * `Ca<sup>2+</sup>`
@@ -364,6 +366,8 @@ wierd thing tagging with nr
   * `CD<sub>15</sub>`
   * `CD<sub>11</sub>b`
   * `CD<sub>36</sub>`
+
+Maybe remove them first and add position reminder to add them in the end.
 
 ### Part-of-speech tagging by tool
 
@@ -468,16 +472,16 @@ e.g.
 
 * [X] fix `$$_`
 * [X] add user dictionary
-  * [ ] symbol and english didn't work
 * [ ] [num-num problem](#Dealing-with-number-number)
-* [ ] `<sup> </sup>` `<sub> </sub>`
+* [X] `<sup> </sup>` `<sub> </sub>`
 * [X] medical NER
   * [ ] find corpus
     * [A 醫學百科 症狀](http://www.a-hospital.com/w/%E7%97%87%E7%8A%B6)
   * [X] split
   * [X] add tag
-  * [ ] more than two words
+  * [X] more than two words
   * [ ] prefix and postfix detection
+* [ ] maybe record detail procedure afterward
 
 ### pkuseg trace code
 
@@ -582,6 +586,10 @@ Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林
 
 * TypeError: object of type 'generator' has no len()
 * TypeError: 'generator' object is not subscriptable
+
+### Python match
+
+* [GeeksforGeeks - Python String | find()](https://www.geeksforgeeks.org/string-find-python/)
 
 ### Deprecated notes
 

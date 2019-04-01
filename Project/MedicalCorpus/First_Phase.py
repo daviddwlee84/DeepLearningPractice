@@ -25,27 +25,6 @@ jieba.load_userdict('user_dict/user_dict.txt')
 import jieba.posseg as jseg
 
 def _jiebaPOSRule():
-    # needAdd = [
-    #     ('10<sup>12</sup>', 'w'), # symbol didn't work (TOTO)
-    #     ('Ca<sup>2+</sup>', 'n'),
-    #     ('10<sup>9</sup>', 'w'),
-    #     ('<sup>*</sup>', 'x'),
-    #     ('PaO<sub>2</sub>', 'n'),
-    #     ('CO<sub>2</sub>', 'n'),
-    #     ('U<sub>1</sub>', 'n'),
-    #     ('PaO<sub>2</sub>', 'n'),
-    #     ('PaCO<sub>2</sub>', 'n'),
-    #     ('PaO<sub>2</sub>', 'n'),
-    #     ('PaCO<sub>2</sub>', 'n'),
-    #     ('CD<sub>33</sub>', 'n'),
-    #     ('CD<sub>13</sub>', 'n'),
-    #     ('CD<sub>15</sub>', 'n'),
-    #     ('CD<sub>11</sub>b', 'n'),
-    #     ('CD<sub>36</sub>', 'n'),
-    # ]
-    # for add_word, tag in needAdd:
-    #     jieba.add_word(add_word, freq=100, tag=tag)
-
     needRetain = [
         '去大脑',
         '广谱', # 广谱抗生素
@@ -68,8 +47,7 @@ def _jiebaPOSRule():
         '迟发性',
         '灵敏性',
         '若有阳',
-        'sup', # english didn't work (TOTO)
-        'sub',
+        '完全恢复',
     ]
     for del_word in needExtract:
         jieba.del_word(del_word)
@@ -143,6 +121,70 @@ def deleteMeaninglessSpace(raw_data_dict:dict):
         cleaned_raw_data_dict[seq_num] = cleaned_text
             
     return cleaned_raw_data_dict
+
+def _loadSubSupDict(data_path:str='user_dict/sub_sup.txt'):
+    with open(data_path, 'r') as f:
+        sub_sup_raw = f.readlines()
+
+    sub_sup_dictionary = {}
+
+    for line in sub_sup_raw:
+        sub_sup_word, tag = line.split()
+        sub_sup_dictionary[sub_sup_word] = tag
+
+    return sub_sup_dictionary
+
+
+def preserveSubSupTags(cleaned_raw_data_dict:dict):
+    
+    sub_sup_dictionary = _loadSubSupDict()
+
+    sub_sup_insert_index_dict = defaultdict(list) # seq_num: [(word_position, sub_sup_word, tag), ...]
+
+    no_sub_sup_raw_data_dict = {}
+
+    for seq_num, string in cleaned_raw_data_dict.items():
+        cumulated_num = 0
+        last_end = 0
+        for sub_sup_word, tag in sub_sup_dictionary.items():
+            while sub_sup_word in string[last_end:]: # may be same token in same line
+                start_idx = string.find(sub_sup_word, last_end) - cumulated_num
+                last_end = start_idx + len(sub_sup_word)
+                cumulated_num += len(sub_sup_word)
+                sub_sup_insert_index_dict[seq_num].append((start_idx, sub_sup_word, tag))
+            string = string.replace(sub_sup_word, '') # clean them up
+        no_sub_sup_raw_data_dict[seq_num] = string
+    
+    return no_sub_sup_raw_data_dict, sub_sup_insert_index_dict
+
+
+def insertSubSupTags(word_list_dict:dict, sub_sup_insert_index_dict:dict, with_tag:bool=True):
+    new_word_list_dict = {}
+    for seq_num, word_list in word_list_dict.items():
+        if seq_num in sub_sup_insert_index_dict:
+            cumulated = 0
+            for (start_idx, sub_sup_word, tag) in sub_sup_insert_index_dict[seq_num]:
+                word_count = 0
+                new_word_list = word_list.copy()
+                for i, word in enumerate(word_list):
+                    if word_count == start_idx:
+                        if with_tag:
+                            new_word_list.insert(i+cumulated, sub_sup_word+'/'+tag)
+                        else:
+                            new_word_list.insert(i+cumulated, sub_sup_word)
+                        break
+                    else:
+                        word_count += len(word)
+                cumulated += 1
+            new_word_list_dict[seq_num] = new_word_list
+        else:
+            new_word_list_dict[seq_num] = word_list
+
+    new_word_dict = {}
+    for seq_num, new_word_list in new_word_list_dict.items():
+        new_word_dict[seq_num] = " ".join(new_word_list)
+
+    return new_word_dict, new_word_list_dict
 
 ## I. Word Segmentation and Pre-POS tagging
 
@@ -363,18 +405,18 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
 
     return to_mark_list_dict
 
-def medicalNER(word_seg_list_dict: dict, new_pos_list_dict:dict, tools:str='jieba'):
+def medicalNER(inserted_word_seg_list_dict: dict, inserted_new_pos_list_dict:dict, tools:str='jieba'):
     assert tools in ('pkuseg', 'jieba') # no difference between two tools for now
     print("Medical NER using {}...".format(tools))
 
     medical_dictionary = _loadMedicalDict()
 
-    to_mark_list_dict = _findToMarkPosition(word_seg_list_dict, medical_dictionary)
+    to_mark_list_dict = _findToMarkPosition(inserted_word_seg_list_dict, medical_dictionary)
 
     medical_ner_list_dict = {}
 
-    for seq_num in new_pos_list_dict.keys():
-        medical_list = new_pos_list_dict[seq_num]
+    for seq_num in inserted_new_pos_list_dict.keys():
+        medical_list = inserted_new_pos_list_dict[seq_num]
 
         if seq_num in to_mark_list_dict:
             for (pos_start, pos_end), tag in to_mark_list_dict[seq_num]:
@@ -486,21 +528,22 @@ def main():
 
     # delete $$_ before I.
     cleaned_raw_data_dict = deleteMeaninglessSpace(raw_data_dict)
+    no_sub_sup_raw_data_dict, sub_sup_insert_index_dict = preserveSubSupTags(cleaned_raw_data_dict)
 
     ## Prediction
     # I. Word Segmentation and Pre-POS
-    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='jieba')
-    # word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(cleaned_raw_data_dict, tools='pkuseg')
-    dumpResultIntoTxt(word_seg_dict, data_path='1_ 59_segment.txt')
+    word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(no_sub_sup_raw_data_dict, tools='jieba')
+    inserted_word_seg_dict, inserted_word_seg_list_dict = insertSubSupTags(word_seg_list_dict, sub_sup_insert_index_dict, with_tag=False)
+    dumpResultIntoTxt(inserted_word_seg_dict, data_path='1_ 59_segment.txt')
 
     # II. POS tagging and General NER
 
     new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='jieba')
-    # new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='pkuseg')
-    dumpResultIntoTxt(new_pos_dict, data_path='1_ 59_pos.txt')
+    inserted_new_pos_dict, inserted_new_pos_list_dict = insertSubSupTags(new_pos_list_dict, sub_sup_insert_index_dict, with_tag=True)
+    dumpResultIntoTxt(inserted_new_pos_dict, data_path='1_ 59_pos.txt')
 
     ## III. Medical NER
-    medical_ner_dict, medical_ner_list_dict = medicalNER(word_seg_list_dict, new_pos_list_dict)
+    medical_ner_dict, medical_ner_list_dict = medicalNER(inserted_word_seg_list_dict, inserted_new_pos_list_dict)
 
     ## Export Result
     dumpResultIntoTxt(medical_ner_dict)
@@ -514,13 +557,19 @@ def main():
 
     raw_data_dict = loadRawDataIntoDict(raw_data_path)
     cleaned_raw_data_dict = deleteMeaninglessSpace(raw_data_dict)
+    # preserveSubSupTags()
     _, jieba_word_seg_list_dict, _, jieba_pre_pos_list_dict = wordSegmentationWithPOS(
         cleaned_raw_data_dict, tools='jieba')
+    # insertSubSupTags()
     _, pkuseg_word_seg_list_dict, _, pkuseg_pre_pos_list_dict = wordSegmentationWithPOS(
         cleaned_raw_data_dict, tools='pkuseg')
+    # insertSubSupTags()
     _, jieba_pos_list_dict = posWithGeneralNER(jieba_pre_pos_list_dict, tools='jieba')
+    # insertSubSupTags()
     _, pkuseg_pos_list_dict = posWithGeneralNER(pkuseg_pre_pos_list_dict, tools='pkuseg')
+    # change input to inserted word_seg and pos list_dict
     _, jieba_medical_ner_list_dict = medicalNER(jieba_word_seg_list_dict, jieba_pos_list_dict)
+    # change input to inserted word_seg and pos list_dict
     _, pkuseg_medical_ner_list_dict = medicalNER(pkuseg_word_seg_list_dict, pkuseg_pos_list_dict)
     seg_ans_list_dict, pos_ans_list_dict, ner_ans_list_dic = loadAnswerIntoDict(seg_ans_path, pos_ans_path, ner_ans_path)
 
