@@ -480,7 +480,7 @@ e.g.
   * [X] split
   * [X] add tag
   * [X] more than two words
-  * [ ] prefix and postfix detection
+  * [ ] prefix and postfix detection (especially postfix one!)
 * [ ] maybe record detail procedure afterward
 
 ### pkuseg trace code
