@@ -327,6 +327,8 @@ Toy
 
 * [**DeepNotes**](https://deepnotes.io/)
     * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
+* [UFLDL Tutorial](http://ufldl.stanford.edu/tutorial/)
+  * [Starter Code](http://ufldl.stanford.edu/tutorial/StarterCode/) - [github](https://github.com/amaas/stanford_dl_ex)
 * [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
 * [深度學習500問](https://github.com/scutan90/DeepLearning-500-questions)
 * [Machine Learning Notebook](https://mlnotebook.github.io/)
@@ -345,6 +347,17 @@ Toy
 #### Slides
 
 * [Supervised Deep Learning](https://sites.google.com/site/deeplearningcvpr2014/ranzato_cvpr2014_DLtutorial.pdf)
+
+### Paper
+
+#### LaTeX Paper Writteing
+
+[LaTeX Notes](Notes/LaTeX.md)
+
+#### Conference
+
+* NAACL North American Chapter of the Association for Computational Linguistics
+  * [NAACL-HLT 2019](https://naacl2019.org/)
 
 ### Summaries
 
@@ -398,6 +411,12 @@ Export Markdown
   * [PDFtoDOCX](https://pdf2docx.com/)
 * toPPT
   * [Smallpdf PDF to PPT Converter](https://smallpdf.com/pdf-to-ppt)
+
+Machine Learning/Deep Learning Platform
+
+* [Anaconda](https://www.anaconda.com/)
+* [PaddlePaddle](http://www.paddlepaddle.org/)
+  * [github](https://github.com/PaddlePaddle/Paddle)
 
 ## Deprecated notes
 
