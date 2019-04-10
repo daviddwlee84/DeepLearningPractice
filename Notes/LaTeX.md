@@ -22,13 +22,32 @@ pdflatex mydocument.tex
 # This will generate "mydocument.pdf", a PDF document
 ```
 
-### Format
+#### BibTeX
+
+```sh
+# need paper.tex (xxx.sty optional)
+latex paper # get paper.aux
+# need paper.aux, xxx.bst
+bibtex paper # get paper.bbl
+
+# final output (with paper.tex paper.bbl)
+latex paper # get paper.dvi
+pdflatex paper # get paper.pdf
+```
+
+![BibTeX proess 1](https://www.arakhne.org/autolatex/process.png)
+
+[![BibTeX proess 2](http://www.zapata.org/stuart/latex/bibtex_process.jpg)](http://www.zapata.org/stuart/latex/bibtex.shtml)
+
+### Extension
 
 #### Main Document
 
 * **tex**: LaTeX
 
 #### Bibliography
+
+> The word *BibTeX* stands for a tool and a file format which are used to describe and process lists of references, mostly in conjunction with LaTeX documents.
 
 * **bst**: BibTeX style file
   * [Guidelines for customizing biblatex styles](https://tex.stackexchange.com/questions/12806/guidelines-for-customizing-biblatex-styles/13076#13076)
@@ -191,6 +210,49 @@ The typeset of tables should be based on the following rules:
 
 ### Footnotes
 
+## Fonts
+
+### Background Knowledge of Fonts
+
+* TrueType (TTF)
+* OpenType (OTF)
+
+### Default Fonts
+
+```tex
+\renewcommand{\familydefault}{<family>}
+```
+
+* `\rmdefault`: serif (roman)
+* `\sfdefault`: sans serif
+* `\ttdefault`: typewriter (monospace)
+
+### Times New Roman
+
+> [mathptmx package](#mathptmx)
+
+```tex
+\usepackage{mathptmx}
+```
+
+> [newtx bundle](#newtx)
+
+```tex
+\usepackage{newtxtext,newtxmath}
+```
+
+> [Times package](#Times) => This will get error. (This package is outdated.)
+
+```tex
+\usepackage{Times}
+```
+
+* [How to set document font to times new roman by command](https://tex.stackexchange.com/questions/153168/how-to-set-document-font-to-times-new-roman-by-command)
+
+### Customized Fonts
+
+> [fontspec package](#fontspec)
+
 ## Package
 
 ### booktabs
@@ -208,6 +270,34 @@ The typeset of tables should be based on the following rules:
 [multicol manual](http://ftp.yzu.edu.tw/CTAN/macros/latex/required/tools/multicol.pdf)
 
 ### geometry
+
+### Font Related
+
+#### fontspec
+
+Example: (Pretty good but current with citation problem)
+
+```tex
+\usepackage{fontspec}
+\setmainfont[Ligatures=TeX]{Georgia}
+\setsansfont[Ligatures=TeX]{Arial}
+```
+
+### mathptmx
+
+> For Times New Roman
+
+[mathptmx](https://ctan.org/pkg/mathptmx)
+
+### newtx
+
+> For Times New Roman
+
+[newtx bundle](https://ctan.org/pkg/newtx)
+
+### Times
+
+> For Times New Roman (deprecated)
 
 ## Appendix
 
@@ -253,12 +343,17 @@ The typeset of tables should be based on the following rules:
   * [Multiple columns](https://www.overleaf.com/learn/latex/Multiple_columns)
   * [Footnotes](https://www.overleaf.com/learn/latex/Footnotes)
 
+#### WikiBooks - [LaTeX](https://en.wikibooks.org/wiki/LaTeX)
+
+* [LaTeX/Tables](https://en.wikibooks.org/wiki/LaTeX/Tables)
+* [LaTeX/Fonts](https://en.wikibooks.org/wiki/LaTeX/Fonts)
+
 #### Others
 
 * [**Keeping tables/figures close to where they are mentioned**](https://tex.stackexchange.com/questions/2275/keeping-tables-figures-close-to-where-they-are-mentioned)
 * [Tabular: title above and caption below?](https://tex.stackexchange.com/questions/15282/tabular-title-above-and-caption-below)
 * [Trying to replicate a table from academic paper](https://tex.stackexchange.com/questions/63204/trying-to-replicate-a-table-from-academic-paper)
-* [Wikibooks - LaTeX/Tables](https://en.wikibooks.org/wiki/LaTeX/Tables)
+* [What is the standard/recommended font to use in papers?](https://academia.stackexchange.com/questions/26889/what-is-the-standard-recommended-font-to-use-in-papers)
 
 ### LaTeX Tools
 
@@ -268,6 +363,15 @@ The typeset of tables should be based on the following rules:
 * [The LaTeX Project](https://www.latex-project.org/)
 * [TeXShop](https://pages.uoregon.edu/koch/texshop/)
 * [MacTEX](https://www.tug.org/mactex/)
+
+BibTeX
+
+* [How to use BibTeX](http://www.bibtex.org/Using/)
+* [BibTeX Format Description](http://www.bibtex.org/Format/) - `.bib`
+
+VS Code Extension
+
+* [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop)
 
 ### Tutorial
 
