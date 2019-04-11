@@ -354,12 +354,12 @@ Example: (Pretty good but current with citation problem)
 * [Tabular: title above and caption below?](https://tex.stackexchange.com/questions/15282/tabular-title-above-and-caption-below)
 * [Trying to replicate a table from academic paper](https://tex.stackexchange.com/questions/63204/trying-to-replicate-a-table-from-academic-paper)
 * [What is the standard/recommended font to use in papers?](https://academia.stackexchange.com/questions/26889/what-is-the-standard-recommended-font-to-use-in-papers)
+* [知乎 - 你寫論文時發現了哪些神網站？](https://www.zhihu.com/question/35931336/answer/641198933)
 
 ### LaTeX Tools
 
 (support Mac)
 
-* [**LaTeXiT**](https://www.chachatelier.fr/latexit/) - equation
 * [The LaTeX Project](https://www.latex-project.org/)
 * [TeXShop](https://pages.uoregon.edu/koch/texshop/)
 * [MacTEX](https://www.tug.org/mactex/)
@@ -373,6 +373,33 @@ VS Code Extension
 
 * [Visual Studio Code LaTeX Workshop Extension](https://github.com/James-Yu/LaTeX-Workshop)
 
+#### Formula/Equation
+
+* [**LaTeXiT**](https://www.chachatelier.fr/latexit/) - equation
+* [**Mathpix**](https://mathpix.com/) - convet inmages to LaTeX
+  * [examples](https://mathpix.com/examples.pdf)
+
+#### iOS App
+
+* [MyScript](https://www.myscript.com/)
+  * MathPad ([End-of-sale](https://www.myscript.com/retired-apps/))
+  * [Nebo](https://www.myscript.com/nebo)
+
+#### Markdown Editor which support LaTeX
+
+* [MacDown](https://macdown.uranusjr.com/)
+* [Typora](https://typora.io/)
+
+Online Collaboration
+
+* [HackMD](https://hackmd.io/)
+
+VS Code Extension
+
+* Markdown All in One
+* Markdown PDF
+* markdownlint
+
 ### Tutorial
 
 * [**LaTeX-Tutorial.com**](https://www.latex-tutorial.com/)
@@ -385,6 +412,7 @@ VS Code Extension
 * [Overleaf](https://www.overleaf.com/) - The easy to use, online, collaborative LaTeX editor
   * [ShareLaTeX](https://www.sharelatex.com/) (ShareLaTeX is now part of Overleaf)
 * [LaTeX Base](https://latexbase.com/)
+* [MyScript Web Demo](https://webdemo.myscript.com/)
 
 #### Table Generator
 
