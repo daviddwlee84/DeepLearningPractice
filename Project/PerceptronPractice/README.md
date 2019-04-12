@@ -5,6 +5,8 @@
 
 ## Introduction
 
+### The Truth Table Problem (Logic AND, OR and XOR)
+
 ![Truth Table and Graph](https://cdn-images-1.medium.com/max/800/1*Tc8UgR_fjI_h0p3y4H9MwA.png)
 
 Data:
@@ -12,7 +14,11 @@ Data:
 * Linear seprable: AND, OR => Single Layer Perceptron (SLP)
 * Linear unseprable: XOR => Multi Layer Perceptron (MLP)
 
-## AND, OR Model
+### The Iris
+
+## Truth Table Problem
+
+### AND, OR Model
 
 **Structure**:
 
@@ -28,7 +34,7 @@ $$
 
 * [AND and OR](AND_OR_Perceptron.py)
 
-### Result of AND
+#### Result of AND
 
 Training AND with one epoch of data (i.e. AND's truth table)
 
@@ -58,7 +64,7 @@ Current bias
  0.30000000000000004
 ```
 
-### Result of OR
+#### Result of OR
 
 Training OR with one 100 epoch of data (i.e. OR's truth table) and Show its prediction result
 
@@ -83,7 +89,7 @@ Predict
 [1 1] --> 1.0
 ```
 
-## XOR Model 1
+### XOR Model 1
 
 **Structure**:
 
@@ -93,11 +99,43 @@ Predict
 
 * [XOR](XOR_MLP.py)
 
-## XOR Model 2
+### XOR Model 2
 
 Another Structure
 
 TBD
+
+## Iris
+
+I have imitate the Keras API and reference from some of the code of `eriklindernoren/ML-From-Scratch` Github repository.
+
+### Model
+
+![Iris Model](IrisModel.png)
+
+#### Result of MLP
+
+> with `verbose = False`
+
+* Measure the accuracy of the test subset (30% of instances)
+* Training the model with 10 epochs and 32 batch size
+* Using Cross Entropy as loss function
+
+```txt
+Accuracy of Keras with Adam optimizer is 0.8444444470935397
+Accuracy of Keras with RMSprop optimizer is 0.5555555562178294
+Accuracy of MLP From Scratch with Adam optimizer is 0.8064903846153846
+Accuracy of MLP From Scratch with RMSprop optimizer is 0.984375
+```
+
+Model                                               |Accuracy   |Optimizer
+----------------------------------------------------|-----------|--------------
+(Multi-Layer Perceptron using Keras)                |0.8444     |Adam
+(Multi-Layer Perceptron using Keras)                |0.5555     |RMSprop
+Multi-Layer Perceptron From Scratch                 |0.8065     |Adam
+Multi-Layer Perceptron From Scratch                 |0.9844     |RMSprop
+
+> [Statistics Machine Learning on Iris](https://github.com/daviddwlee84/MachineLearningPractice/blob/master/Notes/Subject/Iris.md) From Scratch: [Logistic Regression](https://github.com/daviddwlee84/MachineLearningPractice/blob/master/Algorithm/LogisticRegression/LogisticRegression_Iris/LogisticRegression_Iris_FromScratch.py), [SVM](https://github.com/daviddwlee84/MachineLearningPractice/blob/master/Algorithm/SVM/SVM_Iris/SVM_Iris_Multiclass.py)
 
 ## Resources
 
@@ -121,3 +159,13 @@ Matlab
 ### Slides
 
 * [Single Layer Perceptrons](http://www.cs.stir.ac.uk/courses/ITNP4B/lectures/kms/2-Perceptrons.pdf)
+
+### Example
+
+* [eriklindernoren/ML-From-Scratch - Multilayer Perceptron](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/examples/multilayer_perceptron.py)
+  * [neural_network.py](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/neural_network.py)
+  * [layers.py](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/layers.py)
+  * [activation_functions.py](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/activation_functions.py)
+  * [optimizers.py](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/optimizers.py)
+  * [loss_functions.py](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/loss_functions.py)
+* [Keras - Getting started with the Keras Sequential model](https://keras.io/getting-started/sequential-model-guide/)

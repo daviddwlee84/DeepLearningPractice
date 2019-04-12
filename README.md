@@ -18,6 +18,7 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
     * Multi-thread Notes
     * High-level API Notes - tf.keras, tf.layer
     * simple demos with maybe jupyter notebook?!
+    * TensorFlow 2.0
 * [`keras`](https://keras.io)
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
@@ -26,7 +27,7 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 
 Subject|Technique|Framework|Complexity|Remark
 -------|---------|---------|----------|------
-[Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|○○○○●|AND, OR and XOR
+[Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|○○●●●|Truth Table (AND, OR, XOR) and Iris Dataset (simulate Keras API)
 [Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|○○○○●|with Cross Entropy
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|○○●●●|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|○○○●●|Made a Tensorflow like Dataset Class
@@ -301,6 +302,10 @@ Toy
 * SemEval
   * [wiki](https://en.wikipedia.org/wiki/SemEval)
 
+### Github Repository
+
+* [**brightmart/text_classification**](https://github.com/brightmart/text_classification) - all kinds of text classification models and more with deep learning
+
 ### Tutorial
 
 #### Course
@@ -358,6 +363,8 @@ Toy
 
 * NAACL North American Chapter of the Association for Computational Linguistics
   * [NAACL-HLT 2019](https://naacl2019.org/)
+* NPIS Neural Information Processing Systems
+  * [NIPS Proceedingsβ](https://papers.nips.cc/)
 
 ### Summaries
 
