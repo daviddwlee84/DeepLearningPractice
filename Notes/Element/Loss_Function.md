@@ -45,3 +45,7 @@ $$
     * [Loss functions for classification](https://en.wikipedia.org/wiki/Loss_functions_for_classification)
         * [Cross entropy](https://en.wikipedia.org/wiki/Cross_entropy)
 * [Understanding Categorical Cross-Entropy Loss, Binary Cross-Entropy Loss, Softmax Loss, Logistic Loss, Focal Loss and all those confusing names](https://gombru.github.io/2018/05/23/cross_entropy_loss/)
+
+### Github
+
+* [eriklindernoren/ML-From-Scratch - Loss Functions](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/loss_functions.py)

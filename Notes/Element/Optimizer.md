@@ -1,5 +1,7 @@
 # Optimizer / Optimization Algorithm
 
+> How learning rate decay
+
 ## Overview
 
 ## Exponential Moving Average
@@ -54,6 +56,10 @@ TBD
 
 ## Adam
 
+> Adam stands for Adaptive Moment Estimation
+
+## RMSprop
+
 ## Resources
 
 ### Tutorial
@@ -68,6 +74,11 @@ TBD
 ### Article
 
 * [TENSORFLOW GUIDE: EXPONENTIAL MOVING AVERAGE FOR IMPROVED CLASSIFICATION](http://ruishu.io/2017/11/22/ema/)
+* [An overview of gradient descent optimization algorithms](http://sebastianruder.com/optimizing-gradient-descent/index.html)
+
+### Github
+
+* [eriklindernoren/ML-From-Scratch - Optimizers](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/optimizers.py)
 
 ### Tensorflow
 

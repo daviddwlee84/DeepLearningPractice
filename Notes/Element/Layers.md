@@ -48,6 +48,10 @@ aka. Subsampling Layer
 * Reduce numbers of feature
 * Prevent overfitting
 
+Back Propagation
+
+* [Only Numpy: Understanding Back Propagation for Max Pooling Layer in Multi Layer CNN with Example and Interactive Code. (With and Without Activation Layer)](https://medium.com/the-bioinformatics-press/only-numpy-understanding-back-propagation-for-max-pooling-layer-in-multi-layer-cnn-with-example-f7be891ee4b4)
+
 ### Max-Pooling
 
 Pooling using a "max" filter with stride equal to the kernel size
@@ -62,3 +66,7 @@ Pooling using a "max" filter with stride equal to the kernel size
 
 * [ML Cheetsheet - Layers](https://ml-cheatsheet.readthedocs.io/en/latest/layers.html)
 * [ML Cheetsheet - NN Concept - Layers](https://ml-cheatsheet.readthedocs.io/en/latest/nn_concepts.html#layers)
+
+### Github
+
+* [eriklindernoren/ML-From-Scratch - Layers](https://github.com/eriklindernoren/ML-From-Scratch/blob/master/mlfromscratch/deep_learning/layers.py)
