@@ -11,7 +11,7 @@ This experiment will include three parts of jobs.
 And with two phases
 
 1. Using any tool, third-party corpus or even manual labelling the data set
-2. Supervised Learning by using the given preprocessed data
+2. ~~Supervised Learning by using the given preprocessed data~~ Just keep imporving it with your own freaking eyes... = =
 
 ### Data set / Corpus
 
@@ -417,6 +417,8 @@ Idea: Common pattern
 * `XX症`
 * `XX炎`
 * `XX損傷`
+* `XX病`
+* `XX疹`
 
 Make a medical dictionary with some technique
 
@@ -430,13 +432,32 @@ e.g.
 * `_症 sym`
 * `XX損傷 des`
 
+---
+
+The score of the first phase (`1_ 59.txt`)
+
+| CWS P | CWS R | CWS F1 | CWS Rank | POS P | POS R | POS F1 | POS Rank | NER P | NER R | NER F1 | NER Rank |
+| ----- | ----- | ------ | -------- | ----- | ----- | ------ | -------- | ----- | ----- | ------ | -------- |
+| 0.852 | 0.815 | 0.833  | 40/101   | 0.624 | 0.597 | 0.610  | 83/101   | 0.667 | 0.145 | 0.238  | 92/101   |
+
+* The recall rate of NER is really low because I didn't try hard to find out all the NER by my eyes...
+* Rank of POS is low either. Maybe is the standard problem?!
+
+> `ref_59.txt` is the other two random classmates' result
+
+---
+
 ## Second phase
 
-### Chinese word segmentation by learning
+### Chinese word segmentation by ~~learning~~ more eyes
 
-### Part-of-speech tagging by learning
+* Don't seperate `XX性` with length less than 2
 
-### Named-entity recognition by learning
+### Part-of-speech tagging by ~~learning~~ more eyes
+
+### Named-entity recognition by ~~learning~~ more eyes
+
+* Label out more NER...
 
 ## Resources
 
