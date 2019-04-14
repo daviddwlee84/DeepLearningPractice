@@ -1,4 +1,4 @@
-## First Phase: using tools and libraries
+## Chinese Word Segmentation, POS Tagging, Medical NER All In One
 # Originally, we have the following procedure
 #
 # I. Word Segmentation
@@ -41,11 +41,11 @@ def _jiebaPOSRule():
         '细菌性',
         '行为矫正',
         '粟粒状',
-        '安全性',
+        # '安全性', # TA said don't split XX性 = =, but the given example need to split WTF
         '应予以',
         '常继发',
-        '迟发性',
-        '灵敏性',
+        # '迟发性',
+        # '灵敏性',
         '若有阳',
         '完全恢复',
     ]
@@ -100,7 +100,7 @@ def loadAnswerIntoDict(seg_ans_path:str, pos_ans_path:str, ner_ans_path:str):
 
 ## Dumping Data
 
-def dumpResultIntoTxt(result_dict:dict, data_path:str="1_ 59.txt"):
+def dumpResultIntoTxt(result_dict:dict, data_path:str="2_ 59.txt"):
 
     print("Dumping result into {}...".format(data_path))
     with open(data_path, 'w') as result:
@@ -380,7 +380,8 @@ def _loadMedicalDict(data_path:str='user_dict/medical_ner.txt'):
             medical_dictionary[ner] = (tag, 'normal')
     
     return medical_dictionary
-            
+
+# Key function for Medical NER 
 def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
     to_mark_list_dict = defaultdict(list) # seq_num: [((pos_start, pos_end), tag)] 
 
@@ -398,10 +399,14 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
                         elif len(candidate_word) == len(ner): # candidate
                             if candidate_word == ner:
                                 to_mark_list_dict[seq_num].append(((i, j), tag))
-                elif post_pre_fix == 'postfix' and ner in word:
-                    pass
+                elif post_pre_fix == 'postfix' and ner in word: # TODO
+                    if word[-len(ner):] == ner: # Current only support single word postfix
+                        if ((i, i), tag) not in to_mark_list_dict[seq_num]: # make sure not duplicate
+                            to_mark_list_dict[seq_num].append(((i, i), tag))
                 elif post_pre_fix == 'prefix' and ner in word:
-                    pass
+                    if word[:len(ner)] == ner:
+                        if ((i, i), tag) not in to_mark_list_dict[seq_num]:
+                            to_mark_list_dict[seq_num].append(((i, i), tag))
 
     return to_mark_list_dict
 
@@ -534,13 +539,13 @@ def main():
     # I. Word Segmentation and Pre-POS
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(no_sub_sup_raw_data_dict, tools='jieba')
     inserted_word_seg_dict, inserted_word_seg_list_dict = insertSubSupTags(word_seg_list_dict, sub_sup_insert_index_dict, with_tag=False)
-    dumpResultIntoTxt(inserted_word_seg_dict, data_path='1_ 59_segment.txt')
+    dumpResultIntoTxt(inserted_word_seg_dict, data_path='2_ 59_segment.txt')
 
     # II. POS tagging and General NER
 
     new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='jieba')
     inserted_new_pos_dict, inserted_new_pos_list_dict = insertSubSupTags(new_pos_list_dict, sub_sup_insert_index_dict, with_tag=True)
-    dumpResultIntoTxt(inserted_new_pos_dict, data_path='1_ 59_pos.txt')
+    dumpResultIntoTxt(inserted_new_pos_dict, data_path='2_ 59_pos.txt')
 
     ## III. Medical NER
     medical_ner_dict, medical_ner_list_dict = medicalNER(inserted_word_seg_list_dict, inserted_new_pos_list_dict)

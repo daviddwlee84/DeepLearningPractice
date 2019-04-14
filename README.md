@@ -45,7 +45,7 @@ Subject|Technique|Framework|Complexity|Remark
 [YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
 [Word Similarity](Project/WordSimilarity)||||(TODO) Word Similarity Based on Dictionary and Based on Corpus
 [Text Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|Multiple Models|Multiple Libraries|●●●●●|SemEval2018 Task 7 Semantic Relation Extraction and Classification in Scientific Papers
-[Medical Corpus](Project/MedicalCorpus)|RNN|Tensorflow|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
+[Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 
 ## Deep Learning Categories
 
