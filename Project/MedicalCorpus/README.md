@@ -34,7 +34,7 @@ And with two phases
 
 ### Task
 
-> The output filename must be `1_ 59` and `2_ 59` for two phases result. (just inlcude the result after Medical NER)
+> The output filename must be `1_ 59` and `2nd_59` for two phases result. (just inlcude the result after Medical NER)
 
 #### Chinese word segmentation
 
@@ -369,6 +369,9 @@ There are the following case occuring in corpus.
 
 Maybe remove them first and add position reminder to add them in the end.
 
+> Note: `+` and `*` will confused the regular expression. ~~So need to be `\+` and `\*` in dictionary~~
+> So need to be transfer to transfer to regular expression by `re.escape()`
+
 ### Part-of-speech tagging by tool
 
 * [pkuseg POS](#pkuseg-POS)
@@ -449,6 +452,8 @@ The score of the first phase (`1_ 59.txt`)
 
 ## Second phase
 
+* [Online Format Examination Program](http://47.100.62.253:8080/qa)
+
 ### Chinese word segmentation by ~~learning~~ more eyes
 
 * Don't seperate `XX性` with length less than 2
@@ -458,6 +463,36 @@ The score of the first phase (`1_ 59.txt`)
 ### Named-entity recognition by ~~learning~~ more eyes
 
 * Label out more NER...
+
+### Error Debug
+
+Error
+
+* Filename should be `2nd_59.txt`...
+* No `eng`, `ag` in POS tagging
+* Unexpected change on raw data on line 10, 19, 22, 37, 51, 55, 64, 67, 70, 116, 128, 134, 155, 157, 158, 186 (basically the `<sup>`, `<sub>` problem)
+
+Warning
+
+* `$$_` on line 9, 10, 23, 24, 28, 40, 51, 55, 64, 67, 69, 70, 88, 90, 98, 100, 116, 125, 134, 158, 170, 186
+
+#### Tricky line 67
+
+```txt
+67 为最主要实验室检查。患儿呼吸治疗时必须测定动脉血氧分压（PaO<sub>2</sub>）、二氧化碳分压（PaCO<sub>2</sub>）和pH。发病早期，PaO<sub>2</sub>＜6.$$_5kPa（50mmHg），PaCO<sub>2</sub> .......
+```
+
+There are 4 tags (2 `PaO<sub>2</sub>` and 2 `PaCO<sub>2</sub>`). But they are intersect with each other.
+
+So the offset will go wrong even if putting the right order in the dictionary (`sub_sup.txt`)
+
+But I just leave it as TODO. Maybe next time.
+
+Manual adjustment result: (only modify those 4 tags)
+
+```txt
+67 为/p 最/a 主要/b 实验室/n 检查/v 。/w 患儿/n 呼吸/v 治疗/v 时/n 必须/d 测定/v 动脉血/n 氧分压/n （/w PaO<sub>2</sub>/n ）/w 、/x 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/nx 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/nx （/w 50/m mmHg/nx ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/nx $$_ （/w 60/m mmHg/nx ）/w ，/w pH/nx ＜/w 7.20/m ，/w BE/nx ＜/w -/x 5.0/m mmol/nx //w L/x ，/w 应/v 考虑/v 低氧/n [血症/n]sym 、/x 高/a 碳酸/n [血症/n]sym 、/x 代谢性/n 酸中毒/n ，/w 经/n 吸氧/v 或/c 辅助/v 通气/n 治疗/v 无/v 改善/v ，/w 可/v 转为/v 气道/n 插管/n 和/c 呼吸机/n 治疗/v ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/x 3/x 小时/n 以及/c 随后/d 2/x ～/x 3/m 天/q 的/u 每/r 12/m ～/x 24/m 小时/n ，/w 需要/v 检查/v 动脉血/n 气值/n ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/v 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
+```
 
 ## Resources
 
@@ -502,6 +537,8 @@ The score of the first phase (`1_ 59.txt`)
   * [X] add tag
   * [X] more than two words
   * [ ] prefix and postfix detection (especially postfix one!)
+    * [X] postfix
+    * [ ] prefix
 * [ ] maybe record detail procedure afterward
 
 ### pkuseg trace code
