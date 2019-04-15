@@ -23,7 +23,6 @@
 细菌性心内膜炎 dis
 败血症 sym
 抽搐 sym
-创伤 sym
 低血压 sym
 恶寒 sym
 发热 sym
@@ -123,7 +122,6 @@
 肘关节脱位 sym
 末梢神经炎 dis
 Ca<sup>2+</sup>内流 dis
-受伤 dis
 中毒 dis
 先天性畸形 dis
 行为障碍 dis
@@ -321,8 +319,18 @@ Fanconi综合征 sym
 阿片类受体激动剂 tre
 受体拮抗剂 tre
 新霉素 tre
+低氧血症 sym
+高碳酸血症 sym
+代谢性酸中毒 sym
+辅助通气治疗 tre
+呼吸治疗 tre
+测定动脉血氧分压 tes
+气道插管 tre
+呼吸机治疗 tre
 _脓肿 sym
 _症 sym
+_征 sym
+_受伤 dis
 _損傷 dis
 _炎 dis
 _伤 dis
@@ -342,3 +350,7 @@ _动脉 bod
 _静脉 bod
 _心室 bod
 _肺 bod
+_体温 sym
+_中毒 sym
+_治疗 tre
+_插管 tre

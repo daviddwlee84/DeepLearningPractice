@@ -13,6 +13,7 @@
 # III. Medical NER
 
 # TODO Fix <sub> <sup> tag bug on line 67 of raw_59.txt
+# TODO Medical NER: Multiple word prefix, postfix user dictionary
 
 import jieba
 from collections import defaultdict
@@ -413,7 +414,12 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary:dict):
                 elif post_pre_fix == 'postfix' and ner in word: # TODO
                     if word[-len(ner):] == ner: # Current only support single word postfix
                         if ((i, i), tag) not in to_mark_list_dict[seq_num]: # make sure not duplicate
-                            to_mark_list_dict[seq_num].append(((i, i), tag))
+                            found_longer_named_entity = False
+                            for ((_, j), tag) in to_mark_list_dict[seq_num]:
+                                if i == j: # If there is a longer word then they will have the same ending index
+                                    found_longer_named_entity = True
+                            if not found_longer_named_entity:
+                                to_mark_list_dict[seq_num].append(((i, i), tag))
                 elif post_pre_fix == 'prefix' and ner in word:
                     if word[:len(ner)] == ner:
                         if ((i, i), tag) not in to_mark_list_dict[seq_num]:
