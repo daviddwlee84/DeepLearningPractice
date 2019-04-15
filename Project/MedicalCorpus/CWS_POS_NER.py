@@ -379,27 +379,28 @@ def _loadMedicalDict(data_path:str='user_dict/medical_ner.txt'):
     with open(data_path, 'r') as f:
         medical_raw = f.readlines()
     
-    # (NER: (tag, postfix_prefix_normal))
-    medical_dictionary = {}
+    # Use list to make sure the postfix and prefix pattern will be examined later than normal
+    # (NER, (tag, postfix_prefix_normal))
+    medical_dictionary_list = []
 
     for line in medical_raw:
         ner, tag = line.split()
         if ner[0] == '_': # postfix
-            medical_dictionary[ner[1:]] = (tag, 'postfix')
+            medical_dictionary_list.append((ner[1:], (tag, 'postfix')))
         elif ner[-1] == '_': # prefix
-            medical_dictionary[ner[:-1]] = (tag, 'prefix')
+            medical_dictionary_list.append((ner[:-1], (tag, 'prefix')))
         else:
-            medical_dictionary[ner] = (tag, 'normal')
+            medical_dictionary_list.append((ner, (tag, 'normal')))
     
-    return medical_dictionary
+    return medical_dictionary_list
 
 # Key function for Medical NER 
-def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary:dict):
+def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary_list:list):
     to_mark_list_dict = defaultdict(list) # seq_num: [((pos_start, pos_end), tag)] 
 
     for seq_num, word_seg_list in word_seg_list_dict.items():
         for i, word in enumerate(word_seg_list):
-            for ner, (tag, post_pre_fix) in medical_dictionary.items():
+            for (ner, (tag, post_pre_fix)) in medical_dictionary_list:
                 if post_pre_fix == 'normal' and ner == word:
                     to_mark_list_dict[seq_num].append(((i, i), tag))
                 elif post_pre_fix == 'normal' and word in ner: # ner is combined with multiple word
@@ -413,12 +414,16 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary:dict):
                                 to_mark_list_dict[seq_num].append(((i, j), tag))
                 elif post_pre_fix == 'postfix' and ner in word: # TODO
                     if word[-len(ner):] == ner: # Current only support single word postfix
-                        if ((i, i), tag) not in to_mark_list_dict[seq_num]: # make sure not duplicate
-                            found_longer_named_entity = False
-                            for ((_, j), tag) in to_mark_list_dict[seq_num]:
-                                if i == j: # If there is a longer word then they will have the same ending index
-                                    found_longer_named_entity = True
-                            if not found_longer_named_entity:
+                        if ((i, i), tag) not in to_mark_list_dict[seq_num]: # make sure not duplicate (first filtering)
+                            found_duplicate_entity = False
+                            for ((ii, jj), _) in to_mark_list_dict[seq_num]:
+                                # If there is a same word but with same postfix (ii)
+                                # e.g. _水肿 vs. 肺水肿
+                                # If there is a longer word then they will have the same ending index (jj)
+                                # e.g. 细菌性心内膜炎 vs. _炎 (will get 心内膜炎)
+                                if i == ii or i == jj:
+                                    found_duplicate_entity = True
+                            if not found_duplicate_entity:
                                 to_mark_list_dict[seq_num].append(((i, i), tag))
                 elif post_pre_fix == 'prefix' and ner in word:
                     if word[:len(ner)] == ner:
@@ -431,9 +436,9 @@ def medicalNER(inserted_word_seg_list_dict:dict, inserted_new_pos_list_dict:dict
     assert tools in ('pkuseg', 'jieba') # no difference between two tools for now
     print("Medical NER using {}...".format(tools))
 
-    medical_dictionary = _loadMedicalDict()
+    medical_dictionary_list = _loadMedicalDict()
 
-    to_mark_list_dict = _findToMarkPosition(inserted_word_seg_list_dict, medical_dictionary)
+    to_mark_list_dict = _findToMarkPosition(inserted_word_seg_list_dict, medical_dictionary_list)
 
     medical_ner_list_dict = {}
 
