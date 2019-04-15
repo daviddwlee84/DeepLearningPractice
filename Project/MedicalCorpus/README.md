@@ -13,6 +13,11 @@ And with two phases
 1. Using any tool, third-party corpus or even manual labelling the data set
 2. ~~Supervised Learning by using the given preprocessed data~~ Just keep imporving it with your own freaking eyes... = =
 
+TODO:
+
+* [line 67](#Tricky-line-67-(Haven't-fixed))
+* [Medical NER Dict](#Medical-NER-TODO)
+
 ### Data set / Corpus
 
 * [raw_59.txt](data/raw_59.txt)
@@ -109,9 +114,9 @@ Idea:
 5. doing medical dictionary on raw data and found the position of each medical NER
 6. then decorate the previous result
 
-Todo:
+~~Todo:~~
 
-need to find the medical dictionary with tags to filter the medical named-entities
+~~need to find the medical dictionary with tags to filter the medical named-entities~~
 
 ### Clean up meaningless space character
 
@@ -464,7 +469,21 @@ The score of the first phase (`1_ 59.txt`)
 
 * Label out more NER...
 
-### Error Debug
+#### Medical NER TODO
+
+The multiple prefix, postfix!
+
+Because the word segmentation will seperate the things like `[检查/v 动脉血/n 气值/n]tes`, `[体格/n 检查/v]tes` or `[呼吸/v 治疗/v]tre`
+
+So its normal to be multiple word.
+
+Maybe design a postfix or prefix that can including the following word in given count.
+
+e.g. Like `__治疗` with one additional `_` that means two word. And `检查___` with two additional `_` that means three word, respectively.
+
+### Error Debug (Fixed)
+
+> Log of the "Online Format Examination Program"
 
 Error
 
@@ -476,7 +495,7 @@ Warning
 
 * `$$_` on line 9, 10, 23, 24, 28, 40, 51, 55, 64, 67, 69, 70, 88, 90, 98, 100, 116, 125, 134, 158, 170, 186
 
-#### Tricky line 67
+#### Tricky line 67 (Haven't fixed)
 
 ```txt
 67 为最主要实验室检查。患儿呼吸治疗时必须测定动脉血氧分压（PaO<sub>2</sub>）、二氧化碳分压（PaCO<sub>2</sub>）和pH。发病早期，PaO<sub>2</sub>＜6.$$_5kPa（50mmHg），PaCO<sub>2</sub> .......
@@ -488,11 +507,25 @@ So the offset will go wrong even if putting the right order in the dictionary (`
 
 But I just leave it as TODO. Maybe next time.
 
-Manual adjustment result: (only modify those 4 tags)
+Manual adjustment result: ~~(only modify those 4 tags)~~ a little more than that :P
 
 ```txt
-67 为/p 最/a 主要/b 实验室/n 检查/v 。/w 患儿/n 呼吸/v 治疗/v 时/n 必须/d 测定/v 动脉血/n 氧分压/n （/w PaO<sub>2</sub>/n ）/w 、/x 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/nx 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/nx （/w 50/m mmHg/nx ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/nx $$_ （/w 60/m mmHg/nx ）/w ，/w pH/nx ＜/w 7.20/m ，/w BE/nx ＜/w -/x 5.0/m mmol/nx //w L/x ，/w 应/v 考虑/v 低氧/n [血症/n]sym 、/x 高/a 碳酸/n [血症/n]sym 、/x 代谢性/n 酸中毒/n ，/w 经/n 吸氧/v 或/c 辅助/v 通气/n 治疗/v 无/v 改善/v ，/w 可/v 转为/v 气道/n 插管/n 和/c 呼吸机/n 治疗/v ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/x 3/x 小时/n 以及/c 随后/d 2/x ～/x 3/m 天/q 的/u 每/r 12/m ～/x 24/m 小时/n ，/w 需要/v 检查/v 动脉血/n 气值/n ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/v 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
+67 为/p 最/a 主要/b 实验室/n 检查/v 。/w 患儿/n [呼吸/v 治疗/v]tre 时/n 必须/d [测定/v 动脉血/n 氧分压/n]tes （/w PaO<sub>2</sub>/n ）/w 、/w 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/nx 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/nx （/w 50/m mmHg/nx ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/nx $$_ （/w 60/m mmHg/nx ）/w ，/w pH/nx ＜/w 7.20/m ，/w BE/nx ＜/w -/x 5.0/m mmol/nx //w L/x ，/w 应/v 考虑/v [低氧/n 血症/n]sym 、/w [高/a 碳酸/n 血症/n]sym 、/w [代谢性/n 酸中毒/n]sym ，/w 经/n [吸氧/v]tre 或/c [辅助/v 通气/n 治疗/v]tre 无/v 改善/v ，/w 可/v 转为/v [气道/n 插管/n]tre 和/c [呼吸机/n 治疗/v]tre ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/x 3/x 小时/n 以及/c 随后/d 2/x ～/x 3/m 天/q 的/u 每/r 12/m ～/x 24/m 小时/n ，/w 需要/v [检查/v 动脉血/n 气值/n]tes ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/v 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
 ```
+
+#### Other
+
+If enable the postfix function, the medical NER will re-tag the multiple word named entities.
+
+e.g. `[细菌性/n', '[心内膜炎/n]dis]dis` if use posfix `_炎` and `细菌性心内膜炎` as the same time.
+
+Solution:
+
+* If determining postfix, check if the ending index is exist (because the postfix pattern is put in the end of the dictionary)
+* Also testing the starting index if it is single word too.
+* I've changed to use list instead of dict to make sure all the determination of postfix and prefix are later than normal one.
+
+(So don't add duplicate thing in normal list of the dictionary)
 
 ## Resources
 
