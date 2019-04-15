@@ -12,6 +12,7 @@
 # II. POS tagging and General NER
 # III. Medical NER
 
+# TODO Fix <sub> <sup> tag bug on line 67 of raw_59.txt
 
 import jieba
 from collections import defaultdict
@@ -100,7 +101,7 @@ def loadAnswerIntoDict(seg_ans_path:str, pos_ans_path:str, ner_ans_path:str):
 
 ## Dumping Data
 
-def dumpResultIntoTxt(result_dict:dict, data_path:str="2_ 59.txt"):
+def dumpResultIntoTxt(result_dict:dict, data_path:str="2nd_59.txt"):
 
     print("Dumping result into {}...".format(data_path))
     with open(data_path, 'w') as result:
@@ -111,6 +112,7 @@ def dumpResultIntoTxt(result_dict:dict, data_path:str="2_ 59.txt"):
 ## Data clean up
 
 def deleteMeaninglessSpace(raw_data_dict:dict):
+    print("Deleting meaningless spaces...")
     cleaned_raw_data_dict = {}
 
     for seq_num, string in raw_data_dict.items():
@@ -134,9 +136,10 @@ def _loadSubSupDict(data_path:str='user_dict/sub_sup.txt'):
 
     return sub_sup_dictionary
 
-
+# TODO The <sub> <sup> tag bug
 def preserveSubSupTags(cleaned_raw_data_dict:dict):
     
+    print("Preserving <sub> <sup> tags...")
     sub_sup_dictionary = _loadSubSupDict()
 
     sub_sup_insert_index_dict = defaultdict(list) # seq_num: [(word_position, sub_sup_word, tag), ...]
@@ -144,29 +147,35 @@ def preserveSubSupTags(cleaned_raw_data_dict:dict):
     no_sub_sup_raw_data_dict = {}
 
     for seq_num, string in cleaned_raw_data_dict.items():
-        cumulated_num = 0
-        last_end = 0
         for sub_sup_word, tag in sub_sup_dictionary.items():
-            while sub_sup_word in string[last_end:]: # may be same token in same line
-                start_idx = string.find(sub_sup_word, last_end) - cumulated_num
-                last_end = start_idx + len(sub_sup_word)
-                cumulated_num += len(sub_sup_word)
+            sub_sup_pattern = re.escape(sub_sup_word)
+            while sub_sup_word in string: # may be same token in same line
+                start_idx = string.find(sub_sup_word)
                 sub_sup_insert_index_dict[seq_num].append((start_idx, sub_sup_word, tag))
-            string = string.replace(sub_sup_word, '') # clean them up
+                string = re.sub(sub_sup_pattern, '', string, count=1) # delete the first match
         no_sub_sup_raw_data_dict[seq_num] = string
     
     return no_sub_sup_raw_data_dict, sub_sup_insert_index_dict
 
-
+# TODO The <sub> <sup> tag bug
 def insertSubSupTags(word_list_dict:dict, sub_sup_insert_index_dict:dict, with_tag:bool=True):
+    print("Inserting <sub> <sup> with tag..." if with_tag else "Inserting <sub> <sup> without tag...")
     new_word_list_dict = {}
     for seq_num, word_list in word_list_dict.items():
         if seq_num in sub_sup_insert_index_dict:
             cumulated = 0
+            new_word_list = word_list.copy()
             for (start_idx, sub_sup_word, tag) in sub_sup_insert_index_dict[seq_num]:
                 word_count = 0
-                new_word_list = word_list.copy()
                 for i, word in enumerate(word_list):
+                    if with_tag: # remove tag if the input word_list_dict is after POS tagging
+                        if word == '$$_':
+                            word = '$$_'
+                        else:
+                            try:
+                                word, _ = word.split('/')
+                            except ValueError: # jieba: "//x"
+                                word, _ = re.sub(r'(.*)/(\w+)', r'\1 \2', word).split()
                     if word_count == start_idx:
                         if with_tag:
                             new_word_list.insert(i+cumulated, sub_sup_word+'/'+tag)
@@ -266,8 +275,10 @@ def _jiebaPOSMapper(pre_pos_list_dict:dict):
     jiebaExtraTags = {
         'ad': 'a',
         'an': 'a',
+        'ag': 'a',
         'df': 'd',
         'dg': 'd',
+        'eng': 'nx', # English not nr is nx
         'mg': 'm',
         'mq': 'm',
         'ng': 'n',
@@ -307,9 +318,9 @@ def _jiebaPOSMapper(pre_pos_list_dict:dict):
                 tag = jiebaExtraTags[tag] # equivalent to pick first char
 
             if tag == 'x': # TODO
-                if word in ('，', '：', '。', '（', '）', '；'):  # symbol
+                if word in ('，', '：', '。', '（', '）', '；', '/', '［', '］', '＜', '＞', '、'):  # symbol
                     tag = 'w'
-                elif word in ('①', '②', '③', '④'):  # number symbol
+                elif word in ('①', '②', '③', '④', '⑤', '⑥', '⑦'):  # number symbol
                     tag = 'm'
                 
             new_word_with_tag = word + '/' + tag
@@ -382,7 +393,7 @@ def _loadMedicalDict(data_path:str='user_dict/medical_ner.txt'):
     return medical_dictionary
 
 # Key function for Medical NER 
-def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
+def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary:dict):
     to_mark_list_dict = defaultdict(list) # seq_num: [((pos_start, pos_end), tag)] 
 
     for seq_num, word_seg_list in word_seg_list_dict.items():
@@ -410,7 +421,7 @@ def _findToMarkPosition(word_seg_list_dict:dict, medical_dictionary: dict):
 
     return to_mark_list_dict
 
-def medicalNER(inserted_word_seg_list_dict: dict, inserted_new_pos_list_dict:dict, tools:str='jieba'):
+def medicalNER(inserted_word_seg_list_dict:dict, inserted_new_pos_list_dict:dict, tools:str='jieba'):
     assert tools in ('pkuseg', 'jieba') # no difference between two tools for now
     print("Medical NER using {}...".format(tools))
 
@@ -539,13 +550,13 @@ def main():
     # I. Word Segmentation and Pre-POS
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(no_sub_sup_raw_data_dict, tools='jieba')
     inserted_word_seg_dict, inserted_word_seg_list_dict = insertSubSupTags(word_seg_list_dict, sub_sup_insert_index_dict, with_tag=False)
-    dumpResultIntoTxt(inserted_word_seg_dict, data_path='2_ 59_segment.txt')
+    dumpResultIntoTxt(inserted_word_seg_dict, data_path='2nd_59_segment.txt')
 
     # II. POS tagging and General NER
 
     new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='jieba')
     inserted_new_pos_dict, inserted_new_pos_list_dict = insertSubSupTags(new_pos_list_dict, sub_sup_insert_index_dict, with_tag=True)
-    dumpResultIntoTxt(inserted_new_pos_dict, data_path='2_ 59_pos.txt')
+    dumpResultIntoTxt(inserted_new_pos_dict, data_path='2nd_59_pos.txt')
 
     ## III. Medical NER
     medical_ner_dict, medical_ner_list_dict = medicalNER(inserted_word_seg_list_dict, inserted_new_pos_list_dict)
