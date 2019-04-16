@@ -11,12 +11,7 @@ This experiment will include three parts of jobs.
 And with two phases
 
 1. Using any tool, third-party corpus or even manual labelling the data set
-2. ~~Supervised Learning by using the given preprocessed data~~ Just keep imporving it with your own freaking eyes... = =
-
-TODO:
-
-* [line 67](#Tricky-line-67-(Haven't-fixed))
-* [Medical NER Dict](#Medical-NER-TODO)
+2. ~~Supervised Learning by using the given preprocessed data~~ Just keep imporving it with your own freaking eyes... = =, no scorer or gold test data provided.
 
 ### Data set / Corpus
 
@@ -32,6 +27,10 @@ TODO:
 #### Chinese word segmentation & POS tagging Standard
 
 * [《北京大學現代漢語語料庫基本加工規範》](http://www.cinfo.net.cn/pz/pdf/a2%E5%8C%97%E4%BA%AC%E5%A4%A7%E5%AD%A6%E7%8E%B0%E4%BB%A3%E6%B1%89%E8%AF%AD%E8%AF%AD%E6%96%99%E5%BA%93%E5%9F%BA%E6%9C%AC%E5%8A%A0%E5%B7%A5%E8%A7%84%E8%8C%83.pdf)
+
+Shouldn't split the bacteria or the medicine name. e.g. 革兰阴性杆菌 or 醋酸甲羟孕酮
+
+(e.g. maybe end with `菌`, `酮`, `胺`, `酶`, `素`, `剂`)
 
 #### Medical NER Standard
 
@@ -59,7 +58,7 @@ Example of space
 
 #### Part-of-speech tagging (including General NER)
 
-1. 26 Tags must followed the [Dictionary of Modern Chinese Grammar Information (現代漢語語法信息詞典)](http://opendata.pku.edu.cn/dataset.xhtml?persistentId=doi:10.18170/DVN/EDQWIL)
+1. ~~26 tags must follow the [Dictionary of Modern Chinese Grammar Information (現代漢語語法信息詞典)](http://opendata.pku.edu.cn/dataset.xhtml?persistentId=doi:10.18170/DVN/EDQWIL)~~ 40 tags must follow [the standard given by《北京大學現代漢語語料庫基本加工規範》](#Chinese-word-segmentation-&-POS-tagging-Standard) (And [jieba](#jieba-POS) has 55 tags)
 2. The format must be `word/tag` (do not include space).
 3. Additional General NER must include
    * nr: Name
@@ -465,6 +464,12 @@ The score of the first phase (`1_ 59.txt`)
 
 ### Part-of-speech tagging by ~~learning~~ more eyes
 
+* `Ag`, `Dg`, `Ng`, `Tg`, `Vg` need to capitalize its first letter
+* *unit* need to be tagged with `q`
+* number including symbel style number (e.g. `①`) need to be tagged with `m`
+* and any symbol need to be `w`
+* Shouldn't left any `x` label!
+
 ### Named-entity recognition by ~~learning~~ more eyes
 
 * Label out more NER...
@@ -510,10 +515,10 @@ But I just leave it as TODO. Maybe next time.
 Manual adjustment result: ~~(only modify those 4 tags)~~ a little more than that :P
 
 ```txt
-67 为/p 最/a 主要/b 实验室/n 检查/v 。/w 患儿/n [呼吸/v 治疗/v]tre 时/n 必须/d [测定/v 动脉血/n 氧分压/n]tes （/w PaO<sub>2</sub>/n ）/w 、/w 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/nx 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/nx （/w 50/m mmHg/nx ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/nx $$_ （/w 60/m mmHg/nx ）/w ，/w pH/nx ＜/w 7.20/m ，/w BE/nx ＜/w -/x 5.0/m mmol/nx //w L/x ，/w 应/v 考虑/v [低氧/n 血症/n]sym 、/w [高/a 碳酸/n 血症/n]sym 、/w [代谢性/n 酸中毒/n]sym ，/w 经/n [吸氧/v]tre 或/c [辅助/v 通气/n 治疗/v]tre 无/v 改善/v ，/w 可/v 转为/v [气道/n 插管/n]tre 和/c [呼吸机/n 治疗/v]tre ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/x 3/x 小时/n 以及/c 随后/d 2/x ～/x 3/m 天/q 的/u 每/r 12/m ～/x 24/m 小时/n ，/w 需要/v [检查/v 动脉血/n 气值/n]tes ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/v 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
+67 为/p 最/a 主要/b 实验室/n 检查/vn 。/w 患儿/n [呼吸/v 治疗/v]tre 时/n 必须/d [测定/v 动脉血/n 氧分压/n]tes （/w PaO<sub>2</sub>/n ）/w 、/w 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/q 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/q （/w 50/m mmHg/q ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/q $$_ （/w 60/m mmHg/q ）/w ，/w pH/q ＜/w 7.20/m ，/w BE/nx ＜/w -/w 5.0/m mmol/q //w L/q ，/w 应/v 考虑/v [低氧/n 血症/n]sym 、/w [高/a 碳酸/n 血症/n]sym 、/w [代谢性/n 酸中毒/n]sym ，/w 经/n 吸氧/v 或/c [辅助/vn 通气/n 治疗/v]tre 无/v 改善/v ，/w 可/v 转为/v [气道/n 插管/n]tre 和/c [呼吸机/n 治疗/v]tre ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/w 3/m 小时/n 以及/c 随后/d 2/m ～/w 3/m 天/q 的/u 每/r 12/m ～/w 24/m 小时/n ，/w 需要/v 检查/vn 动脉血/n 气值/n ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/vn 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
 ```
 
-#### Other
+#### Other Tricky Things (solved)
 
 If enable the postfix function, the medical NER will re-tag the multiple word named entities.
 
@@ -573,6 +578,8 @@ Solution:
     * [X] postfix
     * [ ] prefix
 * [ ] maybe record detail procedure afterward
+* [ ] [line 67](#Tricky-line-67-(Haven't-fixed))
+* [ ] [Medical NER Dict](#Medical-NER-TODO)
 
 ### pkuseg trace code
 
@@ -587,15 +594,15 @@ Solution:
 * [download_model](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/download.py#L30) - called in [`__init__.py`](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/__init__.py#L183)
   * [model_urls](https://github.com/lancopku/pkuseg-python/blob/master/pkuseg/config.py#L20)
 
-#### pkuseg POS
+#### pkuseg POS (deprecated)
 
 POS Tags: [`tags.txt`](https://github.com/lancopku/pkuseg-python/blob/master/tags.txt)
 
 dict: `tag_to_idx`
 
-There are 35 different tags. But in our standard we only have 26. Thus we need some sort of map.
+There are 35 different tags. ~~But in our standard we only have 26~~. Thus we need some sort of map.
 
-And I found that the first 26 POS is match the standard. The pkuseg has done some extra work on NER.
+~~And I found that the first 26 POS is match the standard.~~ The pkuseg has done some extra work on NER.
 
 ```txt
 nr  人名
@@ -681,76 +688,3 @@ Out[17]: '\n有的是\n服务器\n味精\n男生\n行当\n咀嚼\n博爱\n丛林
 ### Python match
 
 * [GeeksforGeeks - Python String | find()](https://www.geeksforgeeks.org/string-find-python/)
-
-### Deprecated notes
-
-#### Clean up space character
-
-```py
-re.findall(r'(\D\D)\$\$_(\D\D)', text)
-```
-
-```txt
-[('循环', '（C'), ('us', 'Ac'), ('us', 'Ca'), ('Qt', '=（'), ('$_', 'SI'), ('>/', 'L，'), ('al', 'di'), ('治疗', '此类'), ('二节', '生理'), ('一节', '支气'), ('U/', '（k'), ('kg', 'qd'), ('on', 'T现'), ('al', 'in'), ('ve', 'in'), ('nt', 'or'), ('ve', 'in'), ('ll', 'tr'), ('ow', 'vi'), ('us', 'in'), ('an', 'st'), ('dy', 'of'), ('al', 'di'), ('se', 'in'), ('头颅', 'MR'), ('主病', '（G'), ('al', 'he'), ('ic', 'im'), ('er', 'no'), ('ed', 'AS'), ('al', 're'), ('ve', 'AS'), ('al', 'do'), ('nt', 'AS'), ('al', 'hy'), ('试验', '（结'), ('治疗', '①静'), ('三节', '肺结'), ('an', 'vi'), ('PD', 'KT'), ('PD', 'KT'), ('PD', 'KT'), ('体温', '体温'), ('se', 'in'), ('ng', 'QT'), ('al', 'sy'), ('四节', '小儿')]
-```
-
-Maybe add a rule. If a space (`$$_`) surrounding by numbers in 2~3 letter. Then delete it. Otherwise, ~~replace it with normal space.~~ keep it.
-
-> * `string.replace("pattern", "replace")`
-> * `re.sub(r"pattern", "replace", string)`
-
-```py
-# Replace all the '$$_' with ' '
-# all the $$_ not surrounding by digital
-replaced_space = re.sub(r'(\D\D)\$\$_(\D\D)', r'\1 \2', text)
-# all the $$_ surrounding by english letter
-replaced_space = re.sub(r'(\w)\$\$_(\w)', r'\1 \2', replaced_space)
-
-# check the rest of the '$$_'
-re.findall(space_re, replaced_space)
-```
-
-```txt
-['次0.$$_3g，', '菌0.$$_5亿，', '菌1.$$_35亿', '菌0.$$_15亿', '（5.$$_0～8', '2）×$$_100', ' 0.$$_5～1', '11.$$_5～1', '＞1.$$_020', '＞0.$$_009', '-15$$_ SI', '为2.$$_2kb', '为9.$$_9kb', '69.$$_4kJ', '日2.$$_29g', '素0.$$_01～', '松0.$$_1～0', '＜6.$$_5kP', 'kPa$$_（60', '＜7.$$_20，', '-5.$$_0mm', '射0.$$_3～3', '次0.$$_5～1', 'mg=$$_125', '素0.$$_5mg', '66.$$_1%为', '16.$$_1%为', '，8.$$_1%为', '为0.$$_5%～', '为2.$$_5/1', '或0.$$_25%', '量0.$$_05～', '99.$$_9%。', '于5.$$_7mm', ' 1.$$_DIC', '泮0.$$_5mg', '、0.$$_5%碘', ' 1.$$_ATP', '为2.$$_0/w', '于1.$$_9/w', 'KT/$$_Vur', '为2.$$_1/w', '为2.$$_2/w']
-```
-
-> There is a weird thing `KT/$$_Vur` => On the 186th line `CCPD$$_KT/$$_Vurea为2.$$_1/w，NIPD$$_KT/Vurea为` => There are `KT/Vurea` following it. So it should delete as usual.
-
-```py
-# Delete all the other '$$_'
-cleaned_text = replaced_space.replace('$$_', '')
-```
-
-#### jieba space combiner
-
-```py
-# Combine '$', '$', '_' into $$_
-# Combine '$/x', '$/x', '_/x' into $$_
-# equivalent to join than replace '$ $ _ ' (delete)
-def _jiebaSpaceCombiner(pos_or_word_seg_list:list, func:str):
-    assert func in ('seg', 'pos')
-    if func == 'pos':
-        print(pos_or_word_seg_list)
-    idx_head_to_pop_from_list = []
-    for i in range(len(pos_or_word_seg_list)-2):
-        if func == 'seg' and pos_or_word_seg_list[i:i+3] == ['$', '$', '_']:  # for word segment
-            idx_head_to_pop_from_list.append(i)
-        elif func == 'pos' and pos_or_word_seg_list[i:i+3] == ['$/x', '$/x', '_/x']:  # for POS
-            idx_head_to_pop_from_list.append(i)
-    shift = 0
-    for j in idx_head_to_pop_from_list:
-        j += shift
-        for k in range(3):
-            pos_or_word_seg_list.pop(j)
-            if k == 2:
-                pos_or_word_seg_list.insert(j, '$$_')
-                shift -= 2
-    return pos_or_word_seg_list
-
-
-
-# in _firstWordSegmentationWithPOS
-if tools == 'jieba':
-    word_seg_list_dict[seq_num] = _jiebaSpaceCombiner(word_seg_list_dict[seq_num], func='seg')
-    pre_pos_list_dict[seq_num] = _jiebaSpaceCombiner(pre_pos_list_dict[seq_num], func='pos')
-```
