@@ -274,32 +274,27 @@ def wordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba'):
 def _jiebaPOSMapper(pre_pos_list_dict:dict):
 
     jiebaExtraTags = {
-        'ad': 'a',
-        'an': 'a',
-        'ag': 'a',
+        'ag': 'Ag',
         'df': 'd',
-        'dg': 'd',
-        'eng': 'nx', # English not nr is nx
+        'dg': 'Dg',
         'mg': 'm',
         'mq': 'm',
-        'ng': 'n',
-        'nrfg': 'n',
-        'nrt': 'n',
+        'ng': 'Ng',
+        'nrfg': 'nr',
+        'nrt': 'nr',
         'nz': 'n',
         'rg': 'r',
         'rr': 'r',
         'rz': 'r',
-        'tg': 't',
+        'tg': 'Tg',
         'ud': 'u',
         'ug': 'u',
         'uj': 'u',
         'ul': 'u',
         'uv': 'u',
         'uz': 'u',
-        'vd': 'v',
-        'vg': 'v',
+        'vg': 'Vg',
         'vi': 'v',
-        'vn': 'v',
         'vq': 'v',
         'zg': 'z'
     }
@@ -318,12 +313,25 @@ def _jiebaPOSMapper(pre_pos_list_dict:dict):
             if tag in jiebaExtraTags:
                 tag = jiebaExtraTags[tag] # equivalent to pick first char
 
-            if tag == 'x': # TODO
-                if word in ('，', '：', '。', '（', '）', '；', '/', '［', '］', '＜', '＞', '、'):  # symbol
+            if tag == 'x':
+                if word in ('，', '：', '。', '（', '）','∶', '；', '+', '—', '×', '/', '=', '［', '］', '＜', '＞', '、', '%', '～', '-', '.', '【', '】', '°', "'", '"', '•', '℃', '“', '”', '≥'):  # symbol
                     tag = 'w'
-                elif word in ('①', '②', '③', '④', '⑤', '⑥', '⑦'):  # number symbol
+                elif word.isdigit() or word in ('①', '②', '③', '④', '⑤', '⑥', '⑦', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅷ', 'Ⅸ', '+++', '++++'):  # number
+                    # '⑧', '⑨', '⑩', '⑪', '⑫', '⑬', '⑭', '⑮', '⑯', '⑰', '⑱', '⑲', '⑳'
+                    # +++ and ++++ maybe represent some number but due to privacy issue so have been replaced with "+"
                     tag = 'm'
-                
+                elif word.isalpha(): # for some English recognized as x
+                    tag = 'eng' # for further classification later on
+                else:
+                    # Shouldn't print anything!
+                    print('Error (found unknown x tag):', word)
+
+            if tag == 'eng':
+                if word in ('kg', 'kPa', 'd', 'm', 'mg', 'mm', 'L', 'mmol', 'mol', 'mmHg', 'ml', 'pH', 'ppm', 'cm', 'cmH', 'g', 'km', 'sec'): # unit
+                    tag = 'q'
+                else:
+                    tag = 'nx' # English not nr is nx
+
             new_word_with_tag = word + '/' + tag
             new_pos_list.append(new_word_with_tag)
         new_pos_list_dict[seq_num] = new_pos_list

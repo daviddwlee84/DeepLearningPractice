@@ -1,8 +1,8 @@
-10<sup>12</sup> w
+10<sup>12</sup> m
 PaCO<sub>2</sub> n
 Ca<sup>2+</sup> n
-10<sup>9</sup> w
-<sup>*</sup> x
+10<sup>9</sup> m
+<sup>*</sup> w
 PaO<sub>2</sub> n
 CO<sub>2</sub> n
 U<sub>1</sub> n
