@@ -365,10 +365,13 @@ ADHD dis
 钙通道阻滞剂 tre
 四环素 tre
 EDTA tre
+膜性肾病 dis
+骨骼 bod
+ELISA tes
+OCD dis
 _脓肿 sym
 _症 sym
 _征 sym
-_症状 sym
 _受伤 dis
 _損傷 dis
 _炎 dis

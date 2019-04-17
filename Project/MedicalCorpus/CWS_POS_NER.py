@@ -217,6 +217,12 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba')
 
         spaceDetector = 0
         for word, flag in words:
+
+            if len(word) >= 2 and word[-1] == '状' and word[-2:] != '症状': # end with 状 but not 症状
+                flag = 'b'
+            if len(word) >= 2 and word[-1] == '性' and (word[-2:] != '毒性' and len(word) == 2): # end with 性, and not 毒性
+                flag = 'b'
+
             word_with_tag = word + '/' + flag
 
             if word == '\n': # jieba will retain last \n as word

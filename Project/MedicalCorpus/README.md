@@ -470,6 +470,16 @@ The score of the first phase (`1_ 59.txt`)
 * and any symbol need to be `w`
 * Shouldn't left any `x` label!
 
+#### Distinguish Words (b)
+
+> 區別詞 (TODO)
+
+* `XX性`: `先天性/b`, `外源性/b`, `一过性/b`
+  * Include every `性`
+* `XX状`: `网状/b`, `点片状/b`, `粟粒状/b`
+  * Except `症状`
+* `大/b(手术)`, `末梢/b(神经)`, `相对/b(禁忌证)`
+
 ### Named-entity recognition by ~~learning~~ more eyes
 
 * Label out more NER...
@@ -515,7 +525,7 @@ But I just leave it as TODO. Maybe next time.
 Manual adjustment result: ~~(only modify those 4 tags)~~ a little more than that :P
 
 ```txt
-67 为/p 最/a 主要/b 实验室/n 检查/vn 。/w 患儿/n [呼吸/v 治疗/v]tre 时/n 必须/d [测定/v 动脉血/n 氧分压/n]tes （/w PaO<sub>2</sub>/n ）/w 、/w 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/q 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/q （/w 50/m mmHg/q ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/q $$_ （/w 60/m mmHg/q ）/w ，/w pH/q ＜/w 7.20/m ，/w BE/nx ＜/w -/w 5.0/m mmol/q //w L/q ，/w 应/v 考虑/v [低氧/n 血症/n]sym 、/w [高/a 碳酸/n 血症/n]sym 、/w [代谢性/n 酸中毒/n]sym ，/w 经/n 吸氧/v 或/c [辅助/vn 通气/n 治疗/v]tre 无/v 改善/v ，/w 可/v 转为/v [气道/n 插管/n]tre 和/c [呼吸机/n 治疗/v]tre ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/w 3/m 小时/n 以及/c 随后/d 2/m ～/w 3/m 天/q 的/u 每/r 12/m ～/w 24/m 小时/n ，/w 需要/v 检查/vn 动脉血/n 气值/n ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/vn 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
+67 为/p 最/a 主要/b 实验室/n 检查/vn 。/w 患儿/n [呼吸/v 治疗/v]tre 时/n 必须/d [测定/v 动脉血/n 氧分压/n]tes （/w PaO<sub>2</sub>/n ）/w 、/w 二氧化碳/n 分压/v （/w PaCO<sub>2</sub>/n ）/w 和/c pH/q 。/w 发病/v 早期/t ，/w PaO<sub>2</sub>/n ＜/w 6.5/m kPa/q （/w 50/m mmHg/q ）/w ，/w PaCO<sub>2</sub>/n ＞/w 8/m kPa/q $$_ （/w 60/m mmHg/q ）/w ，/w pH/q ＜/w 7.20/m ，/w BE/nx ＜/w -/w 5.0/m mmol/q //w L/q ，/w 应/v 考虑/v [低氧/n 血症/n]sym 、/w [高/a 碳酸/n 血症/n]sym 、/w [代谢性/b 酸中毒/n]sym ，/w 经/n 吸氧/v 或/c [辅助/vn 通气/n 治疗/v]tre 无/v 改善/v ，/w 可/v 转为/v [气道/n 插管/n]tre 和/c [呼吸机/n 治疗/v]tre ，/w 避免/v 发生/v 严重/a [呼吸衰竭/n]sym 。/w 一般/a 在/p 开始/v 机械/n 通气/n 后/t 1/m ～/w 3/m 小时/n 以及/c 随后/d 2/m ～/w 3/m 天/q 的/u 每/r 12/m ～/w 24/m 小时/n ，/w 需要/v 检查/vn 动脉血/n 气值/n ，/w 以/p 判断/v 病情/n 转归/v 和/c 调节/vn 呼吸机/n 参数/n ，/w 以/p 保持/v 合适/a 的/u 通气/n 量/n 和/c 氧供/v 。/w
 ```
 
 #### Other Tricky Things (solved)
