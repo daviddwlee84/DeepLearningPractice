@@ -202,6 +202,34 @@ The typeset of tables should be based on the following rules:
 
 ## Formatting
 
+### Page Numbering
+
+`\pagestyle{empty}` stops the pages being numbered
+`\pagestyle{plain}` this is the default; it puts the numbers at the bottom of the page
+`\pagestyle{headings}` puts the numbers at the top of the page; the precise style and content depends on the document class
+`\pagenumbering{roman}` numbers pages using Roman numerals; use arabic to switch it back
+
+#### Start numbering after the table of contents
+
+```tex
+% preamble %
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+
+\tableofcontents
+\thispagestyle{empty}
+
+\clearpage
+\pagenumbering{arabic}
+
+% contents %
+```
+
 ### Multiple Columns
 
 > [multicol package](#multicol)
@@ -209,6 +237,10 @@ The typeset of tables should be based on the following rules:
 * [How to produce a double column document in Latex?](https://tex.stackexchange.com/questions/285443/how-to-produce-a-double-column-document-in-latex)
 
 ### Footnotes
+
+```tex
+\footnote{...}
+```
 
 ## Fonts
 
@@ -265,11 +297,52 @@ The typeset of tables should be based on the following rules:
 
 [enumitem](https://ctan.org/pkg/enumitem)
 
+```tex
+\usepackage{enumitem}
+\setlist{nosep} % or \setlist{noitemsep} to leave space around whole list
+```
+
 ### multicol
 
 [multicol manual](http://ftp.yzu.edu.tw/CTAN/macros/latex/required/tools/multicol.pdf)
 
 ### geometry
+
+### titling
+
+> Prettify the `\maketitle`
+
+```tex
+% This will center the title
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null
+```
+
+> You can also write your own page like this
+>
+> ```tex
+> \begin{titlepage}
+>     \begin{center}
+>         ...
+>     \end{center}
+> \end{titlepage}
+> ```
+
+### graphicx
+
+```tex
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+```
+
+### Drawing Related
+
+#### TikZ
+
+> [Tutorial](#Drawing)
+
+#### Circuitikz
 
 ### Font Related
 
@@ -283,21 +356,46 @@ Example: (Pretty good but current with citation problem)
 \setsansfont[Ligatures=TeX]{Arial}
 ```
 
-### mathptmx
+#### mathptmx
 
 > For Times New Roman
 
 [mathptmx](https://ctan.org/pkg/mathptmx)
 
-### newtx
+#### newtx
 
 > For Times New Roman
 
 [newtx bundle](https://ctan.org/pkg/newtx)
 
-### Times
+#### Times
 
 > For Times New Roman (deprecated)
+
+### Chinese Related
+
+> Compile with `xelatex`
+
+#### CTeX
+
+```tex
+% Use it as a documentclass
+\documentclass[UTF8]{ctexart}
+\begin{document}
+你好，這是一個測試文件。
+\end{document}
+```
+
+```tex
+% Use it as a macro package
+\documentclass{article}
+\usepackage[UTF8]{ctex}
+\begin{document}
+你好，這是一個測試文件。
+\end{document}
+```
+
+#### xeCJK
 
 ## Appendix
 
@@ -319,6 +417,62 @@ Example: (Pretty good but current with citation problem)
 | `\textwidth`   | width of the text                                   |
 | `\textheight`  | height of the text                                  |
 | `\unitlength`  | units of length in the picture environment.         |
+
+### Setting the VSCode LaTeX Workshop
+
+#### Add another compile method
+
+> [LaTeX-Workshop Wiki - LaTeX Recipes](https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#latex-recipes)
+
+1. Open up the VSCode setting.
+2. Search for `latex-workshop.latex.recipe`.
+3. Click __Edit in settings.json__
+4. Typing `latex-workshop.latex.recipe` and you will see the auto completion.
+5. You can add something like this for compile with `xelatex`
+
+    ```json
+    {
+        "name": "XeLaTeX",
+        "tools": [
+            "xelatex"
+        ]
+    }
+    ```
+
+6. Also don't forget to add the additional tool in `latex-workshop.latex.tools`
+
+    ```json
+    {
+        "name": "xelatex",
+        "command": "xelatex",
+        "args": [
+            "%DOC%"
+        ],
+        "env": {}
+    }
+    ```
+
+7. Then you're done!
+
+### Set TeXcount on local
+
+#### Installation
+
+1. Download TeXcount script from the [download page](https://app.uio.no/ifi/texcount/download.html)
+2. Add a alias in your `.bashrc` or `.zshrc`...
+
+    ```sh
+    # TeXcount
+    alias texcount="perl /path/to/TeXcount_3_1_1/texcount.pl"
+    ```
+
+3. And you're able to use `texcount` as a command anywhere
+
+#### Chinese Word Count
+
+```sh
+texcount -v0 -ch main.tex
+```
 
 ## Links
 
@@ -343,10 +497,23 @@ Example: (Pretty good but current with citation problem)
   * [Multiple columns](https://www.overleaf.com/learn/latex/Multiple_columns)
   * [Footnotes](https://www.overleaf.com/learn/latex/Footnotes)
 
+How to Write a Thesis in LaTeX
+
+* [(Part 1): Basic Structure](https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_1):_Basic_Structure)
+* [(Part 2): Page Layout](https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_2):_Page_Layout)
+* [(Part 3): Figures, Subfigures and Tables](https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_3):_Figures,_Subfigures_and_Tables)
+* [(Part 4): Bibliographies with BibLaTeX](https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_4):_Bibliographies_with_BibLaTeX)
+* [(Part 5): Customising Your Title Page and Abstract](https://www.overleaf.com/learn/latex/How_to_Write_a_Thesis_in_LaTeX_(Part_5):_Customising_Your_Title_Page_and_Abstract)
+
 #### WikiBooks - [LaTeX](https://en.wikibooks.org/wiki/LaTeX)
 
 * [LaTeX/Tables](https://en.wikibooks.org/wiki/LaTeX/Tables)
 * [LaTeX/Fonts](https://en.wikibooks.org/wiki/LaTeX/Fonts)
+
+#### Using Chinese in LaTeX
+
+* [**LaTeX 中如何使用中文**](https://jdhao.github.io/2018/03/29/latex-chinese.zh/)
+* [How does one type Chinese in LaTeX?](https://tex.stackexchange.com/questions/17611/how-does-one-type-chinese-in-latex)
 
 #### Others
 
@@ -354,7 +521,18 @@ Example: (Pretty good but current with citation problem)
 * [Tabular: title above and caption below?](https://tex.stackexchange.com/questions/15282/tabular-title-above-and-caption-below)
 * [Trying to replicate a table from academic paper](https://tex.stackexchange.com/questions/63204/trying-to-replicate-a-table-from-academic-paper)
 * [What is the standard/recommended font to use in papers?](https://academia.stackexchange.com/questions/26889/what-is-the-standard-recommended-font-to-use-in-papers)
+* [How to draw images in Latex?](https://tex.stackexchange.com/questions/397528/how-to-draw-images-in-latex)
 * [知乎 - 你寫論文時發現了哪些神網站？](https://www.zhihu.com/question/35931336/answer/641198933)
+
+Title thing
+
+* [Vertically centering a title page](https://stackoverflow.com/questions/3141702/vertically-centering-a-title-page)
+* [Vertically Center title page : Article](https://tex.stackexchange.com/questions/290432/vertically-center-title-page-article)
+
+Page Numbering
+
+* [Start page numbering from second page in Latex](https://swetava.wordpress.com/2015/05/14/start-page-numbering-from-second-page-in-latex/)
+* [7 Titles and Contents](http://www-users.york.ac.uk/~pjh503/LaTeX/frontstuff.html)
 
 ### LaTeX Tools
 
@@ -368,6 +546,10 @@ BibTeX
 
 * [How to use BibTeX](http://www.bibtex.org/Using/)
 * [BibTeX Format Description](http://www.bibtex.org/Format/) - `.bib`
+
+XeLaTeX
+
+* [Wiki - XeTeX](https://en.wikipedia.org/wiki/XeTeX)
 
 VS Code Extension
 
@@ -384,6 +566,10 @@ VS Code Extension
 * [MyScript](https://www.myscript.com/)
   * MathPad ([End-of-sale](https://www.myscript.com/retired-apps/))
   * [Nebo](https://www.myscript.com/nebo)
+
+#### Word Count
+
+* [TeXcount web service (version 3.1.1)](https://app.uio.no/ifi/texcount/online.php) - Online word count service (support Chinese!)
 
 #### Markdown Editor which support LaTeX
 
@@ -407,6 +593,21 @@ VS Code Extension
   * [LaTeX tables - Tutorial with code examples](https://www.latex-tutorial.com/tutorials/tables/)
     * [Tables from .csv in LaTeX with pgfplotstable](https://www.latex-tutorial.com/tutorials/pgfplotstable/)
 
+#### Video
+
+* [Derek Banas - LaTeX Tutorial](https://youtu.be/VhmkLrOjLsw)
+
+#### Drawing
+
+TikZ
+
+* Overleaf - LaTeX Graphics using TikZ: A Tutorial for Beginners
+  * [(Part 1)—Basic Drawing](https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_1)%E2%80%94Basic_Drawing)
+  * [(Part 2)—Generating TikZ Code from GeoGebra](https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_2)%E2%80%94Generating_TikZ_Code_from_GeoGebra)
+  * [**(Part 3)—Creating Flowcharts**](https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_3)%E2%80%94Creating_Flowcharts)
+  * [(Part 4)—Circuit Diagrams Using Circuitikz](https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_4)%E2%80%94Circuit_Diagrams_Using_Circuitikz)
+  * [(Part 5)—Creating Mind Maps](https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_5)%E2%80%94Creating_Mind_Maps)
+
 ### Online Editor
 
 * [Overleaf](https://www.overleaf.com/) - The easy to use, online, collaborative LaTeX editor
@@ -418,6 +619,11 @@ VS Code Extension
 
 * [LaTeX Table Generator](https://www.tablesgenerator.com/latex_tables)
 
+#### Drawing Graph
+
+* GeoGebra
+* [LaTeXDraw](http://latexdraw.sourceforge.net/)
+
 ### Template
 
 * [Overleaf - Templates](https://www.overleaf.com/latex/templates)
@@ -427,6 +633,11 @@ VS Code Extension
 * [Google Drive - article and journal templates.zip](https://drive.google.com/file/d/0B5wBAHw-J-ViRG9CVEZVWF96OVk/view)
 * [arXiv BERT Template](https://arxiv.org/format/1810.04805)
 * [Springer LaTeX templates](https://www.springer.com/gp/livingreviews/latex-templates)
+
+ElegantLaTeX
+
+* [ElegantLaTeX Templates](https://elegantlatex.org/en/)
+* [Github - ElegantLaTeX/ElegantNote](https://github.com/ElegantLaTeX/ElegantNote)
 
 ### Q&A
 
@@ -440,3 +651,4 @@ VS Code Extension
 * [**Tables in LATEX2ε: Packages and Methods**](https://www.tug.org/pracjourn/2007-1/mori/mori.pdf) - Table Rules
 * [MIT - Figures and Tables in a LATEX Document](http://web.mit.edu/rsi/www/pdfs/fig-intro.pdf)
 * [**Everything you always wanted to know about BiBTEX**](https://ntg.nl/bijeen/pdf-s.20031113/BibTeX-tutorial.pdf)
+* [Graphics in LaTeX using TikZ](https://www.tug.org/TUGboat/tb29-1/tb91walczak.pdf)
