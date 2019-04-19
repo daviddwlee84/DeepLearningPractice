@@ -522,6 +522,7 @@ How to Write a Thesis in LaTeX
 * [Trying to replicate a table from academic paper](https://tex.stackexchange.com/questions/63204/trying-to-replicate-a-table-from-academic-paper)
 * [What is the standard/recommended font to use in papers?](https://academia.stackexchange.com/questions/26889/what-is-the-standard-recommended-font-to-use-in-papers)
 * [How to draw images in Latex?](https://tex.stackexchange.com/questions/397528/how-to-draw-images-in-latex)
+* [Is there any way to do a correct word count of a LaTeX document?](https://tex.stackexchange.com/questions/534/is-there-any-way-to-do-a-correct-word-count-of-a-latex-document)
 * [知乎 - 你寫論文時發現了哪些神網站？](https://www.zhihu.com/question/35931336/answer/641198933)
 
 Title thing
@@ -536,11 +537,24 @@ Page Numbering
 
 ### LaTeX Tools
 
+* [The LaTeX Project](https://www.latex-project.org/)
+
 (support Mac)
 
-* [The LaTeX Project](https://www.latex-project.org/)
-* [TeXShop](https://pages.uoregon.edu/koch/texshop/)
-* [MacTEX](https://www.tug.org/mactex/)
+* [MacTeX](https://www.tug.org/mactex/) - a distribution including a complete TeX system and editors (basically contains everything you need)
+  * GUI Applications
+    * [TeXShop](https://pages.uoregon.edu/koch/texshop/)
+    * BibDesk
+    * [LaTeXiT](https://www.chachatelier.fr/latexit/)
+    * TeX Live Utility
+    * Excalibur (the spell checker)
+  * Ghostscript 9.23
+  * TeX Live 2018 - the actual TeX distribution
+
+IDE
+
+* [TeXstudio](https://www.texstudio.org/)
+* [Texmaker](http://www.xm1math.net/texmaker/)
 
 BibTeX
 
@@ -558,7 +572,7 @@ VS Code Extension
 #### Formula/Equation
 
 * [**LaTeXiT**](https://www.chachatelier.fr/latexit/) - equation
-* [**Mathpix**](https://mathpix.com/) - convet inmages to LaTeX
+* [**Mathpix**](https://mathpix.com/) - convet images to LaTeX
   * [examples](https://mathpix.com/examples.pdf)
 
 #### iOS App
@@ -569,7 +583,12 @@ VS Code Extension
 
 #### Word Count
 
-* [TeXcount web service (version 3.1.1)](https://app.uio.no/ifi/texcount/online.php) - Online word count service (support Chinese!)
+* [TeXcount](http://app.uio.no/ifi/texcount/index.html)
+  * [**TeXcount web service**](https://app.uio.no/ifi/texcount/online.php) - Online word count service (support Chinese!)
+  * [download script](http://app.uio.no/ifi/texcount/download.html)
+* [detex](https://www.ctan.org/pkg/detex) + wc (the word count command)
+* [latexcount](https://www.ctan.org/pkg/latexcount) - Perl script to count words of LATEX documents
+* [wordcount](https://ctan.org/pkg/wordcount) - Estimate the number of words in a LATEX document
 
 #### Markdown Editor which support LaTeX
 
