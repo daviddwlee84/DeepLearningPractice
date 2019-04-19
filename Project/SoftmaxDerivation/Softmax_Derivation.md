@@ -28,7 +28,7 @@
     * $J(\theta) = \operatorname{CE}(\mathbb{y}, \mathbb{\hat{y}}) = \displaystyle -\sum_{i=1}^3 y_i \log(\hat{y}_i)$
     * $\mathbb{\theta} = \mathbb{w}^T\mathbb{x} + \mathbb{b}$
 
-## Deduction
+## Derivation
 
 What we want to calculate $\displaystyle\frac{\partial J(\theta)}{\partial \mathbb{w}}$ and $\displaystyle\frac{\partial J(\theta)}{\partial \mathbb{b}}$
 

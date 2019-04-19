@@ -28,7 +28,7 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 Subject|Technique|Framework|Complexity|Remark
 -------|---------|---------|----------|------
 [Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|○○●●●|Truth Table (AND, OR, XOR) and Iris Dataset (simulate Keras API)
-[Softmax Deduction](Project/SoftmaxDeduction)|FCNN|Numpy|○○○○●|with Cross Entropy
+[Softmax Derivation](Project/SoftmaxDerivation)|FCNN|Numpy|○○○○●|Backpropagation of Softmax with Cross Entropy Loss
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|○○●●●|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|○○○●●|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|○○●●●|Comparison of FCNN and CNN
@@ -340,7 +340,7 @@ Toy
 
 #### Github
 
-* [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
+* [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) ([d2l.ai](https://www.d2l.ai/index.html)) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
     * [English github](https://github.com/diveintodeeplearning/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
 * [**Machine Learning cheatsheets for Stanford's CS 229**](https://github.com/afshinea/stanford-cs-229-machine-learning)
     * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)

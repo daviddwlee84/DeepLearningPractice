@@ -1,13 +1,13 @@
-# Softmax Deduction
+# Softmax Derivation
 
-## Deduction
+## Derivation
 
-* [**Softmax Classification Back Propagation with Cross Entropy**](Softmax_Deduction.md)
+* [**Softmax Classification Back Propagation with Cross Entropy**](Softmax_Derivation.md)
 
 ## Implementation
 
 ```sh
-python3 Softmax_Deduction.py
+python3 Softmax_Derivation.py
 ```
 
 ## Notes
