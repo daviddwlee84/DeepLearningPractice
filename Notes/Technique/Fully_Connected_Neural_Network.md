@@ -71,6 +71,22 @@ Three Protocols
 
 #### Batch Backpropagation
 
+### Computation Graph
+
+> Automatic Gradient Calculation
+
+Representing calculation progress in graph.
+
+* Node: Variable
+* Mark: Operation
+
+Pseudocode
+
+TBD
+
+* [Computation Graph (C1W2L07)](https://youtu.be/hCP1vGoCdYU)
+* [Derivatives With Computation Graphs (C1W2L08)](https://youtu.be/nJyUyKN-XBQ)
+
 ## Others Notes
 
 ### On Training
@@ -105,6 +121,14 @@ Solution
 #### Dropout Training
 
 Each time decide whether to delete one hidden unit with some probability p.
+
+## Next Step
+
+The parameter is too many, i.e. model is too complex (if under no assumption)
+
+[CNN](CNN.md)
+
+[RNN](RNN.md)
 
 ## Resources
 

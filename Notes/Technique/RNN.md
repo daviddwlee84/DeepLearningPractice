@@ -67,7 +67,45 @@ $$
 * Many-to-One
 * One-to-Many - e.g. Music Generation
 
-(one-to-one -> don't need to be RNN)
+> (one-to-one -> don't need to be RNN)
+
+### Sequential Representation Model
+
+* Output the last (time t) hidden layer
+
+![Sequential Representation Model](image/sequential_representation.png)
+
+Example:
+
+* Sentiment Analysis
+
+### Sequential Labeling Model
+
+* Every time hidden layer has an output
+
+![Sequential Representation Model](image/sequential_labeling.png)
+
+Example:
+
+POS tagging, Chinese word segmentation
+
+### [Sequential Transfer Model (Encoder-decoder)](../LearningFramework/seq-to-seq.md)
+
+* Using two set of RNN
+
+![Sequential Transfer Model](image/encoder_decoder.png)
+
+### More Architecture
+
+#### Multi-layer RNN
+
+![Sequential Transfer Model](image/multilayer.png)
+
+#### [Bidirectional RNN](../LearningFramework/BRNN.md)
+
+* Consider the words after current word when calculating semantic
+
+![Sequential Transfer Model](image/bidirectional.png)
 
 ## The Problem of Long-Term Dependencies
 
