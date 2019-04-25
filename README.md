@@ -355,10 +355,6 @@ Toy
 
 ### Paper
 
-#### LaTeX Paper Writteing
-
-[LaTeX Notes](Notes/LaTeX.md)
-
 #### Conference
 
 * NAACL North American Chapter of the Association for Computational Linguistics
