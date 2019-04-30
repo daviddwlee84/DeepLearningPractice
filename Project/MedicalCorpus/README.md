@@ -587,6 +587,7 @@ Solution:
   * [ ] prefix and postfix detection (especially postfix one!)
     * [X] postfix
     * [ ] prefix
+* [X] Split "3." ("3./m") to "3 ." and "3/m ./w"
 * [ ] maybe record detail procedure afterward
 * [ ] [line 67](#Tricky-line-67-(Haven't-fixed))
 * [ ] [Medical NER Dict](#Medical-NER-TODO)

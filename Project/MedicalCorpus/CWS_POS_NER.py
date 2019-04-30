@@ -102,7 +102,7 @@ def loadAnswerIntoDict(seg_ans_path:str, pos_ans_path:str, ner_ans_path:str):
 
 ## Dumping Data
 
-def dumpResultIntoTxt(result_dict:dict, data_path:str="2nd_59.txt"):
+def dumpResultIntoTxt(result_dict:dict, data_path:str="3rd_59.txt"):
 
     print("Dumping result into {}...".format(data_path))
     with open(data_path, 'w') as result:
@@ -218,6 +218,7 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba')
         spaceDetector = 0
         for word, flag in words:
 
+            # For POS tagging "b"
             if len(word) >= 2 and word[-1] == '状' and word[-2:] != '症状': # end with 状 but not 症状
                 flag = 'b'
             if len(word) >= 2 and word[-1] == '性' and (word[-2:] != '毒性' and len(word) == 2): # end with 性, and not 毒性
@@ -227,6 +228,12 @@ def _firstWordSegmentationWithPOS(cleaned_raw_data_dict:dict, tools:str='jieba')
 
             if word == '\n': # jieba will retain last \n as word
                 continue
+
+            if flag == 'm' and re.match(r"\w+\.$", word): # Split "3." ("3./m") to "3 ." and "3/m ./w"
+                word_seg_list_dict[seq_num].append(word[:-1])
+                pre_pos_list_dict[seq_num].append(word[:-1]+'/m')
+                word = '.'
+                word_with_tag = './w'
             
             if flag == 'nr': # people name
                 # print(word, flag) # useful to find mis-classified name
@@ -575,13 +582,13 @@ def main():
     # I. Word Segmentation and Pre-POS
     word_seg_dict, word_seg_list_dict, pre_pos_dict, pre_pos_list_dict = wordSegmentationWithPOS(no_sub_sup_raw_data_dict, tools='jieba')
     inserted_word_seg_dict, inserted_word_seg_list_dict = insertSubSupTags(word_seg_list_dict, sub_sup_insert_index_dict, with_tag=False)
-    dumpResultIntoTxt(inserted_word_seg_dict, data_path='2nd_59_segment.txt')
+    dumpResultIntoTxt(inserted_word_seg_dict, data_path='3rd_59_segment.txt')
 
     # II. POS tagging and General NER
 
     new_pos_dict, new_pos_list_dict = posWithGeneralNER(pre_pos_list_dict, tools='jieba')
     inserted_new_pos_dict, inserted_new_pos_list_dict = insertSubSupTags(new_pos_list_dict, sub_sup_insert_index_dict, with_tag=True)
-    dumpResultIntoTxt(inserted_new_pos_dict, data_path='2nd_59_pos.txt')
+    dumpResultIntoTxt(inserted_new_pos_dict, data_path='3rd_59_pos.txt')
 
     ## III. Medical NER
     medical_ner_dict, medical_ner_list_dict = medicalNER(inserted_word_seg_list_dict, inserted_new_pos_list_dict)
