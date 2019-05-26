@@ -23,6 +23,11 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
 
+Not in this project
+
+* [`pytorch`](https://pytorch.org/)
+  * [Brief Notes](Notes/Framework/PyTorch.md)
+
 ## Project
 
 Subject|Technique|Framework|Complexity|Remark
@@ -46,6 +51,8 @@ Subject|Technique|Framework|Complexity|Remark
 [Word Similarity](Project/WordSimilarity)||||(TODO) Word Similarity Based on Dictionary and Based on Corpus
 [Text Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|Multiple Models|Multiple Libraries|●●●●●|SemEval2018 Task 7 Semantic Relation Extraction and Classification in Scientific Papers
 [Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
+[Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
+[Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|||●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
 
 ## Deep Learning Categories
 
@@ -96,8 +103,11 @@ Basic Block for Sequence Model!
 
 #### [Transfer Learning in NLP](Notes/Technique/NLPTransferLearning.md)
 
+> "Pre-training in NLP" ≈ "Embedding"
+
 * `ELMo`
 * [`BERT`](Notes/LearningFramework/BERT.md)
+* GPT
 
 #### Others
 
@@ -179,15 +189,11 @@ Parameter
 * Vanilla - means standard, usual, or unmodified version of something.
     * Vanilla gradient descent (aka. Batch gradient descent) - means the basic gradient descent algorithm without any bells or whistles.
 
-[Tricks for language model](Notes/Concept/LanguageModel.md)
+[Tricks for language model](Notes/Concept/LanguageModel.md) - a sort of overview
 
-* Embedding
-    * Word Embedding
-        * Word2Vec
-        * GloVe
-        * FastText
-    * Sentence Embedding
-    * Context Embedding
+* [Word Representation](Notes/Concept/WordRepresentation.md)
+  * [Embedding](Notes/Concept/Embedding.md)
+    * [Train Embedding](Notes/Concept/TrainEmbedding.md)
 * CNN for NLP
 * RNN for NLP
 
@@ -284,6 +290,9 @@ Neon|NervanaSystems|Python|
     * [github](https://github.com/zfrenchee/NN-SVG)
 * [draw.io](https://www.draw.io/)
 * [Netscope](https://ethereon.github.io/netscope/quickstart.html)
+* [Graphviz](https://www.graphviz.org/) - Graph Visualization Software
+  * [Keras model visualization](https://keras.io/visualization/)
+  * pydot
 
 Latex
 
@@ -305,6 +314,11 @@ Toy
 ### Github Repository
 
 * [**brightmart/text_classification**](https://github.com/brightmart/text_classification) - all kinds of text classification models and more with deep learning
+
+### Application
+
+* [Leon](https://getleon.ai/)
+  * [leon-ai/leon](https://github.com/leon-ai/leon)
 
 ### Tutorial
 
@@ -348,6 +362,7 @@ Toy
     * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
+* [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
 
 #### Slides
 
