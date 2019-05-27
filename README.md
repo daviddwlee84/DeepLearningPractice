@@ -53,6 +53,7 @@ Subject|Technique|Framework|Complexity|Remark
 [Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 [Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
 [Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|||●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
+[Toxicity Classification](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|Jigsaw Unintended Bias in Toxicity Classification - Detect toxicity across a diverse range of conversations
 
 ## Deep Learning Categories
 
