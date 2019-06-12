@@ -52,8 +52,9 @@ Subject|Technique|Framework|Complexity|Remark
 [Text Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|Multiple Models|Multiple Libraries|●●●●●|SemEval2018 Task 7 Semantic Relation Extraction and Classification in Scientific Papers
 [Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 [Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
-[Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|||●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
+[Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|RNN, CRF|TansorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus") ([paper](https://github.com/pku-nlp-forfun/SemEval2013-Task13-Paper))
 [Toxicity Classification](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|Jigsaw Unintended Bias in Toxicity Classification - Detect toxicity across a diverse range of conversations
+[CWS/NER](Project/CWSNER)|RNN, CRF|TensorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
 
 ## Deep Learning Categories
 
@@ -331,7 +332,11 @@ Toy
 
 #### Interactive Learning
 
-* [Kaggle Learn Deep Learning](https://www.kaggle.com/learn/deep-learning)
+* [**Kaggle Learn Deep Learning**](https://www.kaggle.com/learn/deep-learning)
+* [**Intel AI Developer Program - AI Courses**](https://software.intel.com/en-us/ai/courses)
+  * [Natural Language Processing](https://software.intel.com/en-us/ai/courses/natural-language-processing)
+  * [Computer Vision](https://software.intel.com/en-us/ai/courses/computer-vision)
+  * [Deep Learning](https://software.intel.com/en-us/ai/courses/deep-learning)
 
 #### MOOC
 
@@ -361,6 +366,7 @@ Toy
     * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)
 * [**Deep Learning cheatsheets for Stanford's CS 230**](https://github.com/afshinea/stanford-cs-230-deep-learning)
     * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
+* [**aymericdamien/TensorFlow-Examples**](https://github.com/aymericdamien/TensorFlow-Examples) - TensorFlow Tutorial and Examples for Beginners (support TF v1 & v2)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 * [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
