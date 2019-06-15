@@ -57,6 +57,9 @@ Project/MedicalCorpus/1_ 59*.txt
 Project/MedicalCorpus/2nd_59*.txt
 Project/MedicalCorpus/3rd_59*.txt
 
+# CWS & NER
+Project/CWSNER/train_test/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -5,6 +5,8 @@
 * Split the training data into ratio 7:3 (train:test) and Evaluate them with P/R/F1 metrics
 * Use entire training data to train the model and Test with the test data and then Submit the prediciton as the same format as the training data
 
+> data format is utf-16 little endian
+
 ### Corpus
 
 This is a Traditional Chinese corpus.
@@ -35,3 +37,12 @@ If the word is not NER than use the `N` tag.
 ## Named Entity Recognization
 
 ## Resources
+
+--
+
+## Appendix
+
+### Links
+
+* [Python - read text file with weird utf-16 format](https://stackoverflow.com/questions/19328874/python-read-text-file-with-weird-utf-16-format)
+* [How to split/partition a dataset into training and test datasets for, e.g., cross validation?](https://stackoverflow.com/questions/3674409/how-to-split-partition-a-dataset-into-training-and-test-datasets-for-e-g-cros)
