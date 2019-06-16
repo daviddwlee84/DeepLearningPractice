@@ -25,7 +25,7 @@ def setup_cws_data(path: str = RAW_DATA.CWS):
         test_raw_list = get_raw_article_from_cws_data(
             TRAIN_TEST.CWS_test, TRAIN_TEST.CWS_test_raw)
     else:
-        with io.open(TRAIN_TEST.CWS_test_raw, 'r', encoding='utf-16-le') as test_raw:
+        with open(TRAIN_TEST.CWS_test_raw, 'r') as test_raw:
             test_raw_list = test_raw.readlines()
 
     print("Word Segmentation Test raw article done.")
@@ -41,11 +41,7 @@ def setup_cws_data(path: str = RAW_DATA.CWS):
     print("Word Segmentation Trainable training data (70%) done.")
 
     if not os.path.isfile(TRAIN_TEST.CWS_train_all_pkl):
-        with io.open(RAW_DATA.CWS, 'r', encoding='utf-16-le') as data_file:
-            raw_data_lines = data_file.readlines()
-            # last line is empty line (only with '\n')
-            if len(raw_data_lines) <= 1:
-                del raw_data_lines[-1]
+        raw_data_lines = load_utf16le_data_to_list(RAW_DATA.CWS)
         train_all_list = cws_transfer_to_trainable(raw_data_lines)
         with open(TRAIN_TEST.CWS_train_all_pkl, 'wb') as train_pkl:
             pkl.dump(train_all_list, train_pkl)
@@ -59,11 +55,8 @@ def setup_cws_data(path: str = RAW_DATA.CWS):
 
 
 def read_cws_data_and_split(path: str = RAW_DATA.CWS, test_ratio: float = 0.3):
-    with io.open(path, 'r', encoding='utf-16-le') as data_file:
-        raw_data_lines = data_file.readlines()
-        if len(raw_data_lines) <= 1:  # last line is empty line (only with '\n')
-            print(raw_data_lines)
-            del raw_data_lines[-1]
+
+    raw_data_lines = load_utf16le_data_to_list(path)
 
     total_lines = len(raw_data_lines)
     split_index = round(test_ratio * total_lines)
@@ -73,6 +66,15 @@ def read_cws_data_and_split(path: str = RAW_DATA.CWS, test_ratio: float = 0.3):
                                              split_index], raw_data_lines[-split_index:]
 
     return train_lines, test_lines
+
+
+def load_utf16le_data_to_list(path: str):
+    """ load utf16-le data """
+    with io.open(path, 'r', encoding='utf-16-le') as data_file:
+        raw_data_lines = data_file.readlines()
+    if len(raw_data_lines) <= 1:  # last line is empty line (only with '\n')
+        del raw_data_lines[-1]
+    return raw_data_lines
 
 
 def cws_transfer_to_trainable(raw_data_lines: List[str]):
