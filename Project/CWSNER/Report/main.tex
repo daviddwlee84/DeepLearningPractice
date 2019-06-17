@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathptmx}
+
+\usepackage{geometry}
+\geometry{a4paper, scale=0.8}
+
+% For prettier tables
+% replace \hline with \toprule, \midrule and \bottomrule
+\usepackage{booktabs}
+
+% For list spacing
+\usepackage{enumitem}
+\setlist{noitemsep}
+
+% For multi-column
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+
+% For graphic/figure
+\usepackage{graphicx}
+
+\title{\textbf{Sequence Labeling: Chinese Word Segmentation and Named Entity Recognition}}
+\author{\textbf{Da-Wei Lee} \\
+Peking University \\
+{\tt 1701210963@pku.edu.cn}}
+\date{\vspace{-5ex}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+  \input{sections/abstract.tex}
+\end{abstract}
+
+\begin{multicols}{2}
+
+\input{sections/intro.tex}
+
+\input{sections/approach.tex}
+
+\end{multicols}
+
+\input{sections/experiment.tex}
+
+\input{sections/analysis.tex}
+
+\bibliographystyle{acm}
+\bibliography{citedbibtex}
+
+\end{document}
