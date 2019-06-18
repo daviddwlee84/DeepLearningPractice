@@ -4,12 +4,23 @@
 
 ## Kaggle Competition
 
-Getting started
-
-```sh
-# Download the dataset
-kaggle competitions download -c jigsaw-unintended-bias-in-toxicity-classification
-```
+> Getting started (these is included in `simple_lstm_baseline.py`)
+>
+> ```sh
+> # Download the dataset
+> kaggle competitions download -c jigsaw-unintended-bias-in-toxicity-classification
+>
+> # unzip data
+> mkdir data
+> unzip test.csv.zip -d data
+> unzip train.csv.zip -d data
+>
+> # not sure why it don't have read permission
+> chmod +r data/*
+>
+> # clean up
+> rm *.zip
+> ```
 
 ### Dataset
 
@@ -38,15 +49,22 @@ Submetric
 
 > Generalized Mean of Bias AUCs
 >
->     $$
->     M_p(m_s) = \left(\frac{1}{N} \sum_{s=1}^{N} m_s^p\right)^\frac{1}{p}
->     $$
+> $$
+> M_p(m_s) = \left(\frac{1}{N} \sum_{s=1}^{N} m_s^p\right)^\frac{1}{p}
+> $$
 
 #### Final Metric
 
 $$
 score = w_0 AUC_{overall} + \sum_{a=1}^{A} w_a M_p(m_{s,a})
 $$
+
+## Usage
+
+```sh
+# simple LSTM baseline
+python3 simple_lstm_baseline.py
+```
 
 ## Resources
 

@@ -53,7 +53,7 @@ Subject|Technique|Framework|Complexity|Remark
 [Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 [Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
 [Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|RNN, CRF|TansorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus") ([paper](https://github.com/pku-nlp-forfun/SemEval2013-Task13-Paper))
-[Toxicity Classification](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|Jigsaw Unintended Bias in Toxicity Classification - Detect toxicity across a diverse range of conversations
+[Toxicity Classification](Project/ToxicityClassification)|BiLSTM|Keras|●●●●●|Jigsaw Unintended Bias in Toxicity Classification - Detect toxicity across a diverse range of conversations
 [CWS/NER](Project/CWSNER)|RNN, CRF|TensorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
 
 ## Deep Learning Categories
@@ -306,12 +306,21 @@ Toy
 
 ## Resources
 
-### Corpus/NLP Dataset
+### Dataset/Corpus
+
+#### Corpus/NLP Dataset
 
 * SemCor
 * [SENSEVAL](https://web.eecs.umich.edu/~mihalcea/senseval/)
 * SemEval
   * [wiki](https://en.wikipedia.org/wiki/SemEval)
+
+#### Animate Dataset
+
+* [nico-opendata](https://nico-opendata.jp/en/index.html)
+* [Danbooru2018](https://www.gwern.net/Danbooru2018) - A Large-Scale Crowdsourced and Tagged Anime Illustration Dataset
+* [MyAnimeList Dataset](https://www.kaggle.com/azathoth42/myanimelist)
+  * [MyAnimeList](https://myanimelist.net/)
 
 ### Github Repository
 

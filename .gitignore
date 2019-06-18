@@ -57,6 +57,10 @@ Project/MedicalCorpus/1_ 59*.txt
 Project/MedicalCorpus/2nd_59*.txt
 Project/MedicalCorpus/3rd_59*.txt
 
+# Jigsaw Unintended Bias in Toxicity Classification
+Project/ToxicityClassification/data/
+Project/ToxicityClassification/embedding/
+
 # CWS & NER
 Project/CWSNER/train_test/
 
