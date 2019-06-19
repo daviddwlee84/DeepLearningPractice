@@ -38,6 +38,11 @@ If the word is not NER than use the `N` tag.
 
 ## Resources
 
+### TensorFlow CRF
+
+* [tensorflow/contrib/crf](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/crf)
+* [TesofrFlow issue - CRF functions in TensorFlow 2.0 #26167](https://github.com/tensorflow/tensorflow/issues/26167)
+
 --
 
 ## Appendix
@@ -46,3 +51,7 @@ If the word is not NER than use the `N` tag.
 
 * [Python - read text file with weird utf-16 format](https://stackoverflow.com/questions/19328874/python-read-text-file-with-weird-utf-16-format)
 * [How to split/partition a dataset into training and test datasets for, e.g., cross validation?](https://stackoverflow.com/questions/3674409/how-to-split-partition-a-dataset-into-training-and-test-datasets-for-e-g-cros)
+
+### TensorFlow notes
+
+* [Graphs and Sessions](https://www.tensorflow.org/guide/graphs)
