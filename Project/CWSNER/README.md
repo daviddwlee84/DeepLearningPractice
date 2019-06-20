@@ -55,3 +55,8 @@ If the word is not NER than use the `N` tag.
 ### TensorFlow notes
 
 * [Graphs and Sessions](https://www.tensorflow.org/guide/graphs)
+* [Save and Restore](https://www.tensorflow.org/guide/saved_model)
+* global_step
+  * [What does global_step mean in Tensorflow?](https://stackoverflow.com/questions/41166681/what-does-global-step-mean-in-tensorflow)
+  * [tf.train.global_step](https://www.tensorflow.org/api_docs/python/tf/train/global_step)
+  * [tf.train.get_or_create_global_step](https://www.tensorflow.org/api_docs/python/tf/train/get_or_create_global_step)

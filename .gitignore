@@ -63,6 +63,7 @@ Project/ToxicityClassification/embedding/
 
 # CWS & NER
 Project/CWSNER/train_test/
+Project/CWSNER/model/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
