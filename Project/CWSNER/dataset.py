@@ -176,6 +176,37 @@ def _single_trainable_to_numpy(dataset_list: List[List[Tuple[str, str]]], word_t
     return np.array(x), np.array(y), np.array(seq_len)
 
 
+def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output_path: str = ''):
+    cws_list = []
+    for sentence in dataset_list:
+        str_sentence = ""
+        for i, (word, label) in enumerate(sentence):
+            if i < len(sentence) and (label == 'S' or label == 'E'):
+                str_sentence += word + '  '  # in original data it use two spaces to seperate words
+            elif i == len(sentence) or label == 'B' or label == 'M':
+                str_sentence += word
+        cws_list.append(str_sentence)
+
+    if output_path:
+        with open(output_path, 'w') as f_out:
+            for str_sentence in cws_list:
+                f_out.write(str_sentence + '\n')
+
+    return cws_list
+
+
+def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int]) -> List[List[Tuple[str, str]]]:
+    id_to_tag = {index: tag for tag, index in tag_to_id.items()}
+    id_to_word = {index: word for word, index in word_to_id.items()}
+    all_sentences = []
+    for single_x, single_y, single_len in zip(x, y, seq_len):
+        sentence = []
+        for i in range(single_len):
+            sentence.append((id_to_word[single_x[i]], id_to_tag[single_y[i]]))
+        all_sentences.append(sentence)
+    return all_sentences
+
+
 def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
     """ Transfer labeled cws data into raw article """
     with open(path, 'r') as f_in:
@@ -193,7 +224,23 @@ def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: 
 
 if __name__ == "__main__":
     os.makedirs('train_test', exist_ok=True)
+    print("Get trainable cws data")
     train_data_list, test_data_list, train_all_list, test_raw_list = setup_cws_data()
+
+    print("Transfer trainable cws data into numpy format")
     (train_x, train_y, train_seq_len), _, _ = train_test_trainable_to_numpy(
         train_data_list, test_data_list, train_all_list, CWS_LabelEncode)
     print(train_x)
+
+    word_to_id, _, _ = get_total_word_set(train_all_list)  # get word_to_id
+
+    print("Transfer numpy format back to trainable cws format")
+    new_train_data_list = from_numpy_to_trainable(
+        train_x, train_y, train_seq_len, word_to_id, CWS_LabelEncode)
+
+    print("Transfer cws format back to raw data")
+    cws_list = from_trainable_to_cws_list(
+        new_train_data_list, output_path='test.txt')
+
+    from evaluation import wordSegmentEvaluaiton
+    wordSegmentEvaluaiton(cws_list, cws_list)
