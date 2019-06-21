@@ -10,6 +10,7 @@ class CRF:
         self.num_features = num_features
         self.num_tags = num_tags
         self.model_dir = model_dir
+        os.makedirs(model_dir, exist_ok=True)
         self.model_name = model_name
         self.model_path = os.path.join(model_dir, model_name)
 
@@ -74,7 +75,8 @@ class CRF:
         print("Accuracy: %.2f%%" % accuracy)
 
     # Train and evaluate the model.
-    def train(self, x, y, sequence_len, epoch: int = 1000, echo_per_epoch: int = 100):
+    def train(self, x, y, sequence_len, epoch: int = 1000, echo_per_epoch: int = 100, save_per_epoch: int = 100):
+        """ train using x, y, sequence_len, if echo_per_epoch or save_per_epoch <= 0 that means don't do it """
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
 
@@ -83,10 +85,12 @@ class CRF:
         total_labels = np.sum(sequence_len)
 
         # Train for a fixed number of iterations.
-        for i in tqdm(range(epoch)):
+        # for i in tqdm(range(epoch)):
+        for i in range(epoch):
             tf_viterbi_sequence, _ = self.session.run(
                 [self.viterbi_sequence, self.train_op], feed_dict={self.x_t: x, self.y_t: y, self.sequence_lengths_t: sequence_len})
-            if i % echo_per_epoch == 0:  # evaluate and save the model
+            if echo_per_epoch > 0 and (i + 1) % echo_per_epoch == 0:
+                # evaluate the model
                 global_step = tf.train.global_step(
                     self.session, self.global_step_tensor)
                 print("Step: %d" % global_step)
@@ -95,19 +99,32 @@ class CRF:
                 loss = self.session.run(self.loss, feed_dict={
                                         self.x_t: x, self.y_t: y, self.sequence_lengths_t: sequence_len})
                 print("Loss: %.2f%%" % loss)
+            if save_per_epoch > 0 and (i + 1) % save_per_epoch == 0:
+                # save the model
                 self.saver.save(self.session, self.model_path,
                                 global_step=self.global_step_tensor)
 
-    def inference(self, x, sequence_len):
+    def inference(self, x, sequence_len, y_to_eval=None):
+        """ predict the sequence, if input y_to_eval the eval it (word granularity) """
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
 
         tf_viterbi_sequence = self.session.run(
             self.viterbi_sequence, feed_dict={self.x_t: x, self.sequence_lengths_t: sequence_len})
+
+        if y_to_eval is not None:
+            mask = (np.expand_dims(np.arange(self.num_words), axis=0) <
+                    np.expand_dims(sequence_len, axis=1))
+            total_labels = np.sum(sequence_len)
+            self._eval_during_train(
+                tf_viterbi_sequence, y_to_eval, mask, total_labels)
+
         return tf_viterbi_sequence
 
 
 def get_test_sample(num_examples: int, num_words: int, num_features: int, num_tags: int):
+    np.random.seed(87) # make sure generate same data between executions
+
     # Random features.
     x = np.random.rand(num_examples, num_words,
                        num_features).astype(np.float32)
@@ -134,7 +151,6 @@ if __name__ == "__main__":
         num_examples, num_words, num_features, num_tags)
 
     # Test CRF model
-    os.makedirs("model/crf_test", exist_ok=True)
     print("Creating init model")
     CRFModel = CRF(num_words, num_features, num_tags,
                    model_dir="model/crf_test", model_name="test_crf")
@@ -147,3 +163,5 @@ if __name__ == "__main__":
     print("Testing model")
     answer = CRFModel.inference(x, sequence_lengths)
     print(answer)
+    print("Testing with evaluation")
+    CRFModel.inference(x, sequence_lengths, y)
