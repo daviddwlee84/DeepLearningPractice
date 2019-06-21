@@ -13,14 +13,11 @@ class TRAIN_TEST:
     CWS_train_pkl = 'train_test/cws_train.pkl'  # the trainable format (70% data)
     CWS_train_all_pkl = 'train_test/cws_train_all.pkl' # the trainable format (all data)
     CWS_test = 'train_test/cws_test.txt'  # the test data (with label) (30% data)
-    CWS_test_raw = 'train_test/cws_test_raw.txt'  # the test data (raw article) (30% data)
+    CWS_test_pkl = 'train_test/cws_test.pkl'  # the testable format (30% data)
+    CWS_final_pkl = 'train_test/cws_final.pkl' # the testable format (final test data)
 
 
 class SUBMISSION:
     CWS = '李大為-1701210963.cws'
     NER = '李大為-1701210963.ner'
 
-
-if __name__ == "__main__":
-    import os
-    # make sure create the train dir before training

@@ -21,12 +21,14 @@ def setup_cws_data(path: str = RAW_DATA.CWS):
 
     print("Word Segmentation Train and Test data split done.")
 
-    if not os.path.isfile(TRAIN_TEST.CWS_test_raw):
-        test_raw_list = get_raw_article_from_cws_data(
-            TRAIN_TEST.CWS_test, TRAIN_TEST.CWS_test_raw)
+    if not os.path.isfile(TRAIN_TEST.CWS_final_pkl):
+        final_raw_lines = load_utf16le_data_to_list(RAW_DATA.CWS_test)
+        final_raw_list = [line.strip() for line in final_raw_lines]
+        with open(TRAIN_TEST.CWS_final_pkl, 'wb') as final_pkl:
+            pkl.dump(final_raw_list, final_pkl)
     else:
-        with open(TRAIN_TEST.CWS_test_raw, 'r') as test_raw:
-            test_raw_list = test_raw.readlines()
+        with open(TRAIN_TEST.CWS_final_pkl, 'rb') as final_pkl:
+            final_raw_list = pkl.load(final_pkl)
 
     print("Word Segmentation Test raw article done. (to predict)")
 
@@ -61,7 +63,7 @@ def setup_cws_data(path: str = RAW_DATA.CWS):
 
     print("Word Segmentation Trainable training data (all) done.")
 
-    return train_data_list, test_data_list, train_all_list, test_raw_list
+    return train_data_list, test_data_list, train_all_list, final_raw_list
 
 
 def read_cws_data_and_split(path: str = RAW_DATA.CWS, test_ratio: float = 0.3):
@@ -135,7 +137,8 @@ def get_total_word_set(train_all_dataset_list: list):
     """ statistic all the words in the training set and find the max sequence length and the word to id dict """
     all_word_in_train = [
         word for sentence in train_all_dataset_list for (word, _) in sentence]
-    max_seq_len = max([len(sentence) for sentence in train_all_dataset_list])
+    # max_seq_len = max([len(sentence) for sentence in train_all_dataset_list])
+    max_seq_len = 165  # this is the max sequence length in the test data to predict
     print('Max sentence (sequence) length:', max_seq_len)
     word_set = ['PAD'] + list(set(all_word_in_train))
     print('Total unique word (include PAD):', len(word_set))
@@ -176,6 +179,24 @@ def _single_trainable_to_numpy(dataset_list: List[List[Tuple[str, str]]], word_t
     return np.array(x), np.array(y), np.array(seq_len)
 
 
+def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list):
+    word_to_id, max_seq_len, _ = get_total_word_set(
+        train_all_dataset_list)
+
+    x = []
+    seq_len = []
+    for raw_line in raw_data_line_list:
+        sentence = [*raw_line]
+        x.append([word_to_id[word] if word in word_to_id else word_to_id['PAD'] for word in sentence] +
+                 [word_to_id['PAD']] * (max_seq_len - len(sentence)))
+        seq_len.append(len(sentence))
+        # now just simply assert the predict sentence will always less than the max length sentence in training data
+        # (I've hard coded max_seq_len in get_total_word_set() because there was a case 165 < 164)
+        assert len(sentence) <= max_seq_len
+
+    return np.array(x), np.array(seq_len)
+
+
 def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output_path: str = ''):
     cws_list = []
     for sentence in dataset_list:
@@ -207,6 +228,12 @@ def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id
     return all_sentences
 
 
+def from_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
+    all_sentences = from_numpy_to_trainable(
+        x, y, seq_len, word_to_id, tag_to_id)
+    return from_trainable_to_cws_list(all_sentences, output_path)
+
+
 def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
     """ Transfer labeled cws data into raw article """
     with open(path, 'r') as f_in:
@@ -225,7 +252,12 @@ def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: 
 if __name__ == "__main__":
     os.makedirs('train_test', exist_ok=True)
     print("Get trainable cws data")
-    train_data_list, test_data_list, train_all_list, test_raw_list = setup_cws_data()
+    train_data_list, test_data_list, train_all_list, final_raw_list = setup_cws_data()
+
+    print("Test raw data to numpy without label")
+    final_x, final_seq_len = raw_to_numpy(final_raw_list, train_all_list)
+    print(final_x)
+    print(final_seq_len)
 
     print("Transfer trainable cws data into numpy format")
     (train_x, train_y, train_seq_len), _, _ = train_test_trainable_to_numpy(
