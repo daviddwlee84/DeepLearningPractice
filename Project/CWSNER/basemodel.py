@@ -5,8 +5,7 @@ import os
 
 
 class CRF:
-    def __init__(self, num_examples, num_words, num_features, num_tags, model_dir: str = "model", model_name: str = "crf"):
-        self.num_examples = num_examples
+    def __init__(self, num_words, num_features, num_tags, model_dir: str = "model", model_name: str = "crf"):
         self.num_words = num_words
         self.num_features = num_features
         self.num_tags = num_tags
@@ -16,15 +15,15 @@ class CRF:
 
         self.graph = tf.Graph()
 
-    def build_model(self, sequence_lengths: int):
-        self.sequence_lengths = sequence_lengths
+    def build_model(self):
         with self.graph.as_default():
             # Add the data to the TensorFlow graph.
             self.x_t = tf.placeholder(
-                tf.float32, [self.num_examples, self.num_words, self.num_features])
+                tf.float32, [None, self.num_words, self.num_features])
             self.y_t = tf.placeholder(
-                tf.int32, [self.num_examples, self.num_words])
-            sequence_lengths_t = tf.constant(self.sequence_lengths)
+                tf.int32, [None, self.num_words])
+            self.sequence_lengths_t = tf.placeholder(
+                tf.int32, [None])
             # Create a variable to hold the global_step.
             self.global_step_tensor = tf.Variable(
                 0, trainable=False, name='global_step')
@@ -35,16 +34,16 @@ class CRF:
             matricized_x_t = tf.reshape(self.x_t, [-1, self.num_features])
             matricized_unary_scores = tf.matmul(matricized_x_t, weights)
             unary_scores = tf.reshape(matricized_unary_scores,
-                                      [self.num_examples, self.num_words, self.num_tags])
+                                      [-1, self.num_words, self.num_tags])
 
             # Compute the log-likelihood of the gold sequences and keep the transition
             # params for inference at test time.
             log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
-                unary_scores, self.y_t, sequence_lengths_t)
+                unary_scores, self.y_t, self.sequence_lengths_t)
 
             # Compute the viterbi sequence and score.
             viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
-                unary_scores, transition_params, sequence_lengths_t)
+                unary_scores, transition_params, self.sequence_lengths_t)
 
             # Add a training op to tune the parameters.
             loss = tf.reduce_mean(-log_likelihood)
@@ -59,8 +58,10 @@ class CRF:
 
             ckpt = tf.train.get_checkpoint_state(self.model_dir)
             if ckpt and ckpt.model_checkpoint_path:  # Restore variables from disk.
+                print("Found pre-trained model, restoring")
                 self.saver.restore(self.session, ckpt.model_checkpoint_path)
             else:  # No pre-trained model, initial variables
+                print("Creating new model")
                 self.session.run(tf.global_variables_initializer())
 
         self.loss = loss
@@ -73,18 +74,18 @@ class CRF:
         print("Accuracy: %.2f%%" % accuracy)
 
     # Train and evaluate the model.
-    def train(self, x, y, epoch: int = 1000, echo_per_epoch: int = 100):
+    def train(self, x, y, sequence_len, epoch: int = 1000, echo_per_epoch: int = 100):
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
 
         mask = (np.expand_dims(np.arange(self.num_words), axis=0) <
-                np.expand_dims(self.sequence_lengths, axis=1))
-        total_labels = np.sum(self.sequence_lengths)
+                np.expand_dims(sequence_len, axis=1))
+        total_labels = np.sum(sequence_len)
 
         # Train for a fixed number of iterations.
         for i in tqdm(range(epoch)):
             tf_viterbi_sequence, _ = self.session.run(
-                [self.viterbi_sequence, self.train_op], feed_dict={self.x_t: x, self.y_t: y})
+                [self.viterbi_sequence, self.train_op], feed_dict={self.x_t: x, self.y_t: y, self.sequence_lengths_t: sequence_len})
             if i % echo_per_epoch == 0:  # evaluate and save the model
                 global_step = tf.train.global_step(
                     self.session, self.global_step_tensor)
@@ -92,17 +93,17 @@ class CRF:
                 self._eval_during_train(
                     tf_viterbi_sequence, y, mask, total_labels)
                 loss = self.session.run(self.loss, feed_dict={
-                                        self.x_t: x, self.y_t: y})
+                                        self.x_t: x, self.y_t: y, self.sequence_lengths_t: sequence_len})
                 print("Loss: %.2f%%" % loss)
                 self.saver.save(self.session, self.model_path,
                                 global_step=self.global_step_tensor)
 
-    def inference(self, x):
+    def inference(self, x, sequence_len):
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
 
         tf_viterbi_sequence = self.session.run(
-            self.viterbi_sequence, feed_dict={self.x_t: x})
+            self.viterbi_sequence, feed_dict={self.x_t: x, self.sequence_lengths_t: sequence_len})
         return tf_viterbi_sequence
 
 
@@ -134,9 +135,15 @@ if __name__ == "__main__":
 
     # Test CRF model
     os.makedirs("model/crf_test", exist_ok=True)
-    CRFModel = CRF(num_examples, num_words, num_features,
-                   num_tags, model_dir="model/crf_test", model_name="test_crf")
-    CRFModel.build_model(sequence_lengths)
-    CRFModel.train(x, y)
-    answer = CRFModel.inference(x)
+    print("Creating init model")
+    CRFModel = CRF(num_words, num_features, num_tags,
+                   model_dir="model/crf_test", model_name="test_crf")
+    print("Building model")
+    CRFModel.build_model()
+    print("Training model")
+    CRFModel.train(x, y, sequence_lengths)
+    print("Training again")
+    CRFModel.train(x, y, sequence_lengths)
+    print("Testing model")
+    answer = CRFModel.inference(x, sequence_lengths)
     print(answer)
