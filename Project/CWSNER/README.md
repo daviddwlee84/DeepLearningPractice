@@ -60,3 +60,45 @@ If the word is not NER than use the `N` tag.
   * [What does global_step mean in Tensorflow?](https://stackoverflow.com/questions/41166681/what-does-global-step-mean-in-tensorflow)
   * [tf.train.global_step](https://www.tensorflow.org/api_docs/python/tf/train/global_step)
   * [tf.train.get_or_create_global_step](https://www.tensorflow.org/api_docs/python/tf/train/get_or_create_global_step)
+
+### One-hot solutions
+
+> * [Convert array of indices to 1-hot encoded numpy array](https://stackoverflow.com/questions/29831489/convert-array-of-indices-to-1-hot-encoded-numpy-array)
+> * [Smarter Ways to Encode Categorical Data for Machine Learning](https://towardsdatascience.com/smarter-ways-to-encode-categorical-data-for-machine-learning-part-1-of-3-6dca2f71b159)
+> * [How can I one hot encode in Python?](https://stackoverflow.com/questions/37292872/how-can-i-one-hot-encode-in-python)
+> * [Python: One-hot encoding for huge data](https://stackoverflow.com/questions/41058780/python-one-hot-encoding-for-huge-data)
+> * [Tutorial: (Robust) One Hot Encoding in Python](https://blog.cambridgespark.com/robust-one-hot-encoding-in-python-3e29bfcec77e)
+
+#### One-time transform
+
+> When I try to use them, it will swallow up more than 50G
+
+* Numpy
+  * [X] np.eye
+    * `np.eye(num_features, dtype=np.uint8)[numpy_dataset]`
+  * [X] np.eye + np.reshape
+    * `np.squeeze(np.eye(num_features, dtype=np.uint8)[numpy_dataset.reshape(-1)]).reshape([num_examples, num_words, num_features])`
+* [Scipy.sparse](https://docs.scipy.org/doc/scipy/reference/sparse.html): currently don't support 3-dim matrix ([scipy issue - 3D sparse matrices #8868](https://github.com/scipy/scipy/issues/8868))
+  * [ ] list + scipy.sparse.eye => np.array
+    * `sparse.eye(num_features, dtype=np.uint8).tolil()[numpy_dataset.reshape(-1)].toarray().reshape((num_examples, num_words, num_features))` (don't work)
+  * [ ] list + scipy.sparse.eye -> tf.sparse.SparseTensor: this need to modify the network structure (X)
+* Keras
+  * [X] [keras.utils.to_categorical](https://keras.io/utils/#to_categorical) ([tf.keras.utils.to_categorical](https://www.tensorflow.org/api_docs/python/tf/keras/utils/to_categorical))
+    * `to_categorical(numpy_dataset, num_classes=num_features)`
+* Pandas: don't seem will support 3-dim either
+  * [ ] [pandas.get_dummies](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.get_dummies.html) ([How to do sparse one hot encoding with pandas?](https://www.kaggle.com/general/16675))
+* TensorFlow: this will need to modify network structure which will limit the generalization
+  * [ ] [tf.one_hot](https://www.tensorflow.org/api_docs/python/tf/one_hot)
+* Scikit Learn
+  * [ ] [sklearn.preprocessing.OneHotEncoder](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.OneHotEncoder.html): this will need to input the "original word: encode" pair, which is not what I want
+  * [X] sklearn.preprocessing.LabelBinarizer: can't transform 3-dim data
+* [lazyarray](https://lazyarray.readthedocs.io/en/latest/tutorial.html)
+
+#### Batch transform
+
+#### Transform back from one-hot
+
+> * [Coverting Back One Hot Encoded Results back to single Column in Python](https://stackoverflow.com/questions/45183213/coverting-back-one-hot-encoded-results-back-to-single-column-in-python)
+
+* Numpy
+  * np.argmax
