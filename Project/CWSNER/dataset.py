@@ -5,10 +5,12 @@ import io
 import os
 import pickle as pkl
 
+# CWS Function
 
-def setup_cws_data(path: str = RAW_DATA.CWS):
+
+def setup_cws_data():
     if not os.path.isfile(TRAIN_TEST.CWS_train) or not os.path.isfile(TRAIN_TEST.CWS_test):
-        train_lines, test_lines = read_cws_data_and_split(path, 0.3)
+        train_lines, test_lines = read_cws_data_and_split(RAW_DATA.CWS, 0.3)
         with open(TRAIN_TEST.CWS_train, 'w') as train_file:
             train_file.writelines(train_lines)
         with open(TRAIN_TEST.CWS_test, 'w') as test_file:
@@ -122,6 +124,43 @@ CWS_LabelEncode = {
     'S': 3
 }
 
+
+def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output_path: str = ''):
+    cws_list = []
+    for sentence in dataset_list:
+        str_sentence = ""
+        for i, (word, label) in enumerate(sentence):
+            if i < len(sentence) and (label == 'S' or label == 'E'):
+                str_sentence += word + '  '  # in original data it use two spaces to seperate words
+            elif i == len(sentence) or label == 'B' or label == 'M':
+                str_sentence += word
+        cws_list.append(str_sentence)
+
+    if output_path:
+        with open(output_path, 'w') as f_out:
+            for str_sentence in cws_list:
+                f_out.write(str_sentence + '\n')
+
+    return cws_list
+
+
+def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
+    """ Transfer labeled cws data into raw article """
+    with open(path, 'r') as f_in:
+        raw_data_with_space = f_in.read()
+
+    # remove all the space
+    raw_article = "".join(raw_data_with_space.split(' '))
+
+    if output_path:
+        with open(output_path, 'w') as f_out:
+            f_out.write(raw_article)
+
+    return raw_article
+
+
+# NER Function
+
 NER_LabelEncode = {
     'N': 0,
     'B-PER': 1,
@@ -133,12 +172,124 @@ NER_LabelEncode = {
 }
 
 
-def get_total_word_set(train_all_dataset_list: list):
+def setup_ner_data():
+
+    if not os.path.isfile(TRAIN_TEST.NER_train) or not os.path.isfile(TRAIN_TEST.NER_test):
+        train_data_list, test_data_list = read_ner_data_and_split(
+            RAW_DATA.NER, 0.3, use_utf16_encoding=True)
+        from_trainable_to_ner_list(train_data_list, TRAIN_TEST.NER_train)
+        from_trainable_to_ner_list(test_data_list, TRAIN_TEST.NER_test)
+    else:
+        train_data_list = _read_ner_data_to_trainable(
+            TRAIN_TEST.NER_train, has_label=True, use_utf16_encoding=False)
+        test_data_list = _read_ner_data_to_trainable(
+            TRAIN_TEST.NER_test, has_label=True, use_utf16_encoding=False)
+
+    print("Named Entity Recognition Train and Test data split done.")
+    print("Named Entity Recognition Trainable training data (70%) done.")
+    print("Named Entity Recognition Testable test data (30%) done.")
+
+    if not os.path.isfile(TRAIN_TEST.NER_final_pkl):
+        final_raw_list = _read_ner_data_to_trainable(
+            RAW_DATA.NER_test, has_label=False, use_utf16_encoding=True)
+        with open(TRAIN_TEST.NER_final_pkl, 'wb') as final_pkl:
+            pkl.dump(final_raw_list, final_pkl)
+    else:
+        with open(TRAIN_TEST.NER_final_pkl, 'rb') as final_pkl:
+            final_raw_list = pkl.load(final_pkl)
+
+    print("Named Entity Recognition Test raw article done. (to predict)")
+
+    if not os.path.isfile(TRAIN_TEST.NER_train_all_pkl):
+        train_all_data_list = _read_ner_data_to_trainable(
+            RAW_DATA.NER, has_label=True, use_utf16_encoding=True)
+        with open(TRAIN_TEST.NER_train_all_pkl, 'wb') as train_pkl:
+            pkl.dump(train_all_data_list, train_pkl)
+    else:
+        with open(TRAIN_TEST.NER_train_all_pkl, 'rb') as train_pkl:
+            train_all_data_list = pkl.load(train_pkl)
+
+    print("Named Entity Recognition Trainable training data (all) done.")
+
+    return train_data_list, test_data_list, train_all_data_list, final_raw_list
+
+
+def _read_ner_data_to_trainable(path: str, has_label: bool, use_utf16_encoding: bool):
+    """ assume the ner file is in utf-16-le encoding """
+    if use_utf16_encoding:
+        with io.open(path, 'r', encoding='utf-16-le') as data_file:
+            ner_raw_data = data_file.read()
+    else:
+        with open(path, 'r') as data_file:
+            ner_raw_data = data_file.read()
+
+    raw_sentences = ner_raw_data.split('\n\n')
+
+    dataset_list = []
+
+    for sentence in raw_sentences:
+        trainable_sentence = []
+        if sentence == '\n' or sentence == '':
+            break
+        if has_label:
+            for word_label in sentence.split('\n'):
+                # not sure why \ufeff will be in front of a sentence
+                word, label = word_label.strip('\ufeff\n ').split()
+                trainable_sentence.append((word, label))
+        else:
+            for word in sentence.split('\n'):
+                word = word.strip('\ufeff\n ')
+                trainable_sentence.append(word)
+
+        dataset_list.append(trainable_sentence)
+
+    # List[List[Tuple[str, str]]] or List[List[str]]
+    return dataset_list
+
+
+def read_ner_data_and_split(path: str = RAW_DATA.NER, test_ratio: float = 0.3, use_utf16_encoding: bool = True):
+    ner_trainable = _read_ner_data_to_trainable(
+        path, has_label=True, use_utf16_encoding=use_utf16_encoding)
+
+    total_lines = len(ner_trainable)
+    split_index = round(test_ratio * total_lines)
+
+    np.random.shuffle(ner_trainable)
+    train_lines, test_lines = ner_trainable[:-
+                                            split_index], ner_trainable[-split_index:]
+
+    return train_lines, test_lines
+
+
+def from_trainable_to_ner_list(dataset_list: List[List[Tuple[str, str]]], output_path: str = ''):
+    ner_list = []
+    for sentence in dataset_list:
+        sentence_lines = ""
+        for (word, label) in sentence:
+            sentence_lines += word + ' ' + label + '\n'
+        sentence_lines += '\n'
+
+        ner_list.append(sentence_lines)
+
+    if output_path:
+        with open(output_path, 'w') as f_out:
+            f_out.writelines(ner_list)
+
+    return ner_list
+
+
+# General usage
+
+def get_total_word_set(train_all_dataset_list: list, fixed_max_seq_len: int = 0):
     """ statistic all the words in the training set and find the max sequence length and the word to id dict """
     all_word_in_train = [
         word for sentence in train_all_dataset_list for (word, _) in sentence]
-    # max_seq_len = max([len(sentence) for sentence in train_all_dataset_list])
-    max_seq_len = 165  # this is the max sequence length in the test data to predict
+    if fixed_max_seq_len > 0:
+        max_seq_len = fixed_max_seq_len
+    else:
+        max_seq_len = max([len(sentence)
+                           for sentence in train_all_dataset_list])
+    # max_seq_len = 165  # this is the max sequence length in the cws test data to predict
     print('Max sentence (sequence) length:', max_seq_len)
     word_set = ['PAD'] + list(set(all_word_in_train))
     print('Total unique word (include PAD):', len(word_set))
@@ -147,10 +298,10 @@ def get_total_word_set(train_all_dataset_list: list):
     return word_to_id, max_seq_len, word_set
 
 
-def train_test_trainable_to_numpy(train_dataset_list: list, test_dataset_list: list, train_all_dataset_list: list, tag_to_id: Dict[str, int]):
+def train_test_trainable_to_numpy(train_dataset_list: list, test_dataset_list: list, train_all_dataset_list: list, tag_to_id: Dict[str, int], fixed_max_seq_len: int = 0):
     """ transfer all the training data into numpy array """
     word_to_id, max_seq_len, _ = get_total_word_set(
-        train_all_dataset_list)
+        train_all_dataset_list, fixed_max_seq_len=fixed_max_seq_len)
 
     train_x, train_y, train_seq_len = _single_trainable_to_numpy(
         train_dataset_list, word_to_id, tag_to_id, max_seq_len)
@@ -197,25 +348,6 @@ def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list):
     return np.array(x), np.array(seq_len)
 
 
-def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output_path: str = ''):
-    cws_list = []
-    for sentence in dataset_list:
-        str_sentence = ""
-        for i, (word, label) in enumerate(sentence):
-            if i < len(sentence) and (label == 'S' or label == 'E'):
-                str_sentence += word + '  '  # in original data it use two spaces to seperate words
-            elif i == len(sentence) or label == 'B' or label == 'M':
-                str_sentence += word
-        cws_list.append(str_sentence)
-
-    if output_path:
-        with open(output_path, 'w') as f_out:
-            for str_sentence in cws_list:
-                f_out.write(str_sentence + '\n')
-
-    return cws_list
-
-
 def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int]) -> List[List[Tuple[str, str]]]:
     id_to_tag = {index: tag for tag, index in tag_to_id.items()}
     id_to_word = {index: word for word, index in word_to_id.items()}
@@ -234,23 +366,7 @@ def from_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], ta
     return from_trainable_to_cws_list(all_sentences, output_path)
 
 
-def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
-    """ Transfer labeled cws data into raw article """
-    with open(path, 'r') as f_in:
-        raw_data_with_space = f_in.read()
-
-    # remove all the space
-    raw_article = "".join(raw_data_with_space.split(' '))
-
-    if output_path:
-        with open(output_path, 'w') as f_out:
-            f_out.write(raw_article)
-
-    return raw_article
-
-
-if __name__ == "__main__":
-    os.makedirs('train_test', exist_ok=True)
+def CWS_functionality_test():
     print("Get trainable cws data")
     train_data_list, test_data_list, train_all_list, final_raw_list = setup_cws_data()
 
@@ -261,10 +377,11 @@ if __name__ == "__main__":
 
     print("Transfer trainable cws data into numpy format")
     (train_x, train_y, train_seq_len), _, _ = train_test_trainable_to_numpy(
-        train_data_list, test_data_list, train_all_list, CWS_LabelEncode)
+        train_data_list, test_data_list, train_all_list, CWS_LabelEncode, fixed_max_seq_len=165)
     print(train_x)
 
-    word_to_id, _, _ = get_total_word_set(train_all_list)  # get word_to_id
+    word_to_id, _, _ = get_total_word_set(
+        train_all_list, fixed_max_seq_len=165)  # get word_to_id
 
     print("Transfer numpy format back to trainable cws format")
     new_train_data_list = from_numpy_to_trainable(
@@ -272,7 +389,40 @@ if __name__ == "__main__":
 
     print("Transfer cws format back to raw data")
     cws_list = from_trainable_to_cws_list(
-        new_train_data_list, output_path='test.txt')
+        new_train_data_list, output_path='cws_func_test.txt')
 
     from evaluation import wordSegmentEvaluaiton
     wordSegmentEvaluaiton(cws_list, cws_list)
+
+
+def NER_functionality_test():
+    print("Get trainable ner data")
+    train_data_list, test_data_list, train_all_data_list, final_raw_list = setup_ner_data()
+
+    print("Test raw data to numpy without label")
+    final_x, final_seq_len = raw_to_numpy(final_raw_list, train_all_data_list)
+    print(final_x)
+    print(final_seq_len)
+
+    print("Transfer trainable ner data into numpy format")
+    (train_x, train_y, train_seq_len), _, _ = train_test_trainable_to_numpy(
+        train_data_list, test_data_list, train_all_data_list, NER_LabelEncode)
+    print(train_x)
+
+    word_to_id, _, _ = get_total_word_set(
+        train_all_data_list)  # get word_to_id
+
+    print("Transfer numpy format back to trainable ner format")
+    new_train_data_list = from_numpy_to_trainable(
+        train_x, train_y, train_seq_len, word_to_id, NER_LabelEncode)
+
+    print("Transfer ner format back to raw data")
+    ner_list = from_trainable_to_ner_list(
+        new_train_data_list, output_path='ner_func_test.txt')
+
+
+if __name__ == "__main__":
+    os.makedirs('train_test', exist_ok=True)
+
+    CWS_functionality_test()
+    NER_functionality_test()

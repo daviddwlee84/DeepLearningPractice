@@ -120,9 +120,10 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding):
 if __name__ == "__main__":
     train_data_list, test_data_list, train_all_list, final_raw_list = setup_cws_data()
     train_set, test_set, all_set = train_test_trainable_to_numpy(
-        train_data_list, test_data_list, train_all_list, CWS_LabelEncode)
+        train_data_list, test_data_list, train_all_list, CWS_LabelEncode, fixed_max_seq_len=165)
 
-    word_to_id, max_seq_len, word_set = get_total_word_set(train_all_list)
+    word_to_id, max_seq_len, word_set = get_total_word_set(
+        train_all_list, fixed_max_seq_len=165)
     encoder = Encoding(word_to_id, method='one-hot')
 
     test_x, test_seq_len = test_set[0], test_set[2]

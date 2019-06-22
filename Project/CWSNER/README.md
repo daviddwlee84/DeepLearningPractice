@@ -11,7 +11,15 @@
 
 This is a Traditional Chinese corpus.
 
-### NER
+### CWS Data
+
+* Max sentence (sequence) length: 165 (training data max: 164)
+* Total unique word (include PAD): 4744
+
+### NER Data
+
+* Max sentence (sequence) length: 374 (training data max > test data max)
+* Total unique word (include PAD): 4379
 
 | Category | Tag          |
 | -------- | ------------ |
