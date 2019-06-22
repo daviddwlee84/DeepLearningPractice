@@ -484,6 +484,13 @@ def _print_metric_result_dict(metric_result_dict: Dict[str, dict]):
 def namedEntityEvaluation(pred_ner_labels: List[List[str]], gold_ner_labels: List[List[str]]):
     classes = list(NER_LabelEncode.keys())
     classes.remove(NOT_NER_TAG)
+
+    flat_pred_ner_labels = [
+        label for sentence in pred_ner_labels for label in sentence]
+
+    # if so, that means model doesn't work (all predict NOT_NER_TAG)
+    assert not all(flat_pred_ner_labels) == NOT_NER_TAG
+
     print("Performance per label type per token")
     print(per_token_eval(pred_ner_labels, gold_ner_labels, classes))
 
@@ -501,8 +508,6 @@ def namedEntityEvaluation(pred_ner_labels: List[List[str]], gold_ner_labels: Lis
         print("Type:", entity_type)
         _print_metric_result_dict(result_dict)
 
-    # flat_pred_ner_labels = [
-    #     label for sentence in pred_ner_labels for label in sentence]
     # flat_gold_ner_labels = [
     #     label for sentence in gold_ner_labels for label in sentence]
     # gold_entities = collect_named_entities(flat_gold_ner_labels)
