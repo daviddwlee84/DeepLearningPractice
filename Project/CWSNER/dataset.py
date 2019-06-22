@@ -351,9 +351,9 @@ def _single_trainable_to_numpy(dataset_list: List[List[Tuple[str, str]]], word_t
     return np.array(x), np.array(y), np.array(seq_len)
 
 
-def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list):
+def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list, fixed_max_seq_len: int = 0):
     word_to_id, max_seq_len, _ = get_total_word_set(
-        train_all_dataset_list)
+        train_all_dataset_list, fixed_max_seq_len=fixed_max_seq_len)
 
     x = []
     seq_len = []
@@ -362,8 +362,7 @@ def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list):
         x.append([word_to_id[word] if word in word_to_id else word_to_id['PAD'] for word in sentence] +
                  [word_to_id['PAD']] * (max_seq_len - len(sentence)))
         seq_len.append(len(sentence))
-        # now just simply assert the predict sentence will always less than the max length sentence in training data
-        # (I've hard coded max_seq_len in get_total_word_set() because there was a case 165 < 164)
+        # assert the predict sentence will always less than the max length sentence in training data
         assert len(sentence) <= max_seq_len
 
     return np.array(x), np.array(seq_len)
@@ -386,7 +385,8 @@ def CWS_functionality_test():
     train_data_list, test_data_list, train_all_list, final_raw_list = setup_cws_data()
 
     print("Test raw data to numpy without label")
-    final_x, final_seq_len = raw_to_numpy(final_raw_list, train_all_list)
+    final_x, final_seq_len = raw_to_numpy(
+        final_raw_list, train_all_list, fixed_max_seq_len=165)
     print(final_x)
     print(final_seq_len)
 
