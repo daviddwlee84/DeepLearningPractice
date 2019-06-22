@@ -1,5 +1,5 @@
 from embedding import Encoding
-from dataset import setup_cws_data, get_total_word_set, train_test_trainable_to_numpy, from_trainable_to_cws_list, from_numpy_to_evaluable_format, raw_to_numpy, CWS_LabelEncode
+from dataset import setup_cws_data, get_total_word_set, train_test_trainable_to_numpy, from_trainable_to_cws_list, from_cws_numpy_to_evaluable_format, raw_to_numpy, CWS_LabelEncode
 from basemodel import CRF
 from evaluation import wordSegmentEvaluaiton
 from tqdm import tqdm
@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     test_x, test_seq_len = test_set[0], test_set[2]
     test_predict = train_test_experiment(train_set, test_set, encoder)
-    test30percent = from_numpy_to_evaluable_format(
+    test30percent = from_cws_numpy_to_evaluable_format(
         test_x, test_predict, test_seq_len, word_to_id, CWS_LabelEncode, 'cws_test30percent.txt')
     print("Evaluate on 30% training data")
     test_set_gold = from_trainable_to_cws_list(test_data_list)
@@ -139,5 +139,5 @@ if __name__ == "__main__":
     final_x, final_seq_len = raw_to_numpy(final_raw_list, train_all_list)
     final_predict = train_all_prediction(
         all_set, final_x, final_seq_len, encoder)
-    from_numpy_to_evaluable_format(
+    from_cws_numpy_to_evaluable_format(
         final_x, final_predict, final_seq_len, word_to_id, CWS_LabelEncode, SUBMISSION.CWS)

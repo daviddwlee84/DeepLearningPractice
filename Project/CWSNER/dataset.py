@@ -144,6 +144,12 @@ def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output
     return cws_list
 
 
+def from_cws_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
+    all_sentences = from_numpy_to_trainable(
+        x, y, seq_len, word_to_id, tag_to_id)
+    return from_trainable_to_cws_list(all_sentences, output_path)
+
+
 def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
     """ Transfer labeled cws data into raw article """
     with open(path, 'r') as f_in:
@@ -285,6 +291,14 @@ def from_trainable_to_ner_list(dataset_list: List[List[Tuple[str, str]]], output
     return ner_list
 
 
+def from_ner_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
+    all_sentences = from_numpy_to_trainable(
+        x, y, seq_len, word_to_id, tag_to_id)
+    from_trainable_to_ner_list(
+        all_sentences, output_path)  # just for output file
+    return [[label for (_, label) in sentence] for sentence in all_sentences]
+
+
 # General usage
 
 def get_total_word_set(train_all_dataset_list: list, fixed_max_seq_len: int = 0):
@@ -365,12 +379,6 @@ def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id
             sentence.append((id_to_word[single_x[i]], id_to_tag[single_y[i]]))
         all_sentences.append(sentence)
     return all_sentences
-
-
-def from_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
-    all_sentences = from_numpy_to_trainable(
-        x, y, seq_len, word_to_id, tag_to_id)
-    return from_trainable_to_cws_list(all_sentences, output_path)
 
 
 def CWS_functionality_test():
