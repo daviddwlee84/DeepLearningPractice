@@ -215,7 +215,6 @@ def setup_ner_data():
 
 
 def _read_ner_data_to_trainable(path: str, has_label: bool, use_utf16_encoding: bool):
-    """ assume the ner file is in utf-16-le encoding """
     if use_utf16_encoding:
         with io.open(path, 'r', encoding='utf-16-le') as data_file:
             ner_raw_data = data_file.read()
@@ -245,6 +244,14 @@ def _read_ner_data_to_trainable(path: str, has_label: bool, use_utf16_encoding: 
 
     # List[List[Tuple[str, str]]] or List[List[str]]
     return dataset_list
+
+
+def get_ner_labels_from_file(path: str, use_utf16_encoding: bool) -> List[List[str]]:
+    """ extract all the label for each sentence. lists of per sentence per list """
+    dataset_list = _read_ner_data_to_trainable(
+        path, has_label=True, use_utf16_encoding=use_utf16_encoding)
+    labels = [[label for (_, label) in sentence] for sentence in dataset_list]
+    return labels
 
 
 def read_ner_data_and_split(path: str = RAW_DATA.NER, test_ratio: float = 0.3, use_utf16_encoding: bool = True):

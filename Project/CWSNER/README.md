@@ -42,9 +42,28 @@ If the word is not NER than use the `N` tag.
 
 ## Chinese Word Segmentation
 
+### CWS Evaluation
+
+> [previous notes](../MedicalCorpus/README.md#Evaluation)
+>
+> * [[原創]中文分詞器分詞效果的評測方法](https://www.codelast.com/%E5%8E%9F%E5%88%9B%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E5%99%A8%E5%88%86%E8%AF%8D%E6%95%88%E6%9E%9C%E7%9A%84%E8%AF%84%E6%B5%8B%E6%96%B9%E6%B3%95/)
+
 ## Named Entity Recognization
 
+### NER Evaluation
+
+> * [sklearn_crfsuite Evaluation](https://sklearn-crfsuite.readthedocs.io/en/latest/tutorial.html#evaluation)
+> * [Named-Entity evaluation metrics based on entity-level](http://www.davidsbatista.net/blog/2018/05/09/Named_Entity_Evaluation/)
+>   * [example-full-named-entity-evaluation.ipynb](https://github.com/davidsbatista/NER-Evaluation/blob/master/example-full-named-entity-evaluation.ipynb)
+
+* Performance per label type per token
+  * [sklearn_crfsuite.metrics](https://sklearn-crfsuite.readthedocs.io/en/latest/_modules/sklearn_crfsuite/metrics.html)
+* Performance over full named-entity
+  * [davidsbatista/NER-Evaluation](https://github.com/davidsbatista/NER-Evaluation)
+
 ## Resources
+
+> * [sklearn_crfsuite API](https://sklearn-crfsuite.readthedocs.io/en/latest/api.html)
 
 ### TensorFlow CRF
 

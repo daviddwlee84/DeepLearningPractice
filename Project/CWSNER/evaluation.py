@@ -1,6 +1,9 @@
-from dataset import load_utf16le_data_to_list
+from dataset import load_utf16le_data_to_list, get_ner_labels_from_file, NER_LabelEncode
 from constant import RAW_DATA
 from typing import List
+from sklearn_crfsuite.metrics import flat_classification_report, flat_f1_score
+
+# CWS Function
 
 # from segment to evaluation-able format
 # e.g.
@@ -73,8 +76,31 @@ def wordSegmentEvaluaiton(pred_seg_list: List[str], gold_seg_list: List[str]):
     print('ER: %.2f%%' % (ER*100))
     print('=========================================')
 
+# NER Function
+
+
+def per_token_eval(pred_ner_labels: List[str], gold_ner_labels: List[str], labels: List[str]):
+    labels.remove('N')
+    sorted_labels = sorted(labels, key=lambda name: (
+        name[1:], name[0]))  # group B and I results
+    return flat_classification_report(pred_ner_labels, gold_ner_labels, labels=sorted_labels, digits=4)
+
+
+def namedEntityEvaluation(pred_ner_labels: List[str], gold_ner_labels: List[str]):
+    classes = list(NER_LabelEncode.keys())
+    print("Performance per label type per token")
+    print(per_token_eval(pred_ner_labels, gold_ner_labels, classes))
+
+    print("Performance over full named-entity")
+    # TODO
+
 
 if __name__ == "__main__":
-    # test evaluation function
+    print("test cws evaluation function")
     test_list = load_utf16le_data_to_list(RAW_DATA.CWS)
     wordSegmentEvaluaiton(test_list, test_list)
+
+    print("test ner evaluation function")
+    test_labels = get_ner_labels_from_file(
+        RAW_DATA.NER, use_utf16_encoding=True)
+    namedEntityEvaluation(test_labels, test_labels)
