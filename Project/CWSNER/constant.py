@@ -1,3 +1,6 @@
+from collections import namedtuple
+from enum import Enum
+
 class RAW_DATA:
     CWS = 'data/Train_utf16.seg'
     NER = 'data/Train_utf16.ner'
@@ -25,4 +28,18 @@ class TRAIN_TEST:
 class SUBMISSION:
     CWS = '李大為-1701210963.cws'
     NER = '李大為-1701210963.ner'
+
+
+# Switch to determine which steps to do
+Function = namedtuple(
+    "Function", "Train_Test_Eval_train Train_Test_Eval_predict Final_Submit_train Final_Submit_predict")
+
+
+class Model(Enum):
+    CRF = 'crf'
+    BiRNN_CRF = 'birnn_crf'
+
+
+class Embedding(Enum):
+    ONE_HOT = 'one-hot'
 
