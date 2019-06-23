@@ -124,7 +124,7 @@ class CRF:
 
 class BiRNN_CRF:
     def __init__(self, num_words, num_features, num_tags, max_seq_len,  # Input Data
-                 num_layers: int = 1, dropout_rate: float = 0.9, hidden_unit: int = 512, is_training: bool = True, cell_type: str = 'lstm',  # BiRNN
+                 is_training: bool, num_layers: int = 1, dropout_rate: float = 0.9, hidden_unit: int = 512, cell_type: str = 'lstm',  # BiRNN
                  model_dir: str = "model", model_name: str = "birnn_crf"):
 
         # Input Data
@@ -160,7 +160,7 @@ class BiRNN_CRF:
         """ Get a bidirectional RNN cells (forward & backward) """
         rnn_forward = self._get_rnn_cell()
         rnn_backward = self._get_rnn_cell()
-        if self.dropout_rate > 0:
+        if self.dropout_rate > 0 and self.is_training:
             rnn_forward = tf.contrib.rnn.DropoutWrapper(
                 rnn_forward, output_keep_prob=(1 - self.dropout_rate))
             rnn_backward = tf.contrib.rnn.DropoutWrapper(
@@ -240,6 +240,7 @@ class BiRNN_CRF:
 
         return loss, viterbi_sequence
 
+    # I was try to set is_training here, but there are too many "tf variable reuse" problem
     def build_model(self):
         with self.graph.as_default():
             # Add the data to the TensorFlow graph.
@@ -294,10 +295,12 @@ class BiRNN_CRF:
         print("Accuracy: %.2f%%" % accuracy)
 
     # Train and evaluate the model.
-    def train(self, x, y, sequence_len, epoch: int = 1000, echo_per_epoch: int = 100, save_per_epoch: int = 100):
+    def train(self, x, y, sequence_len, epoch: int = 100, echo_per_epoch: int = 10, save_per_epoch: int = 10):
         """ train using x, y, sequence_len, if echo_per_epoch or save_per_epoch <= 0 that means don't do it """
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
+        # make sure is in training mode (use dropout)
+        assert self.is_training == True
 
         mask = (np.expand_dims(np.arange(self.num_words), axis=0) <
                 np.expand_dims(sequence_len, axis=1))
@@ -327,6 +330,8 @@ class BiRNN_CRF:
         """ predict the sequence, if input y_to_eval the eval it (word granularity) """
         # make sure the session was created in the graph
         assert self.session.graph is self.graph
+        # make sure is not in training mode (disable dropout)
+        assert self.is_training == False
 
         tf_viterbi_sequence = self.session.run(
             self.viterbi_sequence, feed_dict={self.x_t: x, self.sequence_lengths_t: sequence_len})
@@ -381,15 +386,21 @@ def BiRNN_CRF_model_test(x, y, sequence_lengths, num_words, num_features, num_ta
     # calculate max sequence length
     max_seq_len = max(sequence_lengths)
 
-    print("Creating init model")
-    BiRNNCRFModel = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len,
+    print("Creating model for training")
+    BiRNNCRFModel = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True,
                           model_dir="model/birnn_crf_test", model_name="test_birnn_crf")
-    print("Building model")
+    print("Building model (use dropout)")
     BiRNNCRFModel.build_model()
     print("Training model")
     BiRNNCRFModel.train(x, y, sequence_lengths)
     print("Training again")
     BiRNNCRFModel.train(x, y, sequence_lengths)
+
+    print("Creating model for testing")
+    BiRNNCRFModel = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False,
+                          model_dir="model/birnn_crf_test", model_name="test_birnn_crf")
+    print("Building model (disable dropout)")
+    BiRNNCRFModel.build_model()
     print("Testing model")
     answer = BiRNNCRFModel.inference(x, sequence_lengths)
     print(answer)
