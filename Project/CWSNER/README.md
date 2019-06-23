@@ -15,11 +15,23 @@ This is a Traditional Chinese corpus.
 
 * Max sentence (sequence) length: 165 (training data max: 164)
 * Total unique word (include PAD): 4744
+* Training data size
+  * examples (sentences): 66713 (70% training data)
+  * examples (sentences): 95304 (100% training data)
+  * words (max sentence length): 165
+  * features (one-hot encode, i.e. total unique word): 4744
+  * tags (cws tags): 4
 
 ### NER Data
 
 * Max sentence (sequence) length: 374 (training data max > test data max)
 * Total unique word (include PAD): 4379
+* Training data size
+  * examples (sentences): 25434 (70% training data)
+  * examples (sentences): 36334 (100% training data)
+  * words (max sentence length): 374
+  * features (one-hot encode, i.e. total unique word): 4379
+  * tags (ner tags): 7 (PER x 2 + LOC x 2 + ORG x 2 + N)
 
 | Category | Tag          |
 | -------- | ------------ |
@@ -39,6 +51,13 @@ If the word is not NER than use the `N` tag.
 * Question analysis and discussion
 
 > Submission should be named as `Name-ID.seg` and `Name-ID.ner`
+
+## Usage
+
+Train and Predict
+
+* `python3 cws_crf.py`
+* `python3 ner_crf.py`
 
 ## Chinese Word Segmentation
 
@@ -61,6 +80,15 @@ If the word is not NER than use the `N` tag.
 * Performance over full named-entity
   * [davidsbatista/NER-Evaluation](https://github.com/davidsbatista/NER-Evaluation)
 
+## Model
+
+### CRF
+
+### BiLSTM + CRF
+
+* [tf.contrib.layers.xavier_initializer](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/xavier_initializer)
+* [tf.nn.xw_plus_b](https://www.tensorflow.org/api_docs/python/tf/nn/xw_plus_b): Computes matmul(x, weights) + biases.
+
 ## Resources
 
 > * [sklearn_crfsuite API](https://sklearn-crfsuite.readthedocs.io/en/latest/api.html)
@@ -69,6 +97,13 @@ If the word is not NER than use the `N` tag.
 
 * [tensorflow/contrib/crf](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/crf)
 * [TesofrFlow issue - CRF functions in TensorFlow 2.0 #26167](https://github.com/tensorflow/tensorflow/issues/26167)
+
+### Example
+
+* [macanv/BERT-BiLSTM-CRF-NER](https://github.com/macanv/BERT-BiLSTM-CRF-NER): BERT + BiLSTM + CRF
+  * [lstm_crf_layer.py](https://github.com/macanv/BERT-BiLSTM-CRF-NER/blob/master/bert_base/train/lstm_crf_layer.py#L13)
+* [scofield7419/sequence-labeling-BiLSTM-CRF](https://github.com/scofield7419/sequence-labeling-BiLSTM-CRF): BiLSTM + CRF
+  * [BiLSTM_CRFs.py](https://github.com/scofield7419/sequence-labeling-BiLSTM-CRF/blob/master/engines/BiLSTM_CRFs.py#L18)
 
 --
 
