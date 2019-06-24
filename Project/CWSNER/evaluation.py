@@ -439,8 +439,6 @@ def result_over_all_sentences(gold_ner_labels: List[List[str]], pred_ner_labels:
                 true_ents), collect_named_entities(pred_ents), labels
         )
 
-        # print(tmp_results)
-
         # aggregate overall results
         for eval_schema in results.keys():
             for metric in metrics_results.keys():
@@ -472,7 +470,7 @@ def _print_metric_result_dict(metric_result_dict: Dict[str, dict]):
     for key, value in metric_result_dict.items():
         temp_to_print_dict = {}
         value['f1'] = 2*value['precision'] * value['recall'] / \
-            (value['precision']+value['recall'])
+            (value['precision']+value['recall']) if value['precision']+value['recall'] > 0 else 0
 
         for to_print in ['precision', 'recall', 'f1']:
             temp_to_print_dict[to_print] = [value[to_print]]
