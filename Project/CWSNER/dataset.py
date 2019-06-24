@@ -144,11 +144,15 @@ def from_trainable_to_cws_list(dataset_list: List[List[Tuple[str, str]]], output
     return cws_list
 
 
-def from_cws_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
+# Deprecated: can't deal with OOV word
+def from_cws_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int] = CWS_LabelEncode, output_path: str = ''):
     all_sentences = from_numpy_to_trainable(
         x, y, seq_len, word_to_id, tag_to_id)
     return from_trainable_to_cws_list(all_sentences, output_path)
 
+def combine_cws_numpy_pred_to_evaluable_format(dataset_list, pred, tag_to_id: Dict[str, int] = CWS_LabelEncode, output_path: str = ''):
+    all_sentences = combine_numpy_pred_to_trainable(dataset_list, pred, tag_to_id)
+    return from_trainable_to_cws_list(all_sentences, output_path)
 
 def get_raw_article_from_cws_data(path: str = TRAIN_TEST.CWS_test, output_path: str = ''):
     """ Transfer labeled cws data into raw article """
@@ -291,13 +295,19 @@ def from_trainable_to_ner_list(dataset_list: List[List[Tuple[str, str]]], output
     return ner_list
 
 
-def from_ner_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int], output_path: str = ''):
+# Deprecated: can't deal with OOV word
+def from_ner_numpy_to_evaluable_format(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int] = NER_LabelEncode, output_path: str = ''):
     all_sentences = from_numpy_to_trainable(
         x, y, seq_len, word_to_id, tag_to_id)
     from_trainable_to_ner_list(
         all_sentences, output_path)  # just for output file
     return [[label for (_, label) in sentence] for sentence in all_sentences]
 
+def combine_ner_numpy_pred_to_evaluable_format(dataset_list, pred, tag_to_id: Dict[str, int] = NER_LabelEncode, output_path: str = ''):
+    all_sentences = combine_numpy_pred_to_trainable(dataset_list, pred, tag_to_id)
+    from_trainable_to_ner_list(
+        all_sentences, output_path)  # just for output file
+    return [[label for (_, label) in sentence] for sentence in all_sentences]
 
 # General usage
 
@@ -368,6 +378,7 @@ def raw_to_numpy(raw_data_line_list: List[str], train_all_dataset_list: list, fi
     return np.array(x), np.array(seq_len)
 
 
+# Deprecated: can't deal with OOV word
 def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id: Dict[str, int]) -> List[List[Tuple[str, str]]]:
     id_to_tag = {index: tag for tag, index in tag_to_id.items()}
     id_to_word = {index: word for word, index in word_to_id.items()}
@@ -379,6 +390,24 @@ def from_numpy_to_trainable(x, y, seq_len, word_to_id: Dict[str, int], tag_to_id
         all_sentences.append(sentence)
     return all_sentences
 
+def combine_numpy_pred_to_trainable(dataset_list, pred, tag_to_id: Dict[str, int]) -> List[List[Tuple[str, str]]]:
+    id_to_tag = {index: tag for tag, index in tag_to_id.items()}
+    all_sentences = []
+    for row, ori_sentence in enumerate(dataset_list):
+        sentence_pred = []
+        if not ori_sentence:
+            continue # prevent from empty sentence
+        if len(ori_sentence[0]) > 1: # trainable format: (word, label)
+            for col, (word, _) in enumerate(ori_sentence):
+                sentence_pred.append((word, id_to_tag[pred[row][col]]))
+        else: # raw format: word
+            for col, word in enumerate(ori_sentence):
+                sentence_pred.append((word, id_to_tag[pred[row][col]]))
+
+        all_sentences.append(sentence_pred)
+
+    return all_sentences
+            
 
 def CWS_functionality_test():
     print("Get trainable cws data")
@@ -395,12 +424,14 @@ def CWS_functionality_test():
         train_data_list, test_data_list, train_all_list, CWS_LabelEncode, fixed_max_seq_len=165)
     print(train_x)
 
-    word_to_id, _, _ = get_total_word_set(
-        train_all_list, fixed_max_seq_len=165)  # get word_to_id
+    # word_to_id, _, _ = get_total_word_set(
+    #     train_all_list, fixed_max_seq_len=165)  # get word_to_id
 
     print("Transfer numpy format back to trainable cws format")
-    new_train_data_list = from_numpy_to_trainable(
-        train_x, train_y, train_seq_len, word_to_id, CWS_LabelEncode)
+    # new_train_data_list = from_numpy_to_trainable(
+    #     train_x, train_y, train_seq_len, word_to_id, CWS_LabelEncode)
+    new_train_data_list = combine_numpy_pred_to_trainable(
+        train_data_list, train_y, CWS_LabelEncode)
 
     print("Transfer cws format back to raw data")
     cws_list = from_trainable_to_cws_list(
@@ -424,12 +455,14 @@ def NER_functionality_test():
         train_data_list, test_data_list, train_all_data_list, NER_LabelEncode)
     print(train_x)
 
-    word_to_id, _, _ = get_total_word_set(
-        train_all_data_list)  # get word_to_id
+    # word_to_id, _, _ = get_total_word_set(
+    #     train_all_data_list)  # get word_to_id
 
     print("Transfer numpy format back to trainable ner format")
-    new_train_data_list = from_numpy_to_trainable(
-        train_x, train_y, train_seq_len, word_to_id, NER_LabelEncode)
+    # new_train_data_list = from_numpy_to_trainable(
+    #     train_x, train_y, train_seq_len, word_to_id, NER_LabelEncode)
+    new_train_data_list = combine_numpy_pred_to_trainable(
+        train_data_list, train_y, NER_LabelEncode)
 
     print("Transfer ner format back to raw data")
     ner_list = from_trainable_to_ner_list(

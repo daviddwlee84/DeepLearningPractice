@@ -1,5 +1,5 @@
 from embedding import Encoding
-from dataset import setup_cws_data, get_total_word_set, train_test_trainable_to_numpy, from_trainable_to_cws_list, from_cws_numpy_to_evaluable_format, raw_to_numpy, CWS_LabelEncode
+from dataset import setup_cws_data, get_total_word_set, train_test_trainable_to_numpy, from_trainable_to_cws_list, combine_cws_numpy_pred_to_evaluable_format, raw_to_numpy, CWS_LabelEncode
 from basemodel import CRF, BiRNN_CRF
 from evaluation import wordSegmentEvaluaiton
 from tqdm import tqdm
@@ -165,8 +165,8 @@ if __name__ == "__main__":
         test_predict = train_test_experiment(
             train_set, test_set, encoder, max_seq_len)
         if FUNC.Train_Test_Eval_predict:
-            test30percent = from_cws_numpy_to_evaluable_format(
-                test_x, test_predict, test_seq_len, word_to_id, CWS_LabelEncode, test_predict_filename)
+            test30percent = combine_cws_numpy_pred_to_evaluable_format(
+                test_data_list, test_predict, CWS_LabelEncode, test_predict_filename)
             print("Evaluate on 30% training data")
             test_set_gold = from_trainable_to_cws_list(test_data_list)
             with open(test_predict_filename, 'r') as f:
@@ -179,5 +179,5 @@ if __name__ == "__main__":
         final_predict = train_all_prediction(
             all_set, final_x, final_seq_len, encoder, max_seq_len)
         if FUNC.Final_Submit_predict:
-            from_cws_numpy_to_evaluable_format(
-                final_x, final_predict, final_seq_len, word_to_id, CWS_LabelEncode, SUBMISSION.CWS)
+            combine_cws_numpy_pred_to_evaluable_format(
+                final_raw_list, final_predict, CWS_LabelEncode, SUBMISSION.CWS)
