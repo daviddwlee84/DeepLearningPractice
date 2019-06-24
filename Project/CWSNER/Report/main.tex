@@ -3,6 +3,10 @@
 
 \usepackage{mathptmx}
 
+% To show Chinese characters
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+
 \usepackage{geometry}
 \geometry{a4paper, scale=0.8}
 
@@ -21,17 +25,29 @@
 % For graphic/figure
 \usepackage{graphicx}
 
+% For url in footnote, hyperlinks and bookmarks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    pdftitle={Sequence Labeling: Chinese Word Segmentation and Named Entity Recognition},
+    bookmarks=true,
+    pdfpagemode=FullScreen,
+}
+\newcommand\fnurl[2]{
+  \href{#2}{#1}\footnote{\url{#2}}
+}
+
 \title{\textbf{Sequence Labeling: Chinese Word Segmentation and Named Entity Recognition}}
-\author{\textbf{Da-Wei Lee} \\
+\author{\textbf{李大為 Da-Wei Lee} \\
 Peking University \\
 {\tt 1701210963@pku.edu.cn}}
 \date{\vspace{-5ex}}
 
 \begin{document}
 \maketitle
-\begin{abstract}
-  \input{sections/abstract.tex}
-\end{abstract}
 
 \begin{multicols}{2}
 
