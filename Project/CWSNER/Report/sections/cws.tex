@@ -1,2 +1,34 @@
 \subsection{Word Segmentation}
 \label{sec:cws}
+
+In \fnurl{word segmentation}{https://en.wikipedia.org/wiki/Text_segmentation} task, we can reduce it to a 4-class classification problem.
+
+The four classes:
+
+\begin{itemize}
+    \item B: Begin of a token
+    \item M: Middle of a token
+    \item E: End of a token
+    \item S: single character as a token
+\end{itemize}
+
+Thus a seperated (labeled) dataset can be transform to the trainable descripiton - a word with a label, a sentence as a sequence.
+
+For example, \\ 小明 吃 冰淇淋 $\Rightarrow$ (小, B), (明, E), (吃, S), (冰, B), (淇, M), (淋, E).
+
+\subsubsection*{Evaluation of Word Segmentation}
+\label{sec:cws_eval}
+
+The evaluation of the word segmentation task is not that simple, because the "word-level" measurement means nothing. So we need "entity-level" metrics.
+
+There is an approach called the Golden Standard, the classic evaluation method is given by \fnurl{SIGHAN Bakeoff 2005}{http://sighan.cs.uchicago.edu/bakeoff2005/}.
+
+We mark the words' start position and the end position then compare to the golden standard position. Then we can get the following counts:
+
+\begin{itemize}
+    \item $N$: Golden standard's word count
+    \item $e$: Error (not in golden standard) word count
+    \item $c$: Correct (in golden standard) word count
+\end{itemize}
+
+And use these numbers we can calculate precision ($P=\frac{c}{c+e}$), recall ($R=\frac{c}{N}$) and f1 score ($F_1=\frac{2\times P\times R}{P+R}$). We can also get "error rate" ($ER=\frac{e}{N}$) as one of the metrics.

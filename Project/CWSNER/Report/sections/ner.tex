@@ -1,2 +1,31 @@
 \subsection{Named Entity Recognition}
 \label{sec:ner}
+
+Named entity recognition task is very similar with word segmentation. We can also reduce it into a sequence labeling or a classification problem.
+
+In our data we have three tags PER, LOC, ORG represent person, location, organization respectively. Each of them like word segmentation has begin and middle (but without end). Here is the labels:
+
+\begin{itemize}
+    \item B-PER: Begin of a person entity
+    \item I-PER: In a person entity
+    \item B-LOC: Begin of a location entity
+    \item I-LOC: In a location entity
+    \item B-ORG: Begin of a organization entity
+    \item I-ORG: In a organization entity
+    \item N: Not an entity (sometimes use O)
+\end{itemize}
+
+The given dataset is already transfered to the trainable format - a word with a label and sentences are sepreated with double new line character.
+
+So in this task we can save the effort of transfer between trainable format and the final output.
+
+\subsubsection*{Evaluation of Named Entity Recognition}
+\label{sec:ner_eval}
+
+The evaluation of named entity recognition is also a little tricky. And we need to also evaluate on entity-level.
+
+Because, in the dataset, the data is almost labeled with N tag. If use word-level metrics we will get about 90\% precision even we predict N all the times.
+
+There are plenty of evaluation metrics, such as \fnurl{CoNLL-2003}{https://www.aclweb.org/anthology/W03-0419} use only precision, recall and f1 score; \fnurl{SemEval-2013 Task 9-1}{https://www.cs.york.ac.uk/semeval-2013/accepted/76_Paper.pdf} use four advanced metrics (strict, exact, partial, type) to calculate precision, recall, f1 score.
+
+And I'll use SemEval's metrics later on.
