@@ -1,7 +1,7 @@
 \subsection{Named Entity Recognition}
 \label{sec:ner}
 
-Named entity recognition task is very similar with word segmentation. We can also reduce it into a sequence labeling or a classification problem.
+\fnurl{Named entity recognition}{https://en.wikipedia.org/wiki/Named-entity_recognition} task is very similar with word segmentation. We can also reduce it into a sequence labeling or a classification problem.
 
 In our data we have three tags PER, LOC, ORG represent person, location, organization respectively. Each of them like word segmentation has begin and middle (but without end). Here is the labels:
 
@@ -19,7 +19,7 @@ The given dataset is already transfered to the trainable format - a word with a 
 
 So in this task we can save the effort of transfer between trainable format and the final output.
 
-\subsubsection*{Evaluation of Named Entity Recognition}
+\subsubsection*{Evaluation}
 \label{sec:ner_eval}
 
 The evaluation of named entity recognition is also a little tricky. And we need to also evaluate on entity-level.
@@ -29,3 +29,14 @@ Because, in the dataset, the data is almost labeled with N tag. If use word-leve
 There are plenty of evaluation metrics, such as \fnurl{CoNLL-2003}{https://www.aclweb.org/anthology/W03-0419} use only precision, recall and f1 score; \fnurl{SemEval-2013 Task 9-1}{https://www.cs.york.ac.uk/semeval-2013/accepted/76_Paper.pdf} use four advanced metrics (strict, exact, partial, type) to calculate precision, recall, f1 score.
 
 And I'll use SemEval's metrics later on.
+
+\subsubsection*{Given Data}
+
+Here is the summary of the given training data.
+
+\begin{itemize}
+    \item Sentences in training data: 36334
+    \item Total unique word: 4378
+    \item Max sentence (sequence) length: 374
+    \item Classes to classify: 7
+\end{itemize}

@@ -14,9 +14,9 @@ The four classes:
 
 Thus a seperated (labeled) dataset can be transform to the trainable descripiton - a word with a label, a sentence as a sequence.
 
-For example, \\ 小明 吃 冰淇淋 $\Rightarrow$ (小, B), (明, E), (吃, S), (冰, B), (淇, M), (淋, E).
+For example: 小明~吃~冰淇淋 $\Rightarrow$ (小, B), (明, E), (吃, S), (冰, B), (淇, M), (淋, E).
 
-\subsubsection*{Evaluation of Word Segmentation}
+\subsubsection*{Evaluation}
 \label{sec:cws_eval}
 
 The evaluation of the word segmentation task is not that simple, because the "word-level" measurement means nothing. So we need "entity-level" metrics.
@@ -32,3 +32,14 @@ We mark the words' start position and the end position then compare to the golde
 \end{itemize}
 
 And use these numbers we can calculate precision ($P=\frac{c}{c+e}$), recall ($R=\frac{c}{N}$) and f1 score ($F_1=\frac{2\times P\times R}{P+R}$). We can also get "error rate" ($ER=\frac{e}{N}$) as one of the metrics.
+
+\subsubsection*{Given Data}
+
+Here is the summary of the given training data.
+
+\begin{itemize}
+    \item Sentences in training data: 95304
+    \item Total unique word: 4743
+    \item Max sentence (sequence) length: 165
+    \item Classes to classify: 4
+\end{itemize}
