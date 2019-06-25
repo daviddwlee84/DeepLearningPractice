@@ -34,7 +34,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         NER_train_test_model = CRF(num_words, num_features, num_tags,
                                    model_dir='model/ner_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.001,
+        NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, dropout_rate=0.5, learning_rate=0.001,
                                          model_dir='model/ner_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     NER_train_test_model.build_model()
 
@@ -66,7 +66,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         print("Predict on 30% training data")
 
         if MODEL_TYPE == Model.BiRNN_CRF:  # set is_training to false to disable dropout layer
-            NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False,
+            NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False, dropout_rate=0,
                                              model_dir='model/ner_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
             NER_train_test_model.build_model()
 
@@ -98,7 +98,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         NER_all_model = CRF(num_words, num_features, num_tags,
                             model_dir='model/ner_all/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.001,
+        NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, dropout_rate=0.5, learning_rate=0.001,
                                   model_dir='model/ner_all/'+MODEL_NAME, model_name=MODEL_NAME)
     NER_all_model.build_model()
 
@@ -130,7 +130,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         print("Predict on final test data")
 
         if MODEL_TYPE == Model.BiRNN_CRF:  # set is_training to false to disable dropout layer
-            NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False,
+            NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False, dropout_rate=0,
                                       model_dir='model/ner_all/'+MODEL_NAME, model_name=MODEL_NAME)
             NER_all_model.build_model()
 

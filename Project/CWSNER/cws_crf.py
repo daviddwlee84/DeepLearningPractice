@@ -33,7 +33,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         CWS_train_test_model = CRF(num_words, num_features, num_tags,
                                    model_dir='model/cws_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.01,
+        CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, dropout_rate=0.5, learning_rate=0.01,
                                          model_dir='model/cws_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     CWS_train_test_model.build_model()
 
@@ -65,7 +65,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         print("Predict on 30% training data")
 
         if MODEL_TYPE == Model.BiRNN_CRF:  # set is_training to false to disable dropout layer
-            CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False,
+            CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False, dropout_rate=0,
                                              model_dir='model/cws_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
             CWS_train_test_model.build_model()
 
@@ -97,7 +97,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         CWS_all_model = CRF(num_words, num_features, num_tags,
                             model_dir='model/cws_all/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.01,
+        CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, dropout_rate=0.5, learning_rate=0.01,
                                   model_dir='model/cws_all/'+MODEL_NAME, model_name=MODEL_NAME)
     CWS_all_model.build_model()
 
@@ -129,7 +129,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         print("Predict on final test data")
 
         if MODEL_TYPE == Model.BiRNN_CRF:  # set is_training to false to disable dropout layer
-            CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False,
+            CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=False, dropout_rate=0,
                                       model_dir='model/cws_all/'+MODEL_NAME, model_name=MODEL_NAME)
             CWS_all_model.build_model()
 

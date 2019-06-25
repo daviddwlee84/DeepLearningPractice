@@ -256,6 +256,7 @@ class BiRNN_CRF:
             self.global_step_tensor = tf.Variable(
                 0, trainable=False, name='global_step')
 
+            # not sure if this layer is good or bad for the model
             if self.is_training:
                 self.x_t = tf.nn.dropout(self.x_t, self.dropout_rate)
 
