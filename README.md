@@ -45,10 +45,6 @@ Subject|Technique|Framework|Complexity|Remark
 [Chinese Neural Machine Translation](Project/ChineseNMT)|RNN, Attention|Tensorflow|○●●●●|A practice of Seq2Seq and Attention TODO: Multi-graph, Try transformer
 [Dogs!](Project/Dogs)|CNN|Keras|○○●●●|Using images from ImageNet, Keras Transfer learning and Data augmentation
 [2048](https://github.com/daviddwlee84/ReinforcementLearning2048)|FCNN with Policy Gradient|Tensorflow|●●●●●|Reinforcement Learning
-[Online ImageNet Classifier](Project/ImgClassifierAPI)|CNN|Keras|○○●●●|(TODO) Using Keras Applications combine with RESTful API
-[First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
-[YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
-[Word Similarity](Project/WordSimilarity)||||(TODO) Word Similarity Based on Dictionary and Based on Corpus
 [Text Relation Classification](https://github.com/pku-nlp-forfun/SemEval-2018-RelationClassification)|Multiple Models|Multiple Libraries|●●●●●|SemEval2018 Task 7 Semantic Relation Extraction and Classification in Scientific Papers
 [Medical Corpus](Project/MedicalCorpus)|Human Labor|Naked Eyes|●●●●●|From *Chinese word segmentation* to *POS tagging* to *NER*
 [Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
@@ -183,6 +179,10 @@ Parameter
 
 ## Common Concept
 
+Big Pucture: Machine Learning vs. Deep Learning
+
+[![ML vs DL](https://content-static.upwork.com/blog/uploads/sites/3/2017/06/27095812/image-16.png)](https://www.upwork.com/hiring/for-clients/log-analytics-deep-learning-machine-learning/)
+
 ### Terminology / Tricks
 
 * one-hot encoding
@@ -215,24 +215,6 @@ Parameter
 * ResNeXt
 * DPN (Dual Path Network)
 * [CliqueNet](https://github.com/iboing/CliqueNet)
-
-### Programming Framework
-
-Framework |Organization|Support Language|Remark
-----------|------------|----------------|------
-TensorFlow|Google|Python, C++, Go, JavaScript, ...|
-Keras|fchollet|Python|on top of TensorFlow, CNTK, or Theano
-PyTorch|Facebook|Python|
-CNTK|Microsoft|C++|
-OpenNN||C++|
-Caffe|BVLC|C++, Python|
-MXNet|DMLC|Python, C++, R, ...|
-Torch7|Facebook|Lua|
-Theano|U. Montreal|Python|
-Deeplearning4J|DeepLearning4J|Java, Scala|
-Leaf|AutumnAI|Rust|
-Lasagne|Lasagne|Python|
-Neon|NervanaSystems|Python|
 
 ## Applications
 
@@ -330,6 +312,16 @@ Toy
 
 * [Leon](https://getleon.ai/)
   * [leon-ai/leon](https://github.com/leon-ai/leon)
+
+### Mature Tools
+
+NLP
+
+* Chinese
+  * jieba
+* English
+  * [spaCy](https://spacy.io/) - Industrial-Strength Natural Language Processing in Python
+    * [explosion/spaCy](https://github.com/explosion/spaCy)
 
 ### Tutorial
 
@@ -456,3 +448,30 @@ Machine Learning/Deep Learning Platform
 
 * [`h5py`](https://www.h5py.org/) - HDF5 for Python: To store model in HDF5 binary data format
 * [`pyyaml`](https://pyyaml.org/) - PyYAML: YAML framework
+
+### Programming Framework
+
+Framework |Organization|Support Language|Remark
+----------|------------|----------------|------
+TensorFlow|Google|Python, C++, Go, JavaScript, ...|
+Keras|fchollet|Python|on top of TensorFlow, CNTK, or Theano
+PyTorch|Facebook|Python|
+CNTK|Microsoft|C++|
+OpenNN||C++|
+Caffe|BVLC|C++, Python|
+MXNet|DMLC|Python, C++, R, ...|
+Torch7|Facebook|Lua|
+Theano|U. Montreal|Python|
+Deeplearning4J|DeepLearning4J|Java, Scala|
+Leaf|AutumnAI|Rust|
+Lasagne|Lasagne|Python|
+Neon|NervanaSystems|Python|
+
+## Pending Project
+
+Subject|Technique|Framework|Complexity|Remark
+-------|---------|---------|----------|------
+[Online ImageNet Classifier](Project/ImgClassifierAPI)|CNN|Keras|○○●●●|(TODO) Using Keras Applications combine with RESTful API
+[First TF.js](Project/TFjs)||||(TODO) Using TensorFlow.js to load pre-trained model and make prediction on the browser
+[YOLO](Project/YOLO)|CNN|Tensorflow||(TODO) Real-time Object Detection
+[Word Similarity](Project/WordSimilarity)||||(TODO) Word Similarity Based on Dictionary and Based on Corpus
