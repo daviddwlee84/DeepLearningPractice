@@ -33,7 +33,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         CWS_train_test_model = CRF(num_words, num_features, num_tags,
                                    model_dir='model/cws_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True,
+        CWS_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.01,
                                          model_dir='model/cws_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     CWS_train_test_model.build_model()
 
@@ -97,7 +97,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         CWS_all_model = CRF(num_words, num_features, num_tags,
                             model_dir='model/cws_all/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True,
+        CWS_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.01,
                                   model_dir='model/cws_all/'+MODEL_NAME, model_name=MODEL_NAME)
     CWS_all_model.build_model()
 

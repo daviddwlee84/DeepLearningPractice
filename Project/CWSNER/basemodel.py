@@ -124,7 +124,7 @@ class CRF:
 
 class BiRNN_CRF:
     def __init__(self, num_words, num_features, num_tags, max_seq_len,  # Input Data
-                 is_training: bool, num_layers: int = 1, dropout_rate: float = 0.9, hidden_unit: int = 512, cell_type: str = 'lstm',  # BiRNN
+                 is_training: bool, learning_rate: float = 0.01, num_layers: int = 1, dropout_rate: float = 0.9, hidden_unit: int = 512, cell_type: str = 'lstm',  # BiRNN
                  model_dir: str = "model", model_name: str = "birnn_crf"):
 
         # Input Data
@@ -141,6 +141,7 @@ class BiRNN_CRF:
         self.hidden_unit = hidden_unit
         assert cell_type in ['lstm']
         self.cell_type = cell_type  # current only support lstm
+        self.learning_rate = learning_rate
 
         # General
         self.model_dir = model_dir
@@ -230,13 +231,14 @@ class BiRNN_CRF:
                 transition_params=transition_params
             )
 
+            loss = tf.reduce_mean(-log_likelihood)
+
+        with tf.variable_scope('crf_inference'):
             # Compute the viterbi sequence and score.
             viterbi_sequence, viterbi_score = tf.contrib.crf.crf_decode(
                 potentials=logits,
                 transition_params=transition_params,
                 sequence_length=self.sequence_lengths_t)
-
-            loss = tf.reduce_mean(-log_likelihood)
 
         return loss, viterbi_sequence
 
@@ -267,9 +269,8 @@ class BiRNN_CRF:
 
             # Add a training op to tune the parameters.
             # train_op = tf.train.GradientDescentOptimizer(
-            #     0.01).minimize(loss, global_step=self.global_step_tensor)
-            train_op = tf.train.AdamOptimizer(
-                0.01).minimize(loss, global_step=self.global_step_tensor)
+            #     learning_rate=self.learning_rate).minimize(loss, global_step=self.global_step_tensor)
+            train_op = tf.train.AdamOptimizer(learning_rate=self.learning_rate).minimize(loss, global_step=self.global_step_tensor)
 
             # Add ops to save and restore all the variables.
             self.saver = tf.train.Saver()

@@ -1,5 +1,6 @@
 from embedding import Encoding
-from dataset import setup_ner_data, get_total_word_set, train_test_trainable_to_numpy, combine_ner_numpy_pred_to_evaluable_format, get_ner_labels_from_file, raw_to_numpy, NER_LabelEncode
+from dataset import setup_ner_data, get_total_word_set, train_test_trainable_to_numpy, combine_ner_numpy_pred_to_evaluable_format, raw_to_numpy, NER_LabelEncode
+# from dataset import get_ner_labels_from_file  # load from file
 from basemodel import CRF, BiRNN_CRF
 from evaluation import namedEntityEvaluation
 from tqdm import tqdm
@@ -33,7 +34,7 @@ def train_test_experiment(train_set, test_set, encoder: Encoding, max_seq_len: i
         NER_train_test_model = CRF(num_words, num_features, num_tags,
                                    model_dir='model/ner_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True,
+        NER_train_test_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.001,
                                          model_dir='model/ner_train_test/'+MODEL_NAME, model_name=MODEL_NAME)
     NER_train_test_model.build_model()
 
@@ -97,7 +98,7 @@ def train_all_prediction(all_set, final_x, final_seq_len, encoder: Encoding, max
         NER_all_model = CRF(num_words, num_features, num_tags,
                             model_dir='model/ner_all/'+MODEL_NAME, model_name=MODEL_NAME)
     elif MODEL_TYPE == Model.BiRNN_CRF:
-        NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True,
+        NER_all_model = BiRNN_CRF(num_words, num_features, num_tags, max_seq_len, is_training=True, learning_rate=0.001,
                                   model_dir='model/ner_all/'+MODEL_NAME, model_name=MODEL_NAME)
     NER_all_model.build_model()
 
