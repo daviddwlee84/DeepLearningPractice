@@ -86,6 +86,10 @@ Train and Predict
 
 ### BiLSTM + CRF
 
+![cws](https://cdn.nlark.com/yuque/0/2019/png/104214/1559369780794-69fd076c-8f3b-4895-ac7f-5533aff25df2.png)
+
+![ner](https://github.com/scofield7419/sequence-labeling-BiLSTM-CRF/blob/master/snapshot/BiLSTM_CRF.png)
+
 * [tf.contrib.layers.xavier_initializer](https://www.tensorflow.org/api_docs/python/tf/contrib/layers/xavier_initializer)
 * [tf.nn.xw_plus_b](https://www.tensorflow.org/api_docs/python/tf/nn/xw_plus_b): Computes matmul(x, weights) + biases.
 
@@ -104,6 +108,12 @@ Train and Predict
   * [lstm_crf_layer.py](https://github.com/macanv/BERT-BiLSTM-CRF-NER/blob/master/bert_base/train/lstm_crf_layer.py#L13)
 * [scofield7419/sequence-labeling-BiLSTM-CRF](https://github.com/scofield7419/sequence-labeling-BiLSTM-CRF): BiLSTM + CRF
   * [BiLSTM_CRFs.py](https://github.com/scofield7419/sequence-labeling-BiLSTM-CRF/blob/master/engines/BiLSTM_CRFs.py#L18)
+    * [blocks.py](https://github.com/nyu-mll/multiNLI/blob/master/python/util/blocks.py)
+
+Not same task but similar model
+
+* [nyu-mll/multiNLI](https://github.com/nyu-mll/multiNLI) - Baseline Models for MultiNLI Corpus
+  * [bilstm.py](https://github.com/nyu-mll/multiNLI/blob/master/python/models/bilstm.py)
 
 --
 
@@ -114,6 +124,13 @@ Train and Predict
 * [Python - read text file with weird utf-16 format](https://stackoverflow.com/questions/19328874/python-read-text-file-with-weird-utf-16-format)
 * [How to split/partition a dataset into training and test datasets for, e.g., cross validation?](https://stackoverflow.com/questions/3674409/how-to-split-partition-a-dataset-into-training-and-test-datasets-for-e-g-cros)
 
+Python Logging
+
+* [logging — Logging facility for Python](https://docs.python.org/3/library/logging.html)
+* [[Python] logging 教學](https://stackoverflow.max-everyday.com/2017/10/python-logging/)
+* [python-logging](https://zwindr.blogspot.com/2016/08/python-logging.html)
+* [[Python] logging 學習紀錄](https://emineminschang.blogspot.com/2016/08/logging-python-logging-module.html)
+
 ### TensorFlow notes
 
 * [Graphs and Sessions](https://www.tensorflow.org/guide/graphs)
@@ -122,6 +139,17 @@ Train and Predict
   * [What does global_step mean in Tensorflow?](https://stackoverflow.com/questions/41166681/what-does-global-step-mean-in-tensorflow)
   * [tf.train.global_step](https://www.tensorflow.org/api_docs/python/tf/train/global_step)
   * [tf.train.get_or_create_global_step](https://www.tensorflow.org/api_docs/python/tf/train/get_or_create_global_step)
+* [Variables](https://www.tensorflow.org/guide/variables)
+  * Sharing Variable
+    * [What happens when setting reuse=True in tensorflow](https://stackoverflow.com/questions/53547066/what-happens-when-setting-reuse-true-in-tensorflow)
+      * reuse and variable scopes in general are deprecated and will be removed in tf2
+      * instead recommend you use the tf.keras layers to build your model, which you can reuse by just reusing the objects
+    * [tf.variable_scope](https://www.tensorflow.org/api_docs/python/tf/variable_scope)
+      * [TensorFlow基礎：共享變量](https://www.jianshu.com/p/ab0d38725f88)
+      * [共享變量](https://wiki.jikexueyuan.com/project/tensorflow-zh/how_tos/variable_scope.html)
+      * [tensorflow學習筆記（二十六）：構建TF代碼](https://blog.csdn.net/u012436149/article/details/53843158)
+  * Is Training
+    * [Question of tensorflow : How could I turn is_training of batchnorm to False](https://forums.fast.ai/t/question-of-tensorflow-how-could-i-turn-is-training-of-batchnorm-to-false/5870)
 
 ### One-hot solutions
 
