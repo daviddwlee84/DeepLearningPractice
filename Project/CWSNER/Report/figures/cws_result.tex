@@ -1,0 +1,16 @@
+\begin{table}[htbp!]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{lccccccc}
+        \toprule
+            \multicolumn{1}{c}{\multirow{2}{*}{Model}} & \multicolumn{4}{c}{Parameters}                              & \multicolumn{3}{c}{Test Set}     \\
+            \multicolumn{1}{c}{}                       & Input Embedding & Train Epoch & Learing Rate & Dropout Rate & P         & R        & F1        \\
+            \midrule
+            CRF                                        & One-hot         & 100         & 0.01         & None         & 76.36     & 75.06    & 75.70     \\
+            BiLSTM + CRF                               & One-hot         & 10          & 0.01         & 0.5          & 90.02     & 91.08    & 90.55     \\
+        \bottomrule
+        \end{tabular}
+    }
+\caption{Best evaluation result of word segmentation on the test set (in \%)}
+\label{tab:cws_result}
+\end{table}

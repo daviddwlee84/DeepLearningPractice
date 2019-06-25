@@ -1,4 +1,18 @@
 \section{Experiment}
 \label{sec:experiment}
 
-Experiment result of the testing on the 30\% test set
+As the requirement of the tasks. I split the labeled data into two part. 70\% for training set and 30\% for test set. The experiment result are the test on the test set. (And finally will use the entire labeled data to train another model and use it to label final submission).
+
+\subsection{Word Segmentation Evaluation}
+\label{sec:cws_eval}
+
+The evaluation result check out Table~\ref{tab:cws_result}. We can found that the BiLSTM with CRF model is perform much better than pure CRF model.
+
+\input{figures/cws_result.tex}
+
+\subsection{Named Entity Recognition Evaluation}
+\label{sec:ner_eval}
+
+The evaluation result check out Table~\ref{tab:ner_result}. The training parameter is basically the same except the learning rate. This part will be discussed in the next section.
+
+\input{figures/ner_result.tex}

@@ -1,0 +1,16 @@
+\begin{table}[htbp!]
+    \centering
+    \resizebox{\textwidth}{!}{
+        \begin{tabular}{lccccccc}
+        \toprule
+            \multicolumn{1}{c}{\multirow{2}{*}{Model}} & \multicolumn{4}{c}{Parameters}                              & \multicolumn{3}{c}{Test Set}     \\
+            \multicolumn{1}{c}{}                       & Input Embedding & Train Epoch & Learing Rate & Dropout Rate & P         & R        & F1        \\
+            \midrule
+            CRF                                        & One-hot         & 100         & 0.001        & None         & TBD       & TBD      & TBD       \\
+            BiLSTM + CRF                               & One-hot         & 10          & 0.001        & 0.5          & TBD       & TBD      & TBD       \\
+        \bottomrule
+        \end{tabular}
+    }
+\caption{Best evaluation result of named entity recognition on the test set (in \%)}
+\label{tab:ner_result}
+\end{table}
