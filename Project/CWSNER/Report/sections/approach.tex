@@ -1,4 +1,16 @@
 \section{Approach}
 \label{sec:approach}
 
+In this paragraph I'll introduce the approaches including tricks and models that I attempt to solve this task.
+
+\subsection*{Data Preprocessing}
+
+Because the sentence length of the training data are differ. But the model's input should be a fixed shape. Thus I have padded all the sentences into the maximum sentence length among both training data and test data. In the meanwhile, it is necessary to record the actual sequence length, when we will need to mask the rest of the part out when evaulation during training phase.
+
+The padding is using an padding character, it is shared with Out-of-vocabulary character. The OOV happened when testing the test data that is possible appear words not in training set. Thus I have to replace it with OOV and refill it back when generating output file.
+
+I tried to encode the words with one-hot encoding. (I was plan to try different embedding approach as input but the computation time is much longer than I expected thus finally decide to improve other part of models.) And in the first hand found that it is not possible to transfer entire dataset at once. By calculating the data size there will need more than 500GB memory which is not practical. Thus, I encode sentences only when needed (i.e. per batch).
+
 \input{sections/crf.tex}
+
+\input{sections/bilstm.tex}

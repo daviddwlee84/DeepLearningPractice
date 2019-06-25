@@ -1,0 +1,10 @@
+\subsection{BiLSTM with CRF}
+\label{sec:bilstm_crf}
+
+I found that the feature selection is very important to the CRF. One-hot encoding is not good at representing a word's meaning. The BiLSTM with CRF~\cite{huang2015bidirectional} approach is kind of a solution.
+
+When using bidirectional RNN, we can consider it as a dynamic embedding layer that pack the meaning of a word. Use this as the input of the CRF will get much better result.
+
+And because bidirectional, it can better extract the context among a word, compare with simple RNN or other naive embedding methods, that it can reduce the noise when input into the probabilistic graphical model.
+
+In practice, I use dropouts to make the model more generalize that I use dropout wrapper on the RNN cell and set the dropout rate with 0.5 while training. And do not forget to disable the dropouts while doing inference.

@@ -1,4 +1,10 @@
 \subsection{CRF}
 \label{sec:crf}
 
-CRF~\cite{lafferty2001conditional}
+CRF~\cite{lafferty2001conditional}, or \fnurl{Conditional Random Field}{https://en.wikipedia.org/wiki/Conditional_random_field}, is a undirected probabilistic graphical model, usually be used in sequence labeling task.
+
+Choose CRF is better than HMM, \fnurl{Hidden Markov Model}{https://en.wikipedia.org/wiki/Hidden_Markov_model}, in the current case. That is because by given all the data and labels, discriminative model will perform better than generative model. Due to their feature function, the CRF consider the global but the (first-order) HMM impose a dependency only to the previous element. Thus in general CRF is more powerful than HMM.
+
+Training the CRF that is learning the conditional distributions between the true sequence labels and features. 
+
+In practice, I use Viterbi algorithm to decode the transition matrix. And train the model with the log likelihood.
