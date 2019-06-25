@@ -1,4 +1,16 @@
 \section{Analysis and Discussion}
 \label{sec:analysis}
 
-Task analysis and discussion
+The performance of pure CRF is not good enough. As my speculation, that is because one-hot is not good enough as a word representation method for this kind of task. That is why introducing BiLSTM acting the word representation character will gain a big improvement.
+
+I have ask my previous teammate, he said he tried TF-IDF and also the fastText Chinese pre-trained embedding but just worse than one-hot encoding. But he replaced the BiLSTM layer with BERT and get the even better result. It shows that maybe we a dynamic embedding model is better than just look up a embedding vector table.
+
+The pure CRF has become much more tricky in the named entity recognition task. That because of the imbalance of the label (almost 90\% is N tag), thus even the word-level accuracy is very high, but found out the model learned nothing and can only output N tags or a few other tags but wrong.
+
+Thus I deprecate CRF as named entity recognition model and use BiLSTM with CRF model instead. But found out it just can't perform as well as word segmentation. And finally found that the key point is the learning rate. When I lower the learning rate for named entity recognition (about $\frac{1}{10}$ times) it become much better.
+
+I was planned to try different embedding approach as input and the other parameter settings but the computation time is much longer than I expected thus I was only able to test with some configuration after debuging the first valid model. I was extremely relied on the \fnurl{Intel DevCloud}{https://devcloud.intel.com/datacenter/} (20 nodes with 6 cores 3.4GHz CPU and 180GB memory) in my previous project. But it was running out of the six months trail few weeks ago. And training one epoch of BiLSTM model on my laptop will need 10 hours, it make the experiment much harder.
+
+Hope I can keep improve the model after this course when found a substitute or just power enough calculation resource. I think these two tasks are quite basic but also very meaningful. And also maybe I can warp it as an application by calling the API that I have left for the extension. The source code is on \fnurl{my GitHub}{https://github.com/daviddwlee84/DeepLearningPractice/blob/master/Project/CWSNER}.
+
+Finally, thanks teacher for the teaching of this semester. It helps me a lot and even spending very much times on this course and doing projects but it is totally worth it.

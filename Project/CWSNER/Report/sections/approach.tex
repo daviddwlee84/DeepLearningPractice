@@ -9,7 +9,7 @@ Because the sentence length of the training data are differ. But the model's inp
 
 The padding is using an padding character, it is shared with Out-of-vocabulary character. The OOV happened when testing the test data that is possible appear words not in training set. Thus I have to replace it with OOV and refill it back when generating output file.
 
-I tried to encode the words with one-hot encoding. (I was plan to try different embedding approach as input but the computation time is much longer than I expected thus finally decide to improve other part of models.) And in the first hand found that it is not possible to transfer entire dataset at once. By calculating the data size there will need more than 500GB memory which is not practical. Thus, I encode sentences only when needed (i.e. per batch).
+I tried to encode the words with one-hot encoding. And in the first place found that it is not possible to transfer entire dataset at once. By calculating the data size it will need more than 500GB memory which is not practical. Thus, I encode sentences only when needed (i.e. per batch).
 
 \input{sections/crf.tex}
 
