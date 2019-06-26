@@ -7,4 +7,6 @@ When using bidirectional RNN, we can consider it as a dynamic embedding layer th
 
 And because bidirectional, it can better extract the context among a word, compare with simple RNN or other naive embedding methods, that it can reduce the noise when input into the probabilistic graphical model.
 
+The reason why we still need CRF instead of just using dense layer right after the BiLSTM layer. Lets consider the scenario in named entity recognition, all the I-[tag] should followed by B-[tag]. Using dense layer we cannot promise this rule. But with CRF, because there is no chance (zero probability) for a named entity with I-[tag] before a B-[tag], that is the transition probability on the transition matrix will be zero, thus it guarantees this rule establish.
+
 In practice, I use dropouts to make the model more generalize that I use dropout wrapper on the RNN cell and set the dropout rate with 0.5 while training. And do not forget to disable the dropouts while doing inference.
