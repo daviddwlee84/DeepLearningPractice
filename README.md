@@ -22,9 +22,6 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 * [`keras`](https://keras.io)
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
-
-Not in this project
-
 * [`pytorch`](https://pytorch.org/)
   * [Brief Notes](Notes/Framework/PyTorch.md)
 
@@ -343,6 +340,10 @@ NLP
 
 * [Stanford - CS231n: Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)
 * [Stanford - CS244n: Natural Language Processing with Deep Learning](http://web.stanford.edu/class/cs224n/)
+  * Winter 2019 - first time using PyTorch
+    * [Videos](https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z)
+  * [Winter 2017](https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1174/) - using TensorFlow
+    * [Videos](https://www.youtube.com/playlist?list=PL3FW7Lu3i5Jsnh1rnUwq_TcylNr7EkRe6)
     * [Hank's blog](http://www.hankcs.com/tag/cs224n/) ([github](https://github.com/hankcs/CS224n))
     * [CS224n Chinese camp](https://github.com/learning511/cs224n-learning-camp)
 * [MIT Deep Learning](https://deeplearning.mit.edu/)
@@ -368,6 +369,9 @@ NLP
 * [**Deep Learning cheatsheets for Stanford's CS 230**](https://github.com/afshinea/stanford-cs-230-deep-learning)
     * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
 * [**aymericdamien/TensorFlow-Examples**](https://github.com/aymericdamien/TensorFlow-Examples) - TensorFlow Tutorial and Examples for Beginners (support TF v1 & v2)
+* [**graykode/nlp-tutorial**](https://github.com/graykode/nlp-tutorial) - Natural Language Processing Tutorial for Deep Learning Researchers
+* [**Microsoft Natural Language Processing Best Practices & Examples**](https://github.com/microsoft/nlp)
+* [Microsoft AI education materials for Chinese students, teachers and IT professionals](https://github.com/microsoft/ai-edu)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 * [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
