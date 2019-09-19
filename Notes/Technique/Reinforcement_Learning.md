@@ -14,20 +14,32 @@
 * Environment: Physical world in which the agent operates
 * State (S): Current situation of the agent
 * Reward (R): Feedback from the environment
+  * $Q_n \doteq \frac{\sum_{i=1}^{n-1} R_i}{n-1}$
+  * $Q_{n+1} = Q_n + \frac{1}{n} [R_n - Q_n]$
+  * $Q_{n+1} = Q_n + \alpha [R_n - Q_n] = (1 - \alpha)^n Q_1 + \sum_{i=1}^n \alpha (1 - \alpha)^{n-i} R_i$
+    * $\alpha$ is a constant, *step-size parameter*, $0 < \alpha \leq 1$
 * Policy (π): Method to map agent’s state to actions
 * Value (V): Future reward that an agent would receive by taking an action in a particular state
 * Q-value or action-value (Q)
+  * Projection of Action-Reward
+    * $q^*(a) \doteq \mathbb{E}\{R|A_i=a\}$ The ideal (expected) reward of action $a$
+    * $Q_t(a)$ The expectation reward of action $a$ at time $t$
 * Trajectory
+
+Strategy
+
+* Exploration 探索法: Keep searching for new strategies
+  * Probability $\epsilon$ to explore
+* Exploitation 利用法: Exploiting the best strategies found thus far
+  * Probability $1 - \epsilon$ to exploit
+  * $\displaystyle A^* \doteq \arg\max_a Q_t(a)$
 
 ### Other Terms in RL
 
 (Some terms using in Monte Carlo Tree Search (MCTS))
 
-* Exploration: Keep searching for new strategies
-* Exploitation: While exploiting the best strategies found thus far
-
-- State Value: How good a given state is for an agent to be in. A measurement of the expected oucome (or reward) if we're in this state with respect to our final goal.
-- Playout: A simulation of the game that mimics the cause and effect of random action until reach a 'terminal' point. (reliant on a *forward model* that can tell us outcomes of an action of any state)
+* State Value: How good a given state is for an agent to be in. A measurement of the expected oucome (or reward) if we're in this state with respect to our final goal.
+* Playout: A simulation of the game that mimics the cause and effect of random action until reach a 'terminal' point. (reliant on a *forward model* that can tell us outcomes of an action of any state)
 
 ## Background
 
@@ -178,11 +190,11 @@ Actor-Critic + DQN
 
 ## Summary
 
-Policy Gradients|Q-Learning
-----------------|----------
-very general but suffer from high variance so requires a lot of samples|does not always work but when it works, usually more sample-efficient
-Challenge: sample-efficiency|Challenge: exploration
-Grarantees: Converges to a local minima of $J(\theta)$, often good enough|Guarantees: Zero guarantees since you are approximating Bellman equation with a complicated funciton approximator
+| Policy Gradients                                                          | Q-Learning                                                                                                        |
+| ------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| very general but suffer from high variance so requires a lot of samples   | does not always work but when it works, usually more sample-efficient                                             |
+| Challenge: sample-efficiency                                              | Challenge: exploration                                                                                            |
+| Grarantees: Converges to a local minima of $J(\theta)$, often good enough | Guarantees: Zero guarantees since you are approximating Bellman equation with a complicated funciton approximator |
 
 ## Resources
 
@@ -208,6 +220,10 @@ Q Learing
 
 * [Siraj Raval - How to use Q Learning in Video Games Easily](https://youtu.be/A5eihauRQvo)
 * [Siraj Raval - Deep Q Learning for Video Games](https://youtu.be/79pmNdyxEGo)
+
+### MOOC
+
+* [Stanford CS234](http://web.stanford.edu/class/cs234/index.html)
 
 ### Article
 
