@@ -116,6 +116,7 @@ TBD
 ## Reference
 
 * [Wiki - Long short-term memory](https://en.wikipedia.org/wiki/Long_short-term_memory)
+* [**An exploration of dropout with LSTMs**](https://www.danielpovey.com/files/2017_interspeech_dropout.pdf)
 
 ### Article
 

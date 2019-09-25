@@ -123,6 +123,7 @@ POS tagging, Chinese word segmentation
 * [Andrew Ng - RNN W1L03: RNN Model](https://youtu.be/2E65LDnM2cA)
 * [Andrew Ng - RNN W1L04: Backpropagation through time](https://youtu.be/esgbmJ6SnSY)
 * [Andrew Ng - RNN W1L05: Different types of RNNs](https://youtu.be/G5kW3V6qHuk)
+* [Building RNNs is Fun with PyTorch and Google Colab - dair.ai - Medium](https://medium.com/dair-ai/building-rnns-is-fun-with-pytorch-and-google-colab-3903ea9a3a79)
 
 ### TensorFlow
 
