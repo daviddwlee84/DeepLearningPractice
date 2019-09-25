@@ -41,6 +41,22 @@ Strategy
 * State Value: How good a given state is for an agent to be in. A measurement of the expected oucome (or reward) if we're in this state with respect to our final goal.
 * Playout: A simulation of the game that mimics the cause and effect of random action until reach a 'terminal' point. (reliant on a *forward model* that can tell us outcomes of an action of any state)
 
+### Action Selection Strategy
+
+* greedy
+* $\epsilon$-greedy
+* UCB (Upper Confidential Bounder)
+* Gradient
+
+### Problem Space of Reinforcement Learning
+
+| -                        | Single State                    | Associative                             |
+| ------------------------ | ------------------------------- | --------------------------------------- |
+| **Instructive feedback** | Averaging                       | Supervised Learning                     |
+| **Evaluative feedback**  | Bandits (Function optimization) | Associative Search (Contextual bandits) |
+
+> * Instructive feedback: human labeled output (which is good or bad action)
+
 ## Background
 
 ### Markov Decision Processes (MDPs)
@@ -197,6 +213,17 @@ Actor-Critic + DQN
 | Grarantees: Converges to a local minima of $J(\theta)$, often good enough | Guarantees: Zero guarantees since you are approximating Bellman equation with a complicated funciton approximator |
 
 ## Resources
+
+### Book
+
+Reinforcement Learning: An Introduction - [pdf with outlines](http://incompleteideas.net/book/bookdraft2017nov5.pdf)
+
+* Introduction
+* Tabular Solution Methods
+  * Multi-armed Bandits 多臂老虎機
+    * Ch2.2 Action-value Methods
+    * Ch2.7 Upper-Confidence-Bound Action Selection
+    * Ch2.8 Gradient Bandit Algorithms
 
 ### Tutorial
 
