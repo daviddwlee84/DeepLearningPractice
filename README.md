@@ -23,9 +23,19 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
 * [`pytorch`](https://pytorch.org/)
+  * [github](https://github.com/pytorch/pytorch)
   * [Brief Notes](Notes/Framework/PyTorch.md)
+  * torch friends
+    * [`tnt`](https://github.com/pytorch/tnt) - is torchnet for pytorch, supplying you with different metrics (such as accuracy) and abstraction of the train loop
+    * [`inferno`](https://github.com/inferno-pytorch/inferno/) and [`torchsample`](https://github.com/ncullen93/torchsample/) - attempt to model things very similar to Keras and provide some tools for validation
+    * [`skorch`](https://github.com/skorch-dev/skorch) - is a scikit-learn wrapper for pytorch that lets you use all the tools and metrics from sklearn
 
 ## Project
+
+### PKU Courses and Some side projects
+
+* Basically based on TensorFlow 1.x and Keras
+* Begin with the most basic model > CV > NLP
 
 Subject|Technique|Framework|Complexity|Remark
 -------|---------|---------|----------|------
@@ -47,7 +57,15 @@ Subject|Technique|Framework|Complexity|Remark
 [Word Sense Induction](https://github.com/pku-nlp-forfun/SemEval2013-WordSenseInduction)|Multiple Models|Multiple Libraries|●●●●●|SemEval2013 Task 13 Word Sense Induction for Graded and Non-Graded Senses
 [Chinese WS/POS/(NER)](https://github.com/pku-nlp-forfun/CWS_POS_NER)|RNN, CRF|TansorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus") ([paper](https://github.com/pku-nlp-forfun/SemEval2013-Task13-Paper))
 [Toxicity Classification](Project/ToxicityClassification)|BiLSTM|Keras|●●●●●|Jigsaw Unintended Bias in Toxicity Classification - Detect toxicity across a diverse range of conversations
-[CWS/NER](Project/CWSNER)|RNN, CRF|TensorFlow|●●●●●|The "from scratch" version of the previous project ("Medical Corpus")
+[CWS/NER](Project/CWSNER)|RNN, CRF|TensorFlow|●●●●●|The sequence labeling model on the classic Chinese NLP task
+
+### NLP PyTorch
+
+* Basically based on PyTorch and most of the contents are NLP
+
+Subject|Technique|Framework|Complexity|Remark
+-------|---------|---------|----------|------
+[Machine Translation](Project/MachineTranslation)|RNN, Transformer|PyTorch|●●●●●|Machine translation model from Chinese to English based on WMT17 corpus
 
 ## Deep Learning Categories
 
@@ -293,6 +311,9 @@ Toy
 * [SENSEVAL](https://web.eecs.umich.edu/~mihalcea/senseval/)
 * SemEval
   * [wiki](https://en.wikipedia.org/wiki/SemEval)
+* [WMT17](http://www.statmt.org/wmt17/)
+  * [News](http://www.statmt.org/wmt17/translation-task.html)
+    * Chinese-English
 
 #### Animate Dataset
 
@@ -302,6 +323,12 @@ Toy
   * [MyAnimeList](https://myanimelist.net/)
 
 ### Github Repository
+
+Example
+
+* [hadikazemi/Machine-Learning](https://github.com/hadikazemi/Machine-Learning)
+
+Summary
 
 * [**brightmart/text_classification**](https://github.com/brightmart/text_classification) - all kinds of text classification models and more with deep learning
 
@@ -319,6 +346,9 @@ NLP
 * English
   * [spaCy](https://spacy.io/) - Industrial-Strength Natural Language Processing in Python
     * [explosion/spaCy](https://github.com/explosion/spaCy)
+  * gensim
+  * nltk
+  * [fairseq](https://github.com/facebookresearch/fairseq) - Facebook AI Research Sequence-to-Sequence Toolkit
 
 ### Tutorial
 
@@ -375,6 +405,7 @@ NLP
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 * [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
+* [smilelight/lightNLP](https://github.com/smilelight/lightNLP)
 
 #### Slides
 
@@ -382,16 +413,39 @@ NLP
 
 ### Paper
 
+* [NLP領域國際頂會（ACL/EMNLP/NAACLl等）的難度如何？](https://www.zhihu.com/question/266242639/answer/312713059)
+
 #### Conference
 
+NLP
+
+* ACL Association for Computational Linguistics
+  * [ACL 2020](https://acl2020.org/)
+* EMNLP
 * NAACL North American Chapter of the Association for Computational Linguistics
   * [NAACL-HLT 2019](https://naacl2019.org/)
+* COLING
+
+Application Scenario
+
+* WWW The Web Conference
+  * [WWW 2020](https://www2020.thewebconf.org/)
+
+General Models
+
 * NPIS Neural Information Processing Systems
   * [NIPS Proceedingsβ](https://papers.nips.cc/)
+
+Not Sure
+
+* CCL
+* AAAI
 
 ### Summaries
 
 * [StateOfTheArt.ai](https://www.stateoftheart.ai/)
+* [**Didi Chinese NLP**](https://chinesenlp.xyz/#/)
+  * [github](https://github.com/didi/ChineseNLP)
 * [**Papers With Code: Browse state-of-the-art**](https://paperswithcode.com/state-of-the-art)
 
 NLP

@@ -35,6 +35,39 @@ Ready-made
 
 * `from torchtext.datasets import text_classification`
 
+## Tips
+
+### Debug
+
+* Use `ipdb`. (`import ipdb; ipdb.set_trace()`)
+* Usually print **tensor shape** can find the problem easier
+
+#### Debug in the nn.Sequential
+
+Use a `PrintLayer`
+
+```py
+class PrintLayer(nn.Module):
+    def __init__(self):
+        super(PrintLayer, self).__init__()
+
+    def forward(self, x):
+        # Do your print / debug stuff here
+        print(x)
+        return x
+
+model = nn.Sequential(
+        nn.Linear(1, 5),
+        PrintLayer(), # Add Print layer for debug
+        nn.ReLU(),
+        nn.Linear(5,1),
+        nn.LogSigmoid(),
+        )
+
+x = Variable(torch.randn(10, 1))
+output = model(x)
+```
+
 ## Resources
 
 * [Get Started](https://pytorch.org/get-started/locally/)
@@ -57,10 +90,13 @@ Ready-made
 * [**yunjey/pytorch-tutorial**](https://github.com/yunjey/pytorch-tutorial) - PyTorch Tutorial for Deep Learning Researchers
 * [INTERMT/Awesome-PyTorch-Chinese](https://github.com/INTERMT/Awesome-PyTorch-Chinese)
   * [PyTorch Chinese Tutorial](http://pytorchchina.com/)
-* [PyTorchZeroToAll](https://github.com/hunkim/PyTorchZeroToAll) - Quick 3~4 day lecture materials for HKUST students
+* [**PyTorchZeroToAll**](https://github.com/hunkim/PyTorchZeroToAll) - Quick 3~4 day lecture materials for HKUST students
+  * [Youtube videos](https://www.youtube.com/playlist?list=PLlMkM4tgfjnJ3I-dbhO9JTw7gNty6o_2m&disable_polymer=true)
+  * [slides](https://drive.google.com/drive/folders/0B41Zbb4c8HVyUndGdGdJSXd5d3M)
 * [L1aoXingyu/pytorch-beginner](https://github.com/L1aoXingyu/pytorch-beginner) - pytorch tutorial for beginners
 * [xiaobaoonline/pytorch-in-action](https://github.com/xiaobaoonline/pytorch-in-action) - Source code of book PyTorch機器學習從入門到實戰
 * [pytorch handbook (Chinese)](https://github.com/zergtant/pytorch-handbook)
+* [sgrvinod/a-PyTorch-Tutorial-to-Sequence-Labeling](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Sequence-Labeling) - a PyTorch Tutorial to Sequence Labeling
 
 ### Article
 
@@ -86,12 +122,21 @@ Attention
 
 ### Related Project
 
+NLP
+
 * [AllenNLP](https://allennlp.org/) - An open-source NLP research library, built on PyTorch
 * [**torchtext**](https://github.com/pytorch/text)
   * [github](https://github.com/allenai/allennlp)
-* [visionml/pytracking](https://github.com/visionml/pytracking) - Visual tracking library based on PyTorch
 * [**huggingface/pytorch-transformers**](https://github.com/huggingface/pytorch-transformers)
   * [documentation](https://huggingface.co/pytorch-transformers/quickstart.html#documentation)
+
+CV
+
+* [pytorch/vision: Datasets, Transforms and Models specific to Computer Vision](https://github.com/pytorch/vision)
+
+Others
+
+* [pytorch/vision: Datasets, Transforms and Models specific to Computer Vision](https://github.com/pytorch/vision)
 
 ### Others
 
@@ -101,3 +146,7 @@ Attention
 
 * `torch.bmm` vs. `torch.mm` vs. `torch.matmul`
 * `torch.permute` vs. `torch.transpose` vs. `torch.view`
+
+Why `optimizer.zero_grad()`?
+
+nn.Module in list can't be auto assign `.to(device)`, put it in nn.ModuleList and use it as normal list will solve the problem
