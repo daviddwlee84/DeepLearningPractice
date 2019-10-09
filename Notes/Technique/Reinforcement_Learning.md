@@ -50,14 +50,24 @@ Strategy
 
 ### Problem Space of Reinforcement Learning
 
-| -                        | Single State                    | Associative                             |
-| ------------------------ | ------------------------------- | --------------------------------------- |
-| **Instructive feedback** | Averaging                       | Supervised Learning                     |
-| **Evaluative feedback**  | Bandits (Function optimization) | Associative Search (Contextual bandits) |
+| -                        | Single State                    | Associative                             | Multiple State          |
+| ------------------------ | ------------------------------- | --------------------------------------- | ----------------------- |
+| **Instructive feedback** | Averaging                       | Supervised Learning                     | -                       |
+| **Evaluative feedback**  | Bandits (Function optimization) | Associative Search (Contextual bandits) | Markov Decision Process |
 
 > * Instructive feedback: human labeled output (which is good or bad action)
+> * Evaluative feedback: the procedure don't need human involve. evaluate environment
+
+* MDP vs. Bandit
+  * Bandit: the environment is consistent
+  * MDP: your actions will change the environment(state)
 
 ## Background
+
+> * Markov Chain: The future is only related to "current state", and it has nothing to do with the past.
+> * MDP Framework
+>   * Abstract of physical world
+>   * Learning by interaction of "action"
 
 ### Markov Decision Processes (MDPs)
 
@@ -65,6 +75,9 @@ Markov Decision Process (MDP) - a mathematical framework for modeling decisions 
 
 * A Mathematical formulation of the RL problem
 * **Markov property**: Current state completely characterises the state of the word
+* It is a random process without memory
+* The reinforcement learning "with model"
+  * (Q-learning is RL "without model")
 
 Definitions: $(S, A, R, \mathbb{P}, \gamma)$
 
@@ -83,7 +96,11 @@ Pseudo-process of MDP
    3. Environment samples next state $s_{t+1} \sim P(.|s_t, a_t)$
    4. Agent receives reward $r_t$ and next state $s_{t+1}$
 
-* A policy $\pi$ is a function from $S$ to $A$ that specifies what aciton to take in each state.
+> * Police
+>   * For every *state* project to an *action*
+>   * Calculate a Policy such that maximize the cumulated reward
+
+* A **policy** $\pi$ is a function from $S$ to $A$ that specifies what aciton to take in each state.
 * Objective: find policy $\pi^*$ that maximizes cumulative discounted reward: $\displaystyle\sum_{t\geq 0} \gamma^t r_t$
 
 **The optimal policy $\pi^*$**: Maximize the **expected sum of rewards**
@@ -224,6 +241,11 @@ Reinforcement Learning: An Introduction - [pdf with outlines](http://incompletei
     * Ch2.2 Action-value Methods
     * Ch2.7 Upper-Confidence-Bound Action Selection
     * Ch2.8 Gradient Bandit Algorithms
+
+Others' Solution
+
+* [ShangtongZhang/reinforcement-learning-an-introduction: Python Implementation of Reinforcement Learning: An Introduction](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction)
+* [matteocasolari/reinforcement-learning-an-introduction-solutions: Implementations for solutions to programming exercises of Reinforcement Learning: An Introduction, Second Edition (Sutton & Barto)](https://github.com/matteocasolari/reinforcement-learning-an-introduction-solutions)
 
 ### Tutorial
 
