@@ -96,7 +96,7 @@ Pseudo-process of MDP
    3. Environment samples next state $s_{t+1} \sim P(.|s_t, a_t)$
    4. Agent receives reward $r_t$ and next state $s_{t+1}$
 
-> * Police
+> * Policy
 >   * For every *state* project to an *action*
 >   * Calculate a Policy such that maximize the cumulated reward
 
@@ -108,33 +108,46 @@ Pseudo-process of MDP
 Formally:
 
 $$
-\pi^* = \arg \max_\pi \operatorname{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | \pi \end{bmatrix}
+\pi^* = \arg \max_\pi \mathbb{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | \pi \end{bmatrix}
 $$
 
-**Value function** at state s: the expected cumulative reward from following the policy from state s *(Represent how good is a state)*
+**Value function** at state $s$ under a policy $pi$: the expected cumulative reward from following the policy $\pi$ from state $s$ *(Represent how good is a state)*
+
+> * value function: functions of states (or of state-action pairs) that estimate *how good* it is for the aget to be in a give state (or how good it is to perform a given action in a given state)
+> * how good: is defined in terms of future rewards that can be expected, or, to be precise, in terms of **expected return**
 
 $$
-V^\pi(s) = \operatorname{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, \pi \end{bmatrix}
+V_\pi(s) = \mathbb{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, \pi \end{bmatrix}
 $$
 
-**Q-value function** at state s and action a: the expected cumulative reward from taking aciton a in state s and then following the policy *(Represent how good is a state-action pair)*
+**Action-value Function** (**Q-value function**) taking action $a$ at state $s$ under policy $\pi$: the expected cumulative reward from taking aciton a in state s and then following the policy *(Represent how good is a state-action pair)*
 
 > a function that calculates the quality of a state-action combination
 
 $$
-Q^\pi(s, a) = \operatorname{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, a_0 = a, \pi \end{bmatrix}
+Q_\pi(s, a) = \mathbb{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, a_0 = a, \pi \end{bmatrix}
 $$
 
 optimal Q-value function Q* is the maximum expected cumulative reward achievable from a given (state, aciton) paird
 
 $$
-Q^*(s, a) = \max_\pi \operatorname{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, a_0 = a, \pi \end{bmatrix}
+Q^*(s, a) = \max_\pi \mathbb{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | s_0 = s, a_0 = a, \pi \end{bmatrix}
 $$
 
-**Bellman equation**: that Q* satisfied
+> Backup diagrams for (a) $V^*$ and (b) $Q^*$
+>
+> ![backup diagram](http://www.incompleteideas.net/book/ebook/figtmp13.png)
+
+**Bellman equation**: expresses a relationshp between the vlaue of a state and the vlues of its sucessor states
 
 $$
-Q^*(s, a) = \operatorname{E}_{s' \sim \varepsilon} \begin{bmatrix}\displaystyle r + \gamma \max_{a'} Q^*(s', a') | s, a \end{bmatrix}
+V_\pi(s) = \underbrace{\sum_a \pi(a|s)}_\text{prob. of taking action $a$} \underbrace{\sum_{s', r} p(s', r| s, a)}_\text{prob. from $(s, a)$ to $s'$} [r + \gamma v_\pi(s')] \quad \forall s \in S
+$$
+
+**Bellman optimality equation**: expresses the fact that the value of a state under an optimal policy must equal the expected return for the best action from that state (that $Q^*$ satisfied)
+
+$$
+Q^*(s, a) = \mathbb{E}_{s' \sim \varepsilon} \begin{bmatrix}\displaystyle r + \gamma \max_{a'} Q^*(s', a') | s, a \end{bmatrix}
 $$
 
 Intuiiton: if the optimal state-aciton values for the next time-stemp $Q^*(s', a')$ are known, then the optimal strategy is to take the action that maximizes the expected value of $r + \gamma Q^*(s', a')$
@@ -144,7 +157,7 @@ So the optimal policy $\pi^*$ corresponds to taking the best action in any state
 **Value Iteration Algorithm**: Use Bellman equation as an iterative update
 
 $$
-Q_{i+1}(s, a) = \operatorname{E}_{s' \sim \varepsilon} \begin{bmatrix}\displaystyle r + \gamma \max_{a'} Q_{i}(s', a') | s, a \end{bmatrix}
+Q_{i+1}(s, a) = \mathbb{E}_{s' \sim \varepsilon} \begin{bmatrix}\displaystyle r + \gamma \max_{a'} Q_{i}(s', a') | s, a \end{bmatrix}
 $$
 
 **Q-learning**: Use a function approximator to estimate the action-value funciton ($\theta$ is funciton parameters i.e. weights)
@@ -178,7 +191,7 @@ Background
 Definitions
 
 * Class of parametrized policies: $\prod = \{\pi_\theta \theta \in \mathbb{R}^m \}$
-* Value for each policy: $J(\theta) = \operatorname{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | \pi_\theta \end{bmatrix}$
+* Value for each policy: $J(\theta) = \mathbb{E} \begin{bmatrix}\displaystyle \sum_{t\geq 0} \gamma^t r_t | \pi_\theta \end{bmatrix}$
 * Optimal policy: $\theta^* = \arg \max_\theta J(\theta)$
 
 To find the optimal policy: **Gradient ascent on policy parameters!**
@@ -233,14 +246,19 @@ Actor-Critic + DQN
 
 ### Book
 
-Reinforcement Learning: An Introduction - [pdf with outlines](http://incompleteideas.net/book/bookdraft2017nov5.pdf)
+Reinforcement Learning: An Introduction - [pdf with outlines](http://incompleteideas.net/book/bookdraft2017nov5.pdf) - ([old online version](http://www.incompleteideas.net/book/ebook/the-book.html))
 
 * Introduction
-* Tabular Solution Methods
-  * Multi-armed Bandits 多臂老虎機
+* I. Tabular Solution Methods
+  * Ch2 Multi-armed Bandits 多臂老虎機
     * Ch2.2 Action-value Methods
     * Ch2.7 Upper-Confidence-Bound Action Selection
     * Ch2.8 Gradient Bandit Algorithms
+  * Ch3 Finite Markov Decision Processes
+    * Ch3.2 Goals and Rewards
+    * Ch3.3 Returns and Episodes
+    * Ch3.5 Pilicies and Value Functions
+    * Ch3.6 Optimal Policies and Optimal Value Functions
 
 Others' Solution
 
@@ -277,6 +295,7 @@ Q Learing
 ### Article
 
 * [**A Beginner's Guide to Deep Reinforcement Learning**](https://skymind.ai/wiki/deep-reinforcement-learning) - Very good explain
+* [**A (Long) Peek into Reinforcement Learning**](https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html)
 * [Reinforcement Learning — Policy Gradient Explained](https://medium.com/@jonathan_hui/rl-policy-gradients-explained-9b13b688b146)
 * [DeepMind - Human-level control through Deep Reinforcement Learning](https://deepmind.com/research/dqn/)
 
