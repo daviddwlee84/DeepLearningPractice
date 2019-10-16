@@ -122,6 +122,9 @@ Attention
 
 ### Related Project
 
+* [williamFalcon/pytorch-lightning](https://github.com/williamFalcon/pytorch-lightning) - The lightweight PyTorch wrapper for ML researchers. Scale your models. Write less boilerplate
+  * [Pytorch Lightning code guideline for conferences](https://github.com/williamFalcon/pytorch-lightning-conference-seed)
+
 NLP
 
 * [AllenNLP](https://allennlp.org/) - An open-source NLP research library, built on PyTorch

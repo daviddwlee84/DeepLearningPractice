@@ -13,12 +13,12 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 * [`tensorflow`](https://tensorflow.org)
     * [github](https://github.com/tensorflow/tensorflow)
     * [Brief Notes](Notes/Framework/Tensorflow.md) - Placeholder, Graph, Session
+    * [TensorFlow 2.0 Notes](Notes/Framework/Tensorflow2.0.md)
     * Model Save and Restore Notes - ckpt, transfer learning
     * Data Manipulating Notes - TFRecord, Iterator
     * Multi-thread Notes
     * High-level API Notes - tf.keras, tf.layer
     * simple demos with maybe jupyter notebook?!
-    * TensorFlow 2.0
 * [`keras`](https://keras.io)
     * [github](https://github.com/keras-team/keras/)
     * [Brief Notes](Notes/Framework/Keras.md)
@@ -26,6 +26,8 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
   * [github](https://github.com/pytorch/pytorch)
   * [Brief Notes](Notes/Framework/PyTorch.md)
   * torch friends
+    * [`tensorboardX`](https://github.com/lanpa/tensorboardX) - tensorboard for pytorch (and chainer, mxnet, numpy, ...)
+    * [`pytorch-lightning`](https://github.com/williamFalcon/pytorch-lightning) - The lightweight PyTorch wrapper for ML researchers. Scale your models. Write less boilerplate
     * [`tnt`](https://github.com/pytorch/tnt) - is torchnet for pytorch, supplying you with different metrics (such as accuracy) and abstraction of the train loop
     * [`inferno`](https://github.com/inferno-pytorch/inferno/) and [`torchsample`](https://github.com/ncullen93/torchsample/) - attempt to model things very similar to Keras and provide some tools for validation
     * [`skorch`](https://github.com/skorch-dev/skorch) - is a scikit-learn wrapper for pytorch that lets you use all the tools and metrics from sklearn
@@ -119,8 +121,11 @@ Basic Block for Sequence Model!
 > "Pre-training in NLP" ≈ "Embedding"
 
 * `ELMo`
-* [`BERT`](Notes/LearningFramework/BERT.md)
+* [`BERT`](Notes/SOTA_Models/BERT.md)
 * GPT
+  * [openai/gpt-2](https://github.com/openai/gpt-2)
+  * [OpenAI GPT-2: An Almost Too Good Text Generator - YouTube](https://www.youtube.com/watch?v=8ypnLjwpzK8)
+* XLNet
 
 #### Others
 
@@ -357,6 +362,8 @@ NLP
 * [Tensorflow and deep learning without a PhD series by @martin_gorner](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd)
 * [YSDA Natural Language Processing course](https://github.com/yandexdataschool/nlp_course)
 * [**Tensorflow and deep learning without a PhD**](https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd) - Martin Görner
+* [**dataflowr | deep learning courses**](https://mlelarge.github.io/dataflowr-web/) - [github](https://github.com/mlelarge/dataflowr)
+  * [Hands-on tour to deep learning with PyTorch](https://mlelarge.github.io/dataflowr-web/cea_edf_inria.html)
 
 #### Interactive Learning
 
@@ -393,7 +400,10 @@ NLP
 #### Github
 
 * [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) ([d2l.ai](https://www.d2l.ai/index.html)) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
-    * [English github](https://github.com/diveintodeeplearning/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
+  * [English github](https://github.com/d2l-ai/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
+  * [PyTorch](https://github.com/dsgiitr/d2l-pytorch) / [PyTorch (Chinese)](https://github.com/ShusenTang/Dive-into-DL-PyTorch)
+  * [Numpy](http://numpy.d2l.ai/)
+  * [STAT 157 UC Berkeley](https://github.com/d2l-ai/berkeley-stat-157)
 * [**Machine Learning cheatsheets for Stanford's CS 229**](https://github.com/afshinea/stanford-cs-229-machine-learning)
     * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)
 * [**Deep Learning cheatsheets for Stanford's CS 230**](https://github.com/afshinea/stanford-cs-230-deep-learning)
@@ -406,6 +416,7 @@ NLP
     * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 * [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
 * [smilelight/lightNLP](https://github.com/smilelight/lightNLP)
+* [RasaHQ/rasa](https://github.com/RasaHQ/rasa) - Open source machine learning framework to automate text- and voice-based conversations
 
 #### Slides
 
@@ -413,7 +424,15 @@ NLP
 
 ### Paper
 
+* [**2019-2020 International Conferences in Artificial Intelligence, Machine Learning, Computer Vision, Data Mining, Natural Language Processing and Robotics**](https://jackietseng.github.io/conference_call_for_paper/)
+* [自然語言處理領域國內外著名會議和期刊](http://deepon.me/2018/10/02/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E9%A2%86%E5%9F%9F%E5%9B%BD%E5%86%85%E5%A4%96%E8%91%97%E5%90%8D%E4%BC%9A%E8%AE%AE%E5%92%8C%E6%9C%9F%E5%88%8A/)
 * [NLP領域國際頂會（ACL/EMNLP/NAACLl等）的難度如何？](https://www.zhihu.com/question/266242639/answer/312713059)
+
+* Level Criteria
+  * CCF level: only used in China
+  * H-index
+    * [h-index - Wikipedia](https://en.wikipedia.org/wiki/H-index)
+    * [h-index：簡單易懂的評估指標，呈現出多數文章的被引用表現 | 臺大圖書館參考服務部落格](http://tul.blog.ntu.edu.tw/archives/2485)
 
 #### Conference
 
@@ -422,6 +441,7 @@ NLP
 * ACL Association for Computational Linguistics
   * [ACL 2020](https://acl2020.org/)
 * EMNLP
+  * [roomylee/EMNLP-2019-Papers](https://github.com/roomylee/EMNLP-2019-Papers) - Statistics and Accepted paper list with arXiv link of EMNLP-IJCNLP 2019
 * NAACL North American Chapter of the Association for Computational Linguistics
   * [NAACL-HLT 2019](https://naacl2019.org/)
 * COLING
@@ -440,6 +460,8 @@ Not Sure
 
 * CCL
 * AAAI
+* ICLR
+  * [AminJun/ICLR2020](https://github.com/AminJun/ICLR2020) - ICLR2020 Downloader & Search Tool
 
 ### Summaries
 
@@ -450,6 +472,7 @@ Not Sure
 
 NLP
 
+* [graykode/nlp-roadmap: ROADMAP(Mind Map) and KEYWORD for students those who have interest in learning NLP](https://github.com/graykode/nlp-roadmap)
 * [Tracking Progress in Natural Language Processing](https://github.com/sebastianruder/NLP-progress)
 
 CV
