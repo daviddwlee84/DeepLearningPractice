@@ -17,6 +17,10 @@ Regression
 * MAE (L1)
 * MSE (L2)
 
+Similarity
+
+* Margin-based Loss
+
 Metric Learning
 
 * Dice
@@ -81,6 +85,21 @@ celoss = F.cross_entropy(thetensor, target)
 
 print(nllloss, 'should be equal to', celoss)
 ```
+
+## Similarity
+
+### Margin-based Loss
+
+* $A$: document
+* $B$: positive sample document
+* $C$: negative sample document
+* prediction $B$ or $C$
+
+$$
+L = \max\{0, M - \cos(r_A, r_B) + \cos(r_A, r_C)\}
+$$
+
+Let similarity between $A$ and positive sample has "$M$" larger than negetive sample
 
 ## Metric Learning
 
