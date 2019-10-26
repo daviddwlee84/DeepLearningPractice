@@ -17,16 +17,12 @@ Regression
 * MAE (L1)
 * MSE (L2)
 
-Similarity
-
-* Margin-based Loss
-
 Metric Learning
 
 * Dice
 * Contrastive
 * N-pair
-* Triplet
+* Triplet (Margin-based Loss)
 
 ### Brief Description
 
@@ -86,21 +82,6 @@ celoss = F.cross_entropy(thetensor, target)
 print(nllloss, 'should be equal to', celoss)
 ```
 
-## Similarity
-
-### Margin-based Loss
-
-* $A$: document
-* $B$: positive sample document
-* $C$: negative sample document
-* prediction $B$ or $C$
-
-$$
-L = \max\{0, M - \cos(r_A, r_B) + \cos(r_A, r_C)\}
-$$
-
-Let similarity between $A$ and positive sample has "$M$" larger than negetive sample
-
 ## Metric Learning
 
 ### Dice Loss
@@ -114,6 +95,35 @@ Dice Loss in Action
 ### Multi-class N-pair loss
 
 ### Triplet Loss
+
+* [Wiki - Triplet Loss](https://en.wikipedia.org/wiki/Triplet_loss)
+* [C4W4L04 Triplet loss - YouTube](https://www.youtube.com/watch?v=d2XB5-tuCWU)
+* [Lossless Triplet loss - Towards Data Science](https://towardsdatascience.com/lossless-triplet-loss-7e932f990b24)
+* [Siamese Network & Triplet Loss - Towards Data Science](https://towardsdatascience.com/siamese-network-triplet-loss-b4ca82c1aec8)
+
+$$
+L = \max(d(a, b) - d(a, c) + \mathit{margin}, 0)
+$$
+
+* Distance measurement: $d(a, b) \sim$
+  * $\operatorname{sum}(|A-B|)$
+  * $(\operatorname{sum}((A-B)^2))^{1/2}$
+  * $(\operatorname{sum}((A-B)^3))^{1/3}$
+  * $\operatorname{Jaccard}(A, B)$
+  * $\operatorname{Cosine}(A, B)$
+
+> Margin-based Loss
+>
+> * $A$: document
+> * $B$: positive sample document
+> * $C$: negative sample document
+> * prediction $B$ or $C$
+>
+> $$
+> L = \max\{0, M - \cos(r_A, r_B) + \cos(r_A, r_C)\}
+> $$
+>
+> Let similarity between $A$ and positive sample has "$M$" larger than negetive sample
 
 --
 
