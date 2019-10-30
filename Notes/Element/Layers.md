@@ -4,16 +4,19 @@
 
 Table of content
 
-* BatchNorm
-* [Convolution Layer](#Convolution-Layer) - CNN
-* [Pooling Layer](#Pooling-Layer) - CNN
+* CNN
+  * [Convolution Layer](#Convolution-Layer)
+  * [Pooling Layer](#Pooling-Layer)
     * Max-pooling
     * Average-pooling
-* [Fully-connected (Dense) Layer](#Fully-Connected-Layer-(Dense-Layer)) - CNN
-* [Dropout Layer](#Dropout-Layer) - CNN
-* Linear
-* LSTM
+* [Fully-connected (Dense, Linear) Layer](#Fully-Connected-Layer-(Dense-Layer))
 * RNN
+  * LSTM
+  * RNN
+* Normalization
+  * BatchNorm
+* Regularization
+  * [Dropout Layer](#Dropout-Layer)
 
 ### General specking
 
@@ -60,12 +63,24 @@ Pooling using a "max" filter with stride equal to the kernel size
 
 ## Fully Connected Layer (Dense Layer)
 
+## Batch Norm
+
 ## Dropout Layer
+
+> a regularization technique => deal with overfitting
 
 ## Resources
 
 * [ML Cheetsheet - Layers](https://ml-cheatsheet.readthedocs.io/en/latest/layers.html)
 * [ML Cheetsheet - NN Concept - Layers](https://ml-cheatsheet.readthedocs.io/en/latest/nn_concepts.html#layers)
+
+### Book
+
+Dive Into Deep Learning
+
+* Ch3.13 Dropout
+* Ch5.4 Pooling Layer
+* Ch5.10 BatchNorm
 
 ### Github
 
