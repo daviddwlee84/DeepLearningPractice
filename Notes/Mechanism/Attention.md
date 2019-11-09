@@ -31,6 +31,10 @@
 * Attention provides some *interpretability* (e.g. the visualization attention matrix)
   * By inspecting attention distribution, we can see what the decoder was focusing on
 
+### Benefits
+
+* Attention is trivial to parallelize (attention is permutation invariant)
+
 ## Soft-alignment in Seq2seq model
 
 * we have **encoder hidden states** $h_1, \dots, h_N \in \mathbb{R}^h$
@@ -80,7 +84,7 @@ Given a set of vector *values*, and a vector *query*, **attention** is a **techn
 * The weighted sum is a *selective summary* of the information contained in the *values*, where the *query* determines which values to focus on.
 * Atteniton is a way to obtain a *fixed-size representation of an arbitrary set of representations* (the *values*), dependent on some other representation (the *query*)
 
-## Several Attention Variants
+## Several Attention Variants (A Family of Attention Mechanisms)
 
 We have
 
@@ -121,6 +125,32 @@ $$
 * where $W_1 \in \mathbb{R}^{d_3\times d_1}$, $W_2 \in \mathbb{R}^{d_3\times d_2}$ are a weight matrices and $v \in \mathbb{R}^{d_3}$ is a weight vector
 * $d_3$ (the attention dimensionality) is a hyperparameter
 
+### Summary
+
+| Attention Name           | Alignment score function                                                                                                       | Citation     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------ |
+| Content-base             | $\text{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = \text{cosine}[\boldsymbol{s}_t, \boldsymbol{h}_i]$                         |
+| Additive(*)              | $\text{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = \mathbf{v}_a^\top \tanh(\mathbf{W}_a[\boldsymbol{s}_t; \boldsymbol{h}_i])$ | Graves2014   |
+| Location-Base            | $\alpha_{t,i} = \text{softmax}(\mathbf{W}_a \boldsymbol{s}_t)$                                                                 | Bahdanau2015 |
+| General (multiplicative) | $\text{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = \boldsymbol{s}_t^\top\mathbf{W}_a\boldsymbol{h}_i$                         | Luong2015    |
+| Dot-Product              | $\text{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = \boldsymbol{s}_t^\top\boldsymbol{h}_i$                                     | Luong2015    |
+| Scaled Dot-Product(^)    | $\text{score}(\boldsymbol{s}_t, \boldsymbol{h}_i) = \frac{\boldsymbol{s}_t^\top\boldsymbol{h}_i}{\sqrt{n}}$                    | Vaswani2017  |
+
+> * (*) Referred to as “concat” in Luong, et al., 2015 and as “additive attention” in Vaswani, et al., 2017.
+> * (^) It adds a scaling factor 1/n‾√, motivated by the concern when the input is large, the softmax function may have an extremely small gradient, hard for efficient learning.
+
+broader categories of attention mechanisms
+
+| Attention Name    | Alignment score function                                                                                                                                                                          | Citation          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| Self-Attention(&) | Relating different positions of the same input sequence. Theoretically the self-attention can adopt any score functions above, but just replace the target sequence with the same input sequence. | Cheng2016         |
+| Global/Soft       | Attending to the entire input state space.                                                                                                                                                        | Xu2015            |
+| Local/Hard        | Attending to the part of input state space; i.e. a patch of the input image.                                                                                                                      | Xu2015; Luong2015 |
+
+> * (&) Also, referred to as “intra-attention” in Cheng et al., 2016 and some other papers.
+
+## Soft vs. Hard Attention
+
 ## Attention Area
 
 ### Global Attention vs. Local Attention
@@ -129,14 +159,25 @@ $$
 
 > intra-attention
 
+**Re-represent** the word representing based on its context (neighbors).
+
 * For each node/vector, create a query vector Q, key vector K and a value vector V
 
-[Multi-head Self-attention Mechanism: Transformer](Transformer.md)
+$$
+A(Q, K, V) = \operatorname{softmax}{(Q K^T) \over \sqrt{d_k}} V
+$$
 
-## Links
+* dot product ($Q \cdot K$): compute similarity
+* $\sqrt{d_k}$: a **scaling factor** to make sure that the dot products don't blow up
 
+[Multi-head Self-attention: Transformer](Transformer.md)
+
+## Resources
+
+* [**Attention? Attention!**](https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html)
 * [**Attention and Augmented Recurrent Neural Networks**](https://distill.pub/2016/augmented-rnns/)
   * [distillpub/post--augmented-rnns: Attention and Augmented Recurrent Neural Networks](https://github.com/distillpub/post--augmented-rnns)
+* [Attention機制詳解（二）—— Self-Attention與Transformer](https://zhuanlan.zhihu.com/p/47282410)
 * [successar/AttentionExplanation](https://github.com/successar/AttentionExplanation)
 
 ### Code
