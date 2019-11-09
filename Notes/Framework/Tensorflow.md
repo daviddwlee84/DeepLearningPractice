@@ -54,6 +54,7 @@ Convert dataset into .tfrecord format
 ## Resources
 
 * [TensorFlow Internals](https://github.com/horance-liu/tensorflow-internals) - It is open source ebook about TensorFlow kernel and implementation mechanism
+* [**aymericdamien/TensorFlow-Examples**](https://github.com/aymericdamien/TensorFlow-Examples) - TensorFlow Tutorial and Examples for Beginners (support TF v1 & v2)
 
 ### Tutorial
 

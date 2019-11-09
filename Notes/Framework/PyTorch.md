@@ -97,6 +97,8 @@ output = model(x)
 * [xiaobaoonline/pytorch-in-action](https://github.com/xiaobaoonline/pytorch-in-action) - Source code of book PyTorch機器學習從入門到實戰
 * [pytorch handbook (Chinese)](https://github.com/zergtant/pytorch-handbook)
 * [sgrvinod/a-PyTorch-Tutorial-to-Sequence-Labeling](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Sequence-Labeling) - a PyTorch Tutorial to Sequence Labeling
+* [jcjohnson/pytorch-examples: Simple examples to introduce PyTorch](https://github.com/jcjohnson/pytorch-examples)
+* [chenyuntc/pytorch-book: PyTorch tutorials and fun projects including neural talk, neural style, poem writing, anime generation](https://github.com/chenyuntc/pytorch-book)
 
 ### Article
 
@@ -127,7 +129,8 @@ Attention
 
 NLP
 
-* [AllenNLP](https://allennlp.org/) - An open-source NLP research library, built on PyTorch
+* [PyTorch-NLP](https://github.com/PetrochukM/PyTorch-NLP) - Supporting Rapid Prototyping with a Toolkit (including Datasets and Neural Network Layers)
+* [**AllenNLP**](https://allennlp.org/) - An open-source NLP research library, built on PyTorch
 * [**torchtext**](https://github.com/pytorch/text)
   * [github](https://github.com/allenai/allennlp)
 * [**huggingface/pytorch-transformers**](https://github.com/huggingface/pytorch-transformers)

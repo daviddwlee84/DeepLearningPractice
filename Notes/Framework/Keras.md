@@ -31,3 +31,7 @@ Functional Model
 
 * [Text Preprocessing](https://keras.io/preprocessing/text/)
   * `keras.preprocessing.text.Tokenizer`
+
+### Tools
+
+* [keras-team/keras-tuner: Hyperparameter tuning for humans](https://github.com/keras-team/keras-tuner)
