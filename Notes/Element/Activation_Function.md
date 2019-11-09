@@ -8,6 +8,7 @@ Table of Content
 * Rectified Linear Unit (ReLU)
 * Leaky ReLU
 * Softmax
+* Softplus
 
 ## Concept
 
@@ -28,6 +29,10 @@ Gradient
 $$
 \frac{\partial E}{\partial w_i} = \sum_{d\in D}(t_d-o_d)\frac{\partial}{\partial w_i}(-o_d) = \cdots = \sum_{d\in D}(t_d-o_d)\operatorname{sig}(w\cdot x_d)(1-\operatorname{sig}(w \cdot x_d))\cdot x_{i,d}
 $$
+
+Usage
+
+* Binary Classification
 
 ## Hyperbolic Tangent
 
@@ -71,12 +76,22 @@ $$
 \frac {\partial \operatorname{softmax}({\vec {z}})_{i}}{\partial x_{j}}=\operatorname{softmax}({\vec {z}})_{i}(\delta _{ij}-\operatorname{softmax}({\vec {z}})_{j})
 $$
 
->  use [Kronecker delta](https://en.wikipedia.org/wiki/Kronecker_delta) $\delta_{ij}$
+> use [Kronecker delta](https://en.wikipedia.org/wiki/Kronecker_delta) $\delta_{ij}$
+
+Usage
+
+* Multi-class Classification
+
+## Softplus
+
+$$
+y = \log(1 + e^x)
+$$
 
 ## Resources
 
 * [Wiki - Activation Function](https://en.wikipedia.org/wiki/Activation_function)
-    * [Softmax function](https://en.wikipedia.org/wiki/Softmax_function)
+  * [Softmax function](https://en.wikipedia.org/wiki/Softmax_function)
 
 ### Article
 
@@ -85,6 +100,10 @@ $$
 Softmax
 
 * [The Softmax function and its derivative](https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/)
+
+Softplus
+
+* [Softplus as a Neural Networks Activation Function - Sefik Ilkin Serengil](https://sefiks.com/2017/08/11/softplus-as-a-neural-networks-activation-function/)
 
 ### Github
 
