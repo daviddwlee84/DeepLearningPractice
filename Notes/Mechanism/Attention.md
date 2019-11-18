@@ -108,7 +108,9 @@ $$
 
 * this assumes $d_1 = d_2$
 
-### Multiplicative attention
+### Multiplicative attention (Bilinear, Product form)
+
+> two vectors mediated by a matrix
 
 $$
 e_i = s^T W h_i \in \mathbb{R}
@@ -116,7 +118,11 @@ $$
 
 * where $W \in \mathbb{R}^{d_2\times d_1}$ is a weight matrix
 
-### Additive attention
+Space Complexity: $O((m+n) k)$, $W$ is $k \times d$
+
+### Additive attention (MLP form)
+
+> kind of a shallow neural network
 
 $$
 e_i = v^T \tanh(W_1h_i + W_2 s) \in \mathbb{R}
@@ -124,6 +130,20 @@ $$
 
 * where $W_1 \in \mathbb{R}^{d_3\times d_1}$, $W_2 \in \mathbb{R}^{d_3\times d_2}$ are a weight matrices and $v \in \mathbb{R}^{d_3}$ is a weight vector
 * $d_3$ (the attention dimensionality) is a hyperparameter
+
+Space Complexity: $O(mnk)$, $W$ is $k \times d$
+
+### Evolution Attention example of FusionNet
+
+1. Origianl version of Bilinear form attention $S_{ij} = c_i^T W q_j$
+2. Reduce the rank and complexity by dividing it into the product of two lower rank matrices $S_{ij} = c_i^T U^T V q_j$
+3. Make the attention distribution to be symmetric $S_{ij} = c_i^T W^T D W q_j$ (sill make sence of linear algebra term)
+4. Stick the left and right half through a ReLU $S_{ij} = \operatorname{ReLU}(C_i^TW^T)D \operatorname{ReLU}(Wq_j)$
+
+* Smaller space
+* Non-linearity
+
+Space Complexity: $O((m+n) k)$, $W$ is $k \times d$
 
 ### Summary
 
