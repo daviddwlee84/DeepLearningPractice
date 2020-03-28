@@ -160,7 +160,9 @@ def main():
     i = 0
     learning_rate = 1e-2
     MAX_ITER = 10000
-    tolerance = 0.000001
+    tolerance = 0.001
+    last_loss = 999
+    min_diff = 0.000001
     while i < MAX_ITER:
         # Forward Propagation
         output1 = HiddenLayer.forward_propagation(x)
@@ -168,12 +170,14 @@ def main():
         y_hat = Softmax(theta)
 
         # Back Propagation
-        loss = loss_func(y_hat, y)
+        loss = loss_func(theta, y)
         if i % 100 == 0:
             print("Round:", i, "\nCurrent loss:", loss)
-        if loss < tolerance:
+        if loss < tolerance or abs(last_loss - loss) < min_diff:
             # early stop
             break
+        last_loss = loss
+
         gradient = loss_func.gradient(y_hat, y)
         gradient = OutputLayer.back_propagation(gradient, learning_rate=learning_rate)
         HiddenLayer.back_propagation(gradient, learning_rate=learning_rate)
