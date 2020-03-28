@@ -76,6 +76,7 @@ class FCNNLayer:
         """
         if custom_W is not None:
             self.W_ = custom_W
+            assert custom_W.shape == (self.__last_layer_num, self.__node_num)
         else:
             limit = 1 / np.sqrt(self.__last_layer_num)
             self.W_ = np.random.uniform(-limit, limit,
@@ -83,6 +84,7 @@ class FCNNLayer:
 
         if custom_b is not None:
             self.b_ = custom_b
+            assert custom_b.shape == (self.__node_num, 1)
         else:
             self.b_ = np.zeros((self.__node_num, 1))
 
