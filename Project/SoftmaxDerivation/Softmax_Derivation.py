@@ -74,7 +74,7 @@ class FCNNLayer:
         self.W_ = self.W_ - gradient_W
         self.b_ = self.b_ - gradient_b
 
-        accumulated_gradient = gradient.T.dot(W_temp.T)
+        accumulated_gradient = W_temp.dot(gradient)
         return accumulated_gradient
 
 

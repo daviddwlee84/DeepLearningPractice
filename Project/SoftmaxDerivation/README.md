@@ -6,8 +6,16 @@
 
 ## Implementation
 
+### Single Layer & Binary Classification
+
 ```sh
 python3 Softmax_Derivation.py
+```
+
+### Multi-Layer & Multi-class Classification
+
+```sh
+python3 Softmax_Derivation_Multiple.py
 ```
 
 ## Notes
