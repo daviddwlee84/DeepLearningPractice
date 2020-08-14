@@ -4,6 +4,14 @@ Basically neural network based implementation and corresponding notes.
 
 More "general" machine learning notes will be noted in my [Machine Learning](https://github.com/daviddwlee84/MachineLearningPractice) repository.
 
+**If you want to clone this repository, please use the following command**:
+
+```sh
+GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/daviddwlee84/DeepLearningPractice.git
+```
+
+> The notes of this repository haven't updated for a long time, I will update it once I organize my local notes.
+
 ## Environment
 
 * Using Python 3
@@ -11,17 +19,17 @@ More "general" machine learning notes will be noted in my [Machine Learning](htt
 ### Dependencies
 
 * [`tensorflow`](https://tensorflow.org)
-    * [github](https://github.com/tensorflow/tensorflow)
-    * [Brief Notes](Notes/Framework/Tensorflow.md) - Placeholder, Graph, Session
-    * [TensorFlow 2.0 Notes](Notes/Framework/Tensorflow2.0.md)
-    * Model Save and Restore Notes - ckpt, transfer learning
-    * Data Manipulating Notes - TFRecord, Iterator
-    * Multi-thread Notes
-    * High-level API Notes - tf.keras, tf.layer
-    * simple demos with maybe jupyter notebook?!
+  * [github](https://github.com/tensorflow/tensorflow)
+  * [Brief Notes](Notes/Framework/Tensorflow.md) - Placeholder, Graph, Session
+  * [TensorFlow 2.0 Notes](Notes/Framework/Tensorflow2.0.md)
+  * Model Save and Restore Notes - ckpt, transfer learning
+  * Data Manipulating Notes - TFRecord, Iterator
+  * Multi-thread Notes
+  * High-level API Notes - tf.keras, tf.layer
+  * simple demos with maybe jupyter notebook?!
 * [`keras`](https://keras.io)
-    * [github](https://github.com/keras-team/keras/)
-    * [Brief Notes](Notes/Framework/Keras.md)
+  * [github](https://github.com/keras-team/keras/)
+  * [Brief Notes](Notes/Framework/Keras.md)
 * [`pytorch`](https://pytorch.org/)
   * [github](https://github.com/pytorch/pytorch)
   * [Brief Notes](Notes/Framework/PyTorch.md)
@@ -74,9 +82,9 @@ Subject|Technique|Framework|Complexity|Remark
 ### Technique / Network Structure
 
 * Feedforward Neural Network
-    * Multilayer Perceptron (MLP)
+  * Multilayer Perceptron (MLP)
 * [`Fully Connected Neural Network (FCNN)`](Notes/Technique/Fully_Connected_Neural_Network.md) - And an overview of neural network training process including [forward](Notes/Technique/Fully_Connected_Neural_Network.md#Forward-Propagation) and [back](Notes/Technique/Fully_Connected_Neural_Network.md#Back-Propagation) propagation
-    * Dense Neural Network (DNN)
+  * Dense Neural Network (DNN)
 
 #### Image Learning
 
@@ -110,10 +118,10 @@ Basic Block for Sequence Model!
 #### Text and Sequence
 
 * [Sequence-to-Sequence (seq-to-seq) (Encoder-Decoder) Architecture](Notes/LearningFramework/seq-to-seq.md) - Overview of sequence models
-    * [`Bidirectional RNN (BRNN)`](Notes/LearningFramework/BRNN.md) - RNN-Based seq-to-seq
-    * Convolution-based seq-to-seq
-    * [`Attention Model`](Notes/LearningFramework/Attention.md) - Transformer-based seq-to-seq
-    * [`Transformer`](Notes/LearningFramework/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
+  * [`Bidirectional RNN (BRNN)`](Notes/LearningFramework/BRNN.md) - RNN-Based seq-to-seq
+  * Convolution-based seq-to-seq
+  * [`Attention Model`](Notes/LearningFramework/Attention.md) - Transformer-based seq-to-seq
+  * [`Transformer`](Notes/LearningFramework/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
 * Word Piece Model (WPM) aka. SentencePiece
 
 #### [Transfer Learning in NLP](Notes/Technique/NLPTransferLearning.md)
