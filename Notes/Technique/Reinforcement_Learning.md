@@ -242,6 +242,12 @@ Actor-Critic + DQN
 | Challenge: sample-efficiency                                              | Challenge: exploration                                                                                            |
 | Grarantees: Converges to a local minima of $J(\theta)$, often good enough | Guarantees: Zero guarantees since you are approximating Bellman equation with a complicated funciton approximator |
 
+| Learning \ Sampling | $\epsilon$ | greedy | random       |
+| ------------------- | ---------- | ------ | ------------ |
+| $\epsilon$          | Sarsa      | ?      | ?            |
+| (Max) greedy        | Q-learning | ?      | (off-policy) |
+| random              | ?          | ?      | (on-policy)  |
+
 ## Resources
 
 ### Book

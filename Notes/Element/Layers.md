@@ -25,6 +25,8 @@ Table of content
   * Gated Units used Vetrically
     * Residual Block
     * Highway Block
+* Other
+  * CRF
 
 ### General specking
 
@@ -158,6 +160,15 @@ $$
 * C-gate: $C(x)$
 
 [Review: Highway Networks — Gating Function To Highway (Image Classification)](https://towardsdatascience.com/review-highway-networks-gating-function-to-highway-image-classification-5a33833797b5)
+
+## Other
+
+### CRF
+
+* [threelittlemonkeys/lstm-crf-pytorch: LSTM-CRF in PyTorch](https://github.com/threelittlemonkeys/lstm-crf-pytorch)
+* [如何用簡單易懂的例子解釋條件隨機場（CRF）模型？它和HMM有什麼區別？ - 知乎](https://www.zhihu.com/question/35866596/answer/236886066)
+* [最通俗易懂的BiLSTM-CRF模型中的CRF層介紹 - 知乎](https://zhuanlan.zhihu.com/p/44042528)
+* [如何理解LSTM後接CRF？ - 知乎](https://www.zhihu.com/question/62399257)
 
 ## Resources
 

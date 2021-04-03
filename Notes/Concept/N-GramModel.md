@@ -1,4 +1,6 @@
-# N-gram Model
+# N-gram Language Model
+
+> Is a sub-set of the language model
 
 ## Concept
 
@@ -108,7 +110,7 @@ $$
 \theta_{ML} = \theta_{RF}
 $$
 
-### Data Sparseness
+### Data Sparsity
 
 * n-gram is not in the training corpus => probability of the n-gram must be 0
 * MLE given the unobserved event probability 0
@@ -125,13 +127,15 @@ smoothing -> discounting
 
 everybody add-one -> a kind of discounting for the frequent words
 
-solve the 0 prabability problem (data sparseness problem)
+solve the 0 prabability problem (data sparsity problem)
 
 but it's not a good solution even though it's quite simple
 
 there are some more different smoothing method
 
 * [Additive smoothing](https://en.wikipedia.org/wiki/Additive_smoothing)
+
+> [More smoothing technique](DataSmoothing.md)
 
 ### Entropy
 

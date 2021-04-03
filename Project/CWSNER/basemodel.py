@@ -185,9 +185,7 @@ class BiRNN_CRF:
             # concatenate two direction output
             output = tf.concat(output, axis=2)
 
-        # [batch_size, num_steps, emb_size]
-        # [num_examples, num_words, num_features] (not sure yet)
-        return output
+        return tf.reshape(output, shape=[-1, self.hidden_unit * 2])
 
     def _project_birnn_layer(self, birnn_output):
         """ hidden layer between bidirectional RNN layer and logits """
@@ -198,9 +196,7 @@ class BiRNN_CRF:
 
                 b = tf.get_variable("b", shape=[self.hidden_unit], dtype=tf.float32,
                                     initializer=tf.zeros_initializer())
-                output = tf.reshape(
-                    birnn_output, shape=[-1, self.hidden_unit * 2])
-                hidden = tf.tanh(tf.nn.xw_plus_b(output, W, b))
+                hidden = tf.tanh(tf.nn.xw_plus_b(birnn_output, W, b))
 
         # project to score of tags
         with tf.variable_scope('logits'):
@@ -214,13 +210,26 @@ class BiRNN_CRF:
 
         return tf.reshape(pred, [-1, self.max_seq_len, self.num_tags])
 
+    def _project_birnn_layer2(self, birnn_output):
+        """ (simplify) hidden layer between bidirectional RNN layer and logits """
+        with tf.variable_scope('birnn_project'):
+            with tf.variable_scope('hidden'):
+                W = tf.get_variable("W", shape=[self.hidden_unit * 2, self.num_tags],
+                                    dtype=tf.float32, initializer=tf.contrib.layers.xavier_initializer())
+
+                b = tf.get_variable("b", shape=[self.num_tags], dtype=tf.float32,
+                                    initializer=tf.zeros_initializer())
+                pred = tf.tanh(tf.nn.xw_plus_b(birnn_output, W, b))
+
+        return tf.reshape(pred, [-1, self.max_seq_len, self.num_tags])
+
     def _crf_layer(self, logits):
         """ CRF layer & loss """
         with tf.variable_scope('crf_loss'):
-            transition_params = tf.get_variable(
-                "transitions",
-                shape=[self.num_tags, self.num_tags],
-                initializer=tf.contrib.layers.xavier_initializer())
+            # transition_params = tf.get_variable(
+            #     "transitions",
+            #     shape=[self.num_tags, self.num_tags],
+            #     initializer=tf.contrib.layers.xavier_initializer())
 
             # Compute the log-likelihood of the gold sequences and keep the transition
             # params for inference at test time.
@@ -228,7 +237,7 @@ class BiRNN_CRF:
                 inputs=logits,
                 tag_indices=self.y_t,
                 sequence_lengths=self.sequence_lengths_t,
-                transition_params=transition_params
+                # transition_params=transition_params
             )
 
             loss = tf.reduce_mean(-log_likelihood)
@@ -257,13 +266,14 @@ class BiRNN_CRF:
                 0, trainable=False, name='global_step')
 
             # not sure if this layer is good or bad for the model
-            if self.is_training:
-                self.x_t = tf.nn.dropout(self.x_t, self.dropout_rate)
+            # if self.is_training:
+            #     self.x_t = tf.nn.dropout(self.x_t, self.dropout_rate)
 
             # BiRNN
             birnn_output = self._birnn_layer(embedded_input=self.x_t)
             # project
             logits = self._project_birnn_layer(birnn_output)
+            # logits = self._project_birnn_layer2(birnn_output)
 
             # CRF
             loss, viterbi_sequence = self._crf_layer(logits)
@@ -413,15 +423,12 @@ if __name__ == "__main__":
     # Data settings.
     num_examples = 10
     num_words = 20
-    num_features = 100
-    num_tags = 5
+    num_features = 3333
+    num_tags = 4
 
     # Generate test sample
     x, y, sequence_lengths = get_test_sample(
         num_examples, num_words, num_features, num_tags)
-
-    print("Test CRF Model")
-    CRF_model_test(x, y, sequence_lengths, num_words, num_features, num_tags)
 
     print("Test BiRNN CRF Model")
     BiRNN_CRF_model_test(x, y, sequence_lengths, num_words, num_features, num_tags)

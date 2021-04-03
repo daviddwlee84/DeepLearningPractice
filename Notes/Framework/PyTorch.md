@@ -35,6 +35,10 @@ Ready-made
 
 * `from torchtext.datasets import text_classification`
 
+## Embedding
+
+* [torch.nn.Embedding Python Example](https://www.programcreek.com/python/example/107677/torch.nn.Embedding)
+
 ## Tips
 
 ### Debug
@@ -126,6 +130,8 @@ Attention
 
 * [williamFalcon/pytorch-lightning](https://github.com/williamFalcon/pytorch-lightning) - The lightweight PyTorch wrapper for ML researchers. Scale your models. Write less boilerplate
   * [Pytorch Lightning code guideline for conferences](https://github.com/williamFalcon/pytorch-lightning-conference-seed)
+* [Swall0w/torchstat: Model analyzer in PyTorch](https://github.com/Swall0w/torchstat)
+* [harvardnlp/pytorch-struct: Fast, general, and tested differentiable structured prediction in PyTorch](https://github.com/harvardnlp/pytorch-struct)
 
 NLP
 
@@ -135,10 +141,12 @@ NLP
   * [github](https://github.com/allenai/allennlp)
 * [**huggingface/pytorch-transformers**](https://github.com/huggingface/pytorch-transformers)
   * [documentation](https://huggingface.co/pytorch-transformers/quickstart.html#documentation)
+* [threelittlemonkeys/lstm-crf-pytorch: LSTM-CRF in PyTorch](https://github.com/threelittlemonkeys/lstm-crf-pytorch)
 
 CV
 
 * [pytorch/vision: Datasets, Transforms and Models specific to Computer Vision](https://github.com/pytorch/vision)
+* [facebookresearch/pytorch3d: PyTorch3D is FAIR's library of reusable components for deep learning with 3D data](https://github.com/facebookresearch/pytorch3d)
 
 Others
 

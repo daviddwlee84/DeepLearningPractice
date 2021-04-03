@@ -102,7 +102,7 @@ class FCNNLayer:
         W_temp = self.W_
 
         gradient_W = self.__layer_input.dot(gradient.T)
-        gradient_b = gradient
+        gradient_b = np.sum(gradient, axis=1, keepdims=True)
 
         # Update parameters
         self.W_ = self.W_ - learning_rate * gradient_W

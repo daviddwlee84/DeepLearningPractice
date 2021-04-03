@@ -65,6 +65,10 @@ Project/ToxicityClassification/embedding/
 Project/CWSNER/train_test/
 Project/CWSNER/model/
 
+# NCTU_DL_HW1
+# TaibetanMNIST
+Project/NCTU_DL_HW1/TibetanMNIST.npz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

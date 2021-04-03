@@ -71,7 +71,7 @@ class FCNNLayer:
         W_temp = self.W_
 
         gradient_W = self.__layer_input.dot(gradient.T)
-        gradient_b = gradient
+        gradient_b = np.sum(gradient, axis=1, keepdims=True)
 
         self.W_ = self.W_ - gradient_W
         self.b_ = self.b_ - gradient_b

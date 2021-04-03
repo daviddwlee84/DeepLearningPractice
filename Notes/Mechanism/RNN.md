@@ -9,7 +9,15 @@ Why a normal neural network can't perform well in sequence learning task?
 
 * RNNs can use their internal state (memory) to process sequences of inputs.
 * NN with loops in it, allowing information to persist.
-    * A loop allows information to be passed form one stop of the network to the next.
+  * A loop allows information to be passed form one stop of the network to the next.
+
+### Summary
+
+RNN is a family of neural networks that:
+
+* Take sequential input of any length
+* Apply the same weights on each step
+* Can optinally produce output on each step
 
 ### Quick View
 
@@ -62,8 +70,8 @@ $$
 ## RNN Architectures
 
 * Many-to-Many
-    * Equal length of input and output - e.g. NER, DNA
-    * Different length of input and output (Usually has an **encoder** and a **decoder**) - e.g. Machine Translation
+  * Equal length of input and output - e.g. NER, DNA
+  * Different length of input and output (Usually has an **encoder** and a **decoder**) - e.g. Machine Translation
 * Many-to-One
 * One-to-Many - e.g. Music Generation
 
@@ -117,6 +125,10 @@ POS tagging, Chinese word segmentation
 ## Resources
 
 * [Recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network) (not Recursive NN)
+
+### Article
+
+* [Building RNNs is Fun with PyTorch and Google Colab - dair.ai - Medium](https://medium.com/dair-ai/building-rnns-is-fun-with-pytorch-and-google-colab-3903ea9a3a79)
 
 ### Tutorial
 

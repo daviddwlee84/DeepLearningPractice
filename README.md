@@ -50,7 +50,7 @@ GIT_LFS_SKIP_SMUDGE=1 git clone https://github.com/daviddwlee84/DeepLearningPrac
 Subject|Technique|Framework|Complexity|Remark
 -------|---------|---------|----------|------
 [Perceptron Practice](Project/PerceptronPractice)|SLP, MLP|Numpy|○○●●●|Truth Table (AND, OR, XOR) and Iris Dataset (simulate Keras API)
-[Softmax Derivation](Project/SoftmaxDerivation)|FCNN|Numpy|○○○○●|Backpropagation of Softmax with Cross Entropy Loss
+[Softmax Derivation](Project/SoftmaxDerivation)|FCNN|Numpy|○○○●●|Backpropagation of Softmax with Cross Entropy Loss
 [MNIST Handwriting Digit](Project/MNIST)|FCNN|Tensorflow (and tf.keras)|○○●●●|Implement by different ways
 [Semeion Handwritten Digit](Project/SemeionHandwrittenDigit)|FCNN|Tensorflow|○○○●●|Made a Tensorflow like Dataset Class
 [CIFAR-10](Project/CIFAR-10)|FCNN, CNN|Tensorflow|○○●●●|Comparison of FCNN and CNN
@@ -75,9 +75,27 @@ Subject|Technique|Framework|Complexity|Remark
 
 Subject|Technique|Framework|Complexity|Remark
 -------|---------|---------|----------|------
-[Machine Translation](Project/MachineTranslation)|RNN, Transformer|PyTorch|●●●●●|Machine translation model from Chinese to English based on WMT17 corpus
+[Machine Translation](Project/MachineTranslation)|RNN, Transformer|PyTorch|●●●●●|Machine translation model from Chinese to English based on WMT17 corpus (use result of CS224n)
+[Sentence Similarity](https://github.com/daviddwlee84/SentenceSimilarity)|RNN|PyTorch|●●●●●|Enhanced-RCNN and other baseline models on some sentence similarity dataset
+
+### Other Projects
+
+#### NCTU DL Course
+
+Subject|Technique|Framework|Complexity|Remark
+-------|---------|---------|----------|------
+
 
 ## Deep Learning Categories
+
+TODO: Tasks, Subtasks, Structure, General Architecture, Elements, State-of-the-art model
+
+> * General Architecture (DNN, CNN, RNNs, Atteniton, Transformer)
+> * Categorized by Learning (supervised, ...)
+> * Categorized by Tasks (NMT, NER, RE, ...)
+> * Categorized by Structure (Seq2seq, Siamese)
+> * Categorized by Learning Framework (GAN ?!)
+> * State-of-the-art models and papers (BERT, ...)
 
 ### Technique / Network Structure
 
@@ -117,11 +135,11 @@ Basic Block for Sequence Model!
 
 #### Text and Sequence
 
-* [Sequence-to-Sequence (seq-to-seq) (Encoder-Decoder) Architecture](Notes/LearningFramework/seq-to-seq.md) - Overview of sequence models
-  * [`Bidirectional RNN (BRNN)`](Notes/LearningFramework/BRNN.md) - RNN-Based seq-to-seq
-  * Convolution-based seq-to-seq
-  * [`Attention Model`](Notes/LearningFramework/Attention.md) - Transformer-based seq-to-seq
-  * [`Transformer`](Notes/LearningFramework/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
+* [Sequence-to-Sequence (seq-to-seq) (Encoder-Decoder) Architecture](Notes/Mechanism/seq-to-seq.md) - Overview of sequence models
+    * [`Bidirectional RNN (BRNN)`](Notes/Mechanism/BRNN.md) - RNN-Based seq-to-seq
+    * Convolution-based seq-to-seq
+    * [`Attention Model`](Notes/Mechanism/Attention.md) - Transformer-based seq-to-seq
+    * [`Transformer`](Notes/Mechanism/Transformer.md) - Attention Is All You Need - Transformer-based multi-headed self-attention
 * Word Piece Model (WPM) aka. SentencePiece
 
 #### [Transfer Learning in NLP](Notes/Technique/NLPTransferLearning.md)
@@ -288,10 +306,16 @@ Big Pucture: Machine Learning vs. Deep Learning
 
 ## Books Recommendation
 
-* [MIT Deep Learning](https://www.deeplearningbook.org/)
-    * [github pdf](https://github.com/janishar/mit-deep-learning-book-pdf)
-    * [chinese translation pdf](https://github.com/exacity/deeplearningbook-chinese)
-        * [online reading](https://exacity.github.io/deeplearningbook-chinese/)
+* [**Deep Learning**](https://www.deeplearningbook.org/) - MIT
+  * [github pdf](https://github.com/janishar/mit-deep-learning-book-pdf)
+  * [chinese translation pdf](https://github.com/exacity/deeplearningbook-chinese)
+    * [online reading](https://exacity.github.io/deeplearningbook-chinese/)
+* [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) ([d2l.ai](https://www.d2l.ai/index.html)) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
+  * [English github](https://github.com/d2l-ai/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
+  * [PyTorch](https://github.com/dsgiitr/d2l-pytorch) / [PyTorch (Chinese)](https://github.com/ShusenTang/Dive-into-DL-PyTorch)
+  * [Numpy](http://numpy.d2l.ai/)
+  * [STAT 157 UC Berkeley](https://github.com/d2l-ai/berkeley-stat-157)
+* **Speech and Language Processing** 2ed.
 * [Deep Learning with Python](https://www.manning.com/books/deep-learning-with-python)
 
 ## Tools
@@ -299,7 +323,7 @@ Big Pucture: Machine Learning vs. Deep Learning
 ### Visualize Drawing Tools
 
 * [NN-SVG](http://alexlenail.me/NN-SVG/) - FCNN, LeNet, AlexNet style
-    * [github](https://github.com/zfrenchee/NN-SVG)
+  * [github](https://github.com/zfrenchee/NN-SVG)
 * [draw.io](https://www.draw.io/)
 * [Netscope](https://ethereon.github.io/netscope/quickstart.html)
 * [Graphviz](https://www.graphviz.org/) - Graph Visualization Software
@@ -392,13 +416,13 @@ NLP
     * [Hank's blog](http://www.hankcs.com/tag/cs224n/) ([github](https://github.com/hankcs/CS224n))
     * [CS224n Chinese camp](https://github.com/learning511/cs224n-learning-camp)
 * [MIT Deep Learning](https://deeplearning.mit.edu/)
-    * [Github](https://github.com/lexfridman/mit-deep-learning) - Tutorials, assignments, and competitions for MIT Deep Learning related courses
+  * [Github](https://github.com/lexfridman/mit-deep-learning) - Tutorials, assignments, and competitions for MIT Deep Learning related courses
 * [PKU - 人工智慧實踐：Tensorflow筆記](https://www.icourse163.org/course/PKU-1002536002)
 
 #### Document
 
 * [**DeepNotes**](https://deepnotes.io/)
-    * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
+  * [deepnet](https://github.com/parasdahal/deepnet) - Implementations of CNNs, RNNs and cool new techniques in deep learning from scratch
 * [UFLDL Tutorial](http://ufldl.stanford.edu/tutorial/)
   * [Starter Code](http://ufldl.stanford.edu/tutorial/StarterCode/) - [github](https://github.com/amaas/stanford_dl_ex)
 * [Machine Learning Cheatsheet](https://ml-cheatsheet.readthedocs.io/en/latest/index.html)
@@ -407,69 +431,35 @@ NLP
 
 #### Github
 
-* [**Dive into Deep Learning (D2L Book)**](http://en.diveintodeeplearning.org/) ([d2l.ai](https://www.d2l.ai/index.html)) / [**動手學深度學習**](https://zh.diveintodeeplearning.org/)
-  * [English github](https://github.com/d2l-ai/d2l-en) / [Chinese github](https://github.com/diveintodeeplearning/d2l-zh)
-  * [PyTorch](https://github.com/dsgiitr/d2l-pytorch) / [PyTorch (Chinese)](https://github.com/ShusenTang/Dive-into-DL-PyTorch)
-  * [Numpy](http://numpy.d2l.ai/)
-  * [STAT 157 UC Berkeley](https://github.com/d2l-ai/berkeley-stat-157)
 * [**Machine Learning cheatsheets for Stanford's CS 229**](https://github.com/afshinea/stanford-cs-229-machine-learning)
-    * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)
+  * [Webpage - CS 229 ― Machine Learning](https://stanford.edu/~shervine/teaching/cs-229.html)
 * [**Deep Learning cheatsheets for Stanford's CS 230**](https://github.com/afshinea/stanford-cs-230-deep-learning)
-    * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
-* [**aymericdamien/TensorFlow-Examples**](https://github.com/aymericdamien/TensorFlow-Examples) - TensorFlow Tutorial and Examples for Beginners (support TF v1 & v2)
+  * [Webpage - CS 230 ― Deep Learning](https://stanford.edu/~shervine/teaching/cs-230.html)
+[kmario23/deep-learning-drizzle: Drench yourself in Deep Learning, Reinforcement Learning, Machine Learning, Computer Vision, and NLP by learning from these exciting lectures!!](https://github.com/kmario23/deep-learning-drizzle)
 * [**graykode/nlp-tutorial**](https://github.com/graykode/nlp-tutorial) - Natural Language Processing Tutorial for Deep Learning Researchers
 * [**Microsoft Natural Language Processing Best Practices & Examples**](https://github.com/microsoft/nlp)
 * [Microsoft AI education materials for Chinese students, teachers and IT professionals](https://github.com/microsoft/ai-edu)
 * [Lambda Deep Learning Demos](https://lambda-deep-learning-demo.readthedocs.io/en/latest/)
-    * [github](https://github.com/lambdal/lambda-deep-learning-demo)
+  * [github](https://github.com/lambdal/lambda-deep-learning-demo)
 * [Azure/MachineLearningNotebooks](https://github.com/Azure/MachineLearningNotebooks)
 * [smilelight/lightNLP](https://github.com/smilelight/lightNLP)
 * [RasaHQ/rasa](https://github.com/RasaHQ/rasa) - Open source machine learning framework to automate text- and voice-based conversations
+* [xinjli/pytensor: A numpy deep learning framework](https://github.com/xinjli/pytensor)
+* [boat-group/fancy-nlp: NLP for human. A fast and esay-to-use natural language processing (NLP) toolkit, satisfying your imagination about NLP.](https://github.com/boat-group/fancy-nlp)
+* [Hironsan/anago: Bidirectional LSTM-CRF and ELMo for Named-Entity Recognition, Part-of-Speech Tagging and so on.](https://github.com/Hironsan/anago)
+* [BrikerMan/Kashgari: Kashgari is a Production-ready NLP Transfer learning framework for text-labeling and text-classification, includes Word2Vec, BERT, and GPT2 Language Embedding.](https://github.com/BrikerMan/Kashgari)
+* [jiesutd/NCRFpp: NCRF++, a Neural Sequence Labeling Toolkit. Easy use to any sequence labeling tasks (e.g. NER, POS, Segmentation). It includes character LSTM/CNN, word LSTM/CNN and softmax/CRF components.](https://github.com/jiesutd/NCRFpp)
+* [jiqizhixin/ML-Tutorial-Experiment: Coding the Machine Learning Tutorial for Learning to Learn](https://github.com/jiqizhixin/ML-Tutorial-Experiment)
 
 #### Slides
 
 * [Supervised Deep Learning](https://sites.google.com/site/deeplearningcvpr2014/ranzato_cvpr2014_DLtutorial.pdf)
 
-### Paper
-
-* [**2019-2020 International Conferences in Artificial Intelligence, Machine Learning, Computer Vision, Data Mining, Natural Language Processing and Robotics**](https://jackietseng.github.io/conference_call_for_paper/)
-* [自然語言處理領域國內外著名會議和期刊](http://deepon.me/2018/10/02/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E9%A2%86%E5%9F%9F%E5%9B%BD%E5%86%85%E5%A4%96%E8%91%97%E5%90%8D%E4%BC%9A%E8%AE%AE%E5%92%8C%E6%9C%9F%E5%88%8A/)
-* [NLP領域國際頂會（ACL/EMNLP/NAACLl等）的難度如何？](https://www.zhihu.com/question/266242639/answer/312713059)
-
-* Level Criteria
-  * CCF level: only used in China
-  * H-index
-    * [h-index - Wikipedia](https://en.wikipedia.org/wiki/H-index)
-    * [h-index：簡單易懂的評估指標，呈現出多數文章的被引用表現 | 臺大圖書館參考服務部落格](http://tul.blog.ntu.edu.tw/archives/2485)
-
-#### Conference
+### Conclusion
 
 NLP
 
-* ACL Association for Computational Linguistics
-  * [ACL 2020](https://acl2020.org/)
-* EMNLP
-  * [roomylee/EMNLP-2019-Papers](https://github.com/roomylee/EMNLP-2019-Papers) - Statistics and Accepted paper list with arXiv link of EMNLP-IJCNLP 2019
-* NAACL North American Chapter of the Association for Computational Linguistics
-  * [NAACL-HLT 2019](https://naacl2019.org/)
-* COLING
-
-Application Scenario
-
-* WWW The Web Conference
-  * [WWW 2020](https://www2020.thewebconf.org/)
-
-General Models
-
-* NPIS Neural Information Processing Systems
-  * [NIPS Proceedingsβ](https://papers.nips.cc/)
-
-Not Sure
-
-* CCL
-* AAAI
-* ICLR
-  * [AminJun/ICLR2020](https://github.com/AminJun/ICLR2020) - ICLR2020 Downloader & Search Tool
+* [crownpku/Awesome-Chinese-NLP: A curated list of resources for Chinese NLP](https://github.com/crownpku/Awesome-Chinese-NLP)
 
 ### Summaries
 

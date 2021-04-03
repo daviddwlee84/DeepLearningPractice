@@ -1,5 +1,7 @@
 # Long Short Term Memory (LSTM)
 
+> The dominant approach during 2013-2015
+
 ## Brief Description
 
 * A special kind of RNN, capable of learning long-term dependencies.
@@ -17,16 +19,28 @@
 
 ## The Key Component Behind LSTMs
 
+### Hidden State
+
+> the same as vanilla RNN
+
 ### Cell State
+
+> cell stores *long-term information*
 
 * The cell state is kind of like a conveyor belt. It runs straight down the entire chain, with only some minor linear interactions. => For information to just flow along it unchanged!
 
 ### Gate
 
+> selection of *erase*, *write*, *read* information from the cell
+
 * The ability for LSTM to remove or add information to cell state.
 * A way to optionally let information through.
 
 They are composed out of a sigmoid neural net layer and a pointwise multiplication operation.
+
+* gates are also vectors
+* on each timestep, each element of the gates can be **open** (1), **closed** (0), or somewhere in-between
+* gates are *dynamic*: their value is computed based on current context
 
 #### Sigmoid Neural Layer
 
@@ -39,6 +53,8 @@ Sigmoid output between 0 and 1: Describing how much of each component should be 
 
 ### First. Forget Gate
 
+> controls what is kept vs. forgotten, from previous cell state
+
 How much we want to forget.
 
 $$
@@ -48,6 +64,8 @@ $$
 > Multiply the old state by $f_t$ to forget the things we decided to forget.
 
 ### Second. Input Gate
+
+> controls what parts of the new cell content are written to cell
 
 #### Input gate layer
 
@@ -72,6 +90,8 @@ Update the old cell state, $C_{t-1}$, into the new cell state $C_t$.
 > Add $i_t \times \tilde{C_t}$. This is the new candidate value scaled by how much we decided to update each state value.
 
 ### Final. Ouput Gate
+
+> controls what parts of cell are output to hidden state
 
 Decide what we're going to output.
 

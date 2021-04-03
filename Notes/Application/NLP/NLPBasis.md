@@ -52,6 +52,8 @@ Choose the best solution from many potential candidates. Each candidate is recon
 
 ### Question Answering
 
+[GitHub - Decalogue/chat: 基于自然语言理解与机器学习的聊天机器人，支持多用户并发及自定义多轮对话](https://github.com/Decalogue/chat)
+
 ## Sequence Labeling
 
 * Each token in a sequence is assigned a label.
@@ -105,6 +107,8 @@ Backward Classification
 
 ### Machine Translation
 
+[OpenNMT/OpenNMT-py: Open Source Neural Machine Translation in PyTorch](https://github.com/OpenNMT/OpenNMT-py)
+
 ## Structured Prediction
 
 ### Syntactic Parsing
@@ -136,3 +140,14 @@ Modeling Shallow Parsing (as a sequence labeling problem)
 ## Appendix
 
 ### Chinese part-of-speech table
+
+
+
+
+
+[Deep Learning for NLP Best Practices](https://ruder.io/deep-learning-nlp-best-practices/index.html)
+
+[makcedward/nlp: This repository recorded my NLP journey.](https://github.com/makcedward/nlp)
+
+
+[google/sentencepiece: Unsupervised text tokenizer for Neural Network-based text generation.](https://github.com/google/sentencepiece)

@@ -1,24 +1,62 @@
 # Language Model Concept
 
+到時候要弄一下 這放的位置(README) 和內容都怪怪 重複
+N元模型 算是其中的子類..
+
 Table of Content
 
 * Embedding
-    * Word Embedding
-        * Bag-of-Words (BOW)
-        * Word2Vec
-        * GloVe
-        * FastText
-    * Sentence Embedding
-    * Context Embedding
+  * Word Embedding
+    * Bag-of-Words (BOW)
+    * Word2Vec
+    * GloVe
+    * FastText
+  * Sentence Embedding
+  * Context Embedding
 
 * Model
-    * BiLM (Bidirectional Language Model)
-    * CNN for NLP
-    * RNN for NLP
+  * BiLM (Bidirectional Language Model)
+  * CNN for NLP
+  * RNN for NLP
 
 ## Terminology
 
 * Granularity 粒度: The granularity of data refers to the size in which data fields are sub-divided.
+* Perplexity (ppl.) 困惑度
+  * for evaluation
+
+## Overview
+
+### Definition
+
+Language Modeling
+
+* is the NLP task of *predicting what word comes next*
+* given a sequence of words and compute the *probability distribution* of the next word (which can be any word in the vocabulary)
+
+> * Input: sequence of words $x^{(1)}, x^{(2)}, \dots, x^{(t)}$
+> * Output: prob dist of the next word $P(x^{(t+1)}|x^{(t)}, \dots, x^{(1)})$
+
+Language Model
+
+* a system that does language modeling
+* assigns probability to a piece of text
+
+### Life Example
+
+> Language Modeling is a *subcomponent* of many NLP tasks
+
+* input method (predictive typing)
+* search engine
+* speech recognition
+* ...
+
+### Building Language Model
+
+* N-gram Language Model
+* Neural Language Model
+  * Fixed-window Neural Language Model
+  * Recurrent Neural Networks (a family of neural architectures)
 
 ## Word Embedding
 
@@ -33,11 +71,22 @@ Table of Content
 * Continous Bag-of-Words (CBOW): Predicting a target word (output) with the sum of the words in the context (input)
 * Skip-gram: Predicting each of other words in the context (output) with the target word (input)
 
-* Speed-up:
-    * Hierarchical softmax: Represent words as leaves of a binary tree.
-        * Cost of objective calculaiton: V to log(V)
-    * Negative sampling: Approximage the softmax with negative samples.
-        * Cost of objective calculation: V to #
+Both of these two model can be composed with three layers
+
+> assume word set size is N, K hidden units
+
+* Input Layer
+  * input N-dimension one-hot layer
+* Projection (Hidden) Layer
+  * weight: $N \times K$
+* Output Layer
+  * softmax
+
+* Speed-up: (because the softmax function has normalization term, it need to iterate through the entire word set)
+  * **Hierarchical softmax**: Represent words as leaves of a binary tree.
+    * Cost of objective calculaiton: V to log(V)
+  * **Negative sampling**: Approximage the softmax with negative samples.
+    * Cost of objective calculation: V to #
 
 [Google word2vec](https://code.google.com/archive/p/word2vec/)
 
@@ -50,7 +99,7 @@ Learning word representations by factorizing a co-occurrence matrix
 
 ### FastText (Subword Model)
 
-Modeling morphology of words by embedding character n-grams on top of the model of skip-gram
+Modeling morphology of words by **embedding character n-grams** on top of the model of skip-gram
 
 * [Github - facebookresearch/fastText](https://github.com/facebookresearch/fastText)
 
@@ -83,6 +132,8 @@ Architecture of RNN
 
 ### RNN with LSTM
 
+> RNN with separate **memory** (cell state)
+
 * Input gate
 * Forget gate
 * Output gate
@@ -93,19 +144,27 @@ Architecture of RNN
 * Update gate
 * Reset gate
 
-> With a comparable performance with LSTM, but is much simpler
+> With a comparable performance with LSTM, but is much simpler (no cell state)
 
-## Links
+## Resources
+
+* [Building Language Models](https://nlpforhackers.io/language-models/)
+
+> this shouldn't put here
 
 * [Vanishing / Exploding gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
-    * Solutions:
-        * Multi-level hierarchy
-        * LSTM ([RNN - The Problem of Long-Term Dependencies](Notes/Technique/RNN.md#The-Problem-of-Long-Term-Dependencies))
-        * Faster hardware
-        * Residual networks
-        * Other activation functions
+  * Solutions:
+    * Multi-level hierarchy
+    * LSTM ([RNN - The Problem of Long-Term Dependencies](Notes/Technique/RNN.md#The-Problem-of-Long-Term-Dependencies))
+    * Faster hardware
+    * Residual networks
+    * Other activation functions
 
 ### Tutorial
 
 * [Andrew Ng - RNN W2L02 : Using Word Embeddings](https://www.youtube.com/watch?v=Qu-cvY4HP4g)
 * [Andrew Ng - RNN W2L06 : Word2Vec](https://www.youtube.com/watch?v=jak0sKPoKu8)
+
+CS224n
+
+* [Stanford CS224N: NLP with Deep Learning | Winter 2019 | Lecture 6 – Language Models and RNNs - YouTube](https://www.youtube.com/watch?v=iWea12EAu6U&feature=youtu.be)

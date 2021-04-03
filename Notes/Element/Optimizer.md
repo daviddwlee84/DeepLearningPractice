@@ -19,6 +19,8 @@ $$
 
 ## Momentum
 
+> like driving, if you drive in the same direction then you supposed to drive faster (bigger step). if you change your direction frequently then you should drive slower (smaller step)
+
 ### Exponentially Weighted Moving Average
 
 * Also called exponentially weighted moving average.
