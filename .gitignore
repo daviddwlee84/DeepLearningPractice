@@ -67,7 +67,9 @@ Project/CWSNER/model/
 
 # NCTU_DL_HW1
 # TaibetanMNIST
-Project/NCTU_DL_HW1/TibetanMNIST.npz
+Project/NCTU_DL/HW1/TibetanMNIST-DNN/TibetanMNIST.npz
+# NCTU_DL_HW2
+Project/NCTU_DL/HW2/*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
