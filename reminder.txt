@@ -1,0 +1,47 @@
+Data Smoothing: N-GramModel.md + DataSmoothing
+
+word representation (語意 前三個ppt) + word embedding (Lect8)
+
+CNN + FCNN + Layers
+
+NLP總整理 有些以前的筆記實在不堪入目 (有一些筆記在MLPractice那邊 如HMM、CRF 可能要link一下)
+NLPAP的注意力與Transformer的PPT
+
+可能把所有常見task都整理一下 可用的模型 這樣
+
+Machine Translation Notes
+
+Specify the TensorFlow version (1.x or 2.x)
+
+Maybe implement computational graph:
+* each node type:
+    * compute its output
+    * compute its gradient wrt. its inputs
+* topological sort (order) for forwardprop and reverse order for backprop
+
+模型壓縮
+蒸餾模型 Distilled Model
+https://zhuanlan.zhihu.com/p/67871864
+https://zhuanlan.zhihu.com/p/24337627
+Paper: Distilling the Knowledge in an Neural Network
+https://zhuanlan.zhihu.com/p/39945855
+
+Links to each notes may changed
+
+
+
+
+
+Machine Reading Comprehension (MRC) vs. sequence labeling
+
+
+Remove NLPTransferLearning and put into README
+
+
+
+Evaluation Metrics <==> Tasks
+
+
+
+
+[AMiner - Exploring the Motive Force of Scientific and T](https://aminer.org/)
